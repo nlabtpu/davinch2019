@@ -1,0 +1,16 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet',href='/stylesheets/screen.css')
+        script(type="text/javascript" src="/socket.io/socket.io.js")
+        script.
+          var socket = io.connect();
+    body(id="output-area")
+        canvas(id="game" width="2000" height="900")
+        canvas(id="chart" width="2000" height="900")
+        div(class="winner" id="winner")
+        script(type='text/javascript' src='/js_screen/index.js')
+        

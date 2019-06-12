@@ -1,2 +1,7 @@
-# davinch2019
-festival of davinch in 2019
+# davinci2018
+
+# member
+
+- Takeuchi Akihiro
+- Ozaki Yuki
+- Sahara Yui

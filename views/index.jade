@@ -1,0 +1,55 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        title= title
+        link(rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous")
+        link(rel='stylesheet' href='/stylesheets/style.css')
+        script(type="text/javascript" src="/socket.io/socket.io.js")
+        script.
+          var socket = io.connect();
+    body
+      .Putin
+        form(class="cp_ipselect cp_sl01")
+          select(id="userID")
+            option(value="" hidden) せんたくしてください
+            option(value="・ω・") ・ω・
+            option(value="˘ω˘") ˘ω˘
+            option(value="><") ><
+        .Field
+          .Area
+            .buttonArea
+              button(class="button1" type="button" id="left15") ↖
+              .space
+              button(class="button1" type="button" id="right15") ↗
+              button(class="button1" type="button" id="left90") ←
+              button(class="button2" type="button" id="go") Go
+              button(class="button1" type="button" id="right90") →
+              button(class="button1" type="button" id="left135") ↙
+              button(class="button1" type="button" id="back") ↓
+              button(class="button1" type="button" id="right135") ↘
+            .under
+              button(class="reset" type="button" id="onereturn") ひとつけす
+              div(class="scroll" id="messageList") めいれい
+          .Area
+            .buttonArea
+              button(class="button1" type="button" id="left15Event" ) ↖
+              .space
+              button(class="button1" type="button" id="right15Event" ) ↗
+              button(class="button1" type="button" id="left90Event" ) ←
+              button(class="button2" type="button" id="goEvent" ) Go
+              button(class="button1" type="button" id="right90Event" ) →
+              button(class="button1" type="button" id="left135Event" ) ↙
+              button(class="button1" type="button" id="backEvent" ) ↓
+              button(class="button1" type="button" id="right135Event" ) ↘
+            .under
+              button(class="reset" type="button" id="onereturnEvent") ひとつけす
+              div(class="scroll" id="hitEventList") ぶつかったとき
+          .order
+            button(class="subsend" type="button" id="subsend") おためし
+            button(class="send" type="button" id="send")  アップロード
+            button(class="reset" type="button" id="reset") リセット
+            div(id="teamcolor" class="teamcolor")
+              div(class="textcolor") キミの色
+      iframe(class="iframe" id="iframe")
+      script(type='text/javascript' src='/js_client/index.js')
