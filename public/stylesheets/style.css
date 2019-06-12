@@ -1,0 +1,200 @@
+body {
+  display: flex;
+  padding: 30px;
+}
+.cp_ipselect {
+  overflow: hidden;
+  width: 500px;
+  margin: 2em;
+}
+.cp_ipselect select {
+  width: 100%;
+  cursor: pointer;
+  text-indent: 0.01px;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.cp_ipselect select::-ms-expand {
+  display: none;
+}
+.cp_ipselect.cp_sl01 {
+  border: 1px solid #bbbbbb;
+  border-radius: 2px;
+  background: #ffffff;
+}
+.cp_ipselect.cp_sl01 select {
+  padding: 8px 38px 8px 8px;
+  color: #666666;
+}
+.Putin{
+  flex: column;
+}
+.Field{
+  display: flex;
+}
+.Area{
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
+.buttonArea{
+  display: flex;
+  flex-wrap: wrap;
+  width: 180px;
+  margin: 20px;
+}
+.space{
+  flex: 0 1 45px;
+  margin: 5px;
+}
+.under{
+  display: flex;
+  flex-direction: column;
+}
+.order{
+  display: flex;
+  flex-direction: column;
+}
+button{
+  cursor: pointer;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin: 5px;
+}
+button.button1 {
+  flex: 0 1 45px;
+  background-color: gray;
+  color: #000;
+  padding: 5px 8px;
+  height: 40px;
+  border-style: none;
+  background-image: -webkit-linear-gradient(#a0a0a0 0%, #606060 100%);
+  background-image: linear-gradient(#a0a0a0 0%, #606060 100%);
+  border-bottom: solid 3px #505050;
+}
+button.button1:hover {
+  opacity: 0.7;
+  background-color: DarkGray;
+  color: #000;
+  border-bottom: none;
+}
+button.button2 {
+  flex: 0 1 45px;
+  background-color: Silver;
+  color: #000;
+  padding: 5px 8px;
+  height:  40px;
+  border-style: none;
+  background-image: -webkit-linear-gradient(#f0f0f0 0%, #a0a0a0 100%);
+  background-image: linear-gradient(#f0f0f0 0%, #a0a0a0 100%);
+  border-bottom: solid 3px #808080;
+}
+button.button2:hover {
+  opacity: 0.7;
+  border-bottom: none;
+  background-color: Gainsboro;
+  color: #000;
+}
+button.send {
+  background-color: blue;
+  color: #fff;
+  width: 200px;
+  height:  35px;
+  border-style: none;
+  background-image: -webkit-linear-gradient(#8080f0 0%, #0000ff 100%);
+  background-image: linear-gradient(#8080f0 0%, #0000ff 100%);
+  margin: 10px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #33339b;
+}
+button.send:hover {
+  opacity: 0.8;
+  background-color: DodgerBlue;
+  color: #f0f0f0;
+  border-style: none;
+}
+button.subsend {
+  background-color: green;
+  color: #fff;
+  width: 200px;
+  height:  35px;
+  border-style: none;
+  background-image: -webkit-linear-gradient(#558000 0%, #55f055 100%);
+  background-image: linear-gradient(#558000 0%, #55f055 100%);
+  margin: 10px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #5e8f70;
+}
+button.subsend:hover {
+  opacity: 0.7;
+  color: #f0f0f0;
+  border-style: none;
+}
+button.reset {
+  background-color: red;
+  color: #fff;
+  width: 200px;
+  height:  35px;
+  border-style: none;
+  background-image: -webkit-linear-gradient(#ff0000 0%, #ff8080 100%);
+  background-image: linear-gradient(#ff0000 0%, #ff8080 100%);
+  margin: 10px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #ffa07a;
+}
+button.reset:hover {
+  opacity: 0.7;
+  color: #f0f0f0;
+  border-style: none;
+}
+.block1{
+  position: relative;
+  padding: 0.35em 0.7em;
+  text-decoration: none;
+  color: #00BCD4;
+  background: #CCFDFD;
+  transition: .4s;
+  text-align: center;
+  background-size: 13px 10px;
+}
+.block2{
+  position: relative;
+  padding: 0.35em 0.7em;
+  background: #668ad8;
+  color: #FFF;
+  text-align: center;
+  text-decoration: none;
+}
+.block2:hover{
+  background-size: 13px 10px;
+}
+.teamcolor{
+  width: 200px;
+  height: 300px;
+  margin: 10px;
+}
+.textcolor{
+  color: white;
+  text-align: center;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+  font-weight: bold;
+  font-size: 24pt;
+  padding: 80px 80px;
+}
+.scroll{
+  width: 290px;
+  height: 400px;
+  overflow-y: scroll;
+}
+iframe.iframe{
+  height: 500px;
+  width: 500px;
+}
