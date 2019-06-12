@@ -327,6 +327,8 @@ Circle.prototype = {
     let futureLocX = this.locX + distanceX;
     let futureLocY = this.locY + distanceY;
 
+/*
+
     // 左右衝突確認
     if (futureLocX < this.radius || futureLocX > this.width - this.radius) {
       futureLocX -= distanceX; // 進んだ分を戻す
@@ -344,6 +346,9 @@ Circle.prototype = {
       distanceY = distance * Math.sin(radian);
       futureLocY += distanceY;
     }
+
+*/
+
     let direction = this.direction;
     futureLocX %= this.width;
     futureLocY %= this.height;
