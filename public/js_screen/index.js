@@ -249,8 +249,13 @@ const Circle = function(data, field) {
 
   switch (this.color) {
     case 'red':
-    this.locX = this.width - 10;
-    this.locY = this.height - 10;
+      this.locX = this.width - 20;
+      this.locY = this.height - 20;
+      break;
+
+    case 'aqua':
+      this.locX = this.width - 10;
+      this.locY = this.height - 10;
       break;
 
     default:
@@ -321,35 +326,35 @@ Circle.prototype = {
 */
 
   draw: function(context) {
-        context.beginPath();
-        context.lineWidth = 2;
-        context.strokeStyle = 'white';
-        context.arc(this.locX, this.locY , this.radius, 0, Math.PI * 2.0, true);
-        context.stroke();
-        context.lineWidth = 1;
-        context.fillStyle = this.color;
-        context.arc(this.locX, this.locY, this.radius, 0, Math.PI * 2.0, true);
-        context.fill();
-        let direction = this.direction * Math.PI / 180;
-        let textLocX = this.locX  - this.radius * 1 / 3 - 20 / this.radius;
-        let textLocY = this.locY  - this.radius * 1 / 50 + 20 / this.radius;
-        context.fillStyle = 'black';
-        context.font = "bold 8px Arial";
-        context.fillText(this.id, textLocX + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + this.radius / 6 * (Math.sin(direction) + 1 / 3));
-        context.fillStyle = 'white';
-        context.fillText(this.id, textLocX + 1 + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + 1 + this.radius / 6 * (Math.sin(direction) + 1 / 3));
+    context.beginPath();
+    context.lineWidth = 2;
+    context.strokeStyle = 'white';
+    context.arc(this.locX, this.locY, this.radius, 0, Math.PI * 2.0, true);
+    context.stroke();
+    context.lineWidth = 1;
+    context.fillStyle = this.color;
+    context.arc(this.locX, this.locY, this.radius, 0, Math.PI * 2.0, true);
+    context.fill();
+    let direction = this.direction * Math.PI / 180;
+    let textLocX = this.locX - this.radius * 1 / 3 - 20 / this.radius;
+    let textLocY = this.locY - this.radius * 1 / 50 + 20 / this.radius;
+    context.fillStyle = 'black';
+    context.font = "bold 8px Arial";
+    context.fillText(this.id, textLocX + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + this.radius / 6 * (Math.sin(direction) + 1 / 3));
+    context.fillStyle = 'white';
+    context.fillText(this.id, textLocX + 1 + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + 1 + this.radius / 6 * (Math.sin(direction) + 1 / 3));
 
   },
   shadeDraw: function(context) {
-        context.beginPath();
-        context.lineWidth = 3;
-        context.strokeStyle = this.color;
-        context.arc(this.locX , this.locY, this.radius, 0, Math.PI * 2.0, true);
-        context.stroke();
-        context.lineWidth = 1;
-        context.fillStyle = this.color;
-        context.arc(this.locX, this.locY, this.radius, 0, Math.PI * 2.0, true);
-        context.fill();
+    context.beginPath();
+    context.lineWidth = 3;
+    context.strokeStyle = this.color;
+    context.arc(this.locX, this.locY, this.radius, 0, Math.PI * 2.0, true);
+    context.stroke();
+    context.lineWidth = 1;
+    context.fillStyle = this.color;
+    context.arc(this.locX, this.locY, this.radius, 0, Math.PI * 2.0, true);
+    context.fill();
   },
 
 
@@ -363,27 +368,27 @@ Circle.prototype = {
     let futureLocX = this.locX + distanceX;
     let futureLocY = this.locY + distanceY;
 
-/*
+    /*
 
-    // 左右衝突確認
-    if (futureLocX < this.radius || futureLocX > this.width - this.radius) {
-      futureLocX -= distanceX; // 進んだ分を戻す
-      this.direction = 180 - this.direction; // 角度変更
-      radian = this.direction * Math.PI / 180; // ラジアンへ変換
-      distanceX = distance * Math.cos(radian); // 進む距離の設定
-      futureLocX += distanceX; // 進む
-    }
+        // 左右衝突確認
+        if (futureLocX < this.radius || futureLocX > this.width - this.radius) {
+          futureLocX -= distanceX; // 進んだ分を戻す
+          this.direction = 180 - this.direction; // 角度変更
+          radian = this.direction * Math.PI / 180; // ラジアンへ変換
+          distanceX = distance * Math.cos(radian); // 進む距離の設定
+          futureLocX += distanceX; // 進む
+        }
 
-    // 上下衝突判定
-    if (futureLocY < this.radius || futureLocY > this.height - this.radius) {
-      futureLocY -= distanceY;
-      this.direction = 360 - this.direction;
-      radian = this.direction * Math.PI / 180;
-      distanceY = distance * Math.sin(radian);
-      futureLocY += distanceY;
-    }
+        // 上下衝突判定
+        if (futureLocY < this.radius || futureLocY > this.height - this.radius) {
+          futureLocY -= distanceY;
+          this.direction = 360 - this.direction;
+          radian = this.direction * Math.PI / 180;
+          distanceY = distance * Math.sin(radian);
+          futureLocY += distanceY;
+        }
 
-*/
+    */
 
     let direction = this.direction;
     futureLocX %= this.width;
