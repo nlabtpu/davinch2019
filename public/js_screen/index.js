@@ -249,8 +249,8 @@ const Circle = function(data, field) {
 
   switch (this.color) {
     case 'red':
-    this.locX = 0.5 * (this.width - 100) + 50;
-    this.locY = 0.5 * (this.height - 100) + 50;
+    this.locX = canvas.width - 10;
+    this.locY = canvas.height - 10;
       break;
 
     default:
