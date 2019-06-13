@@ -263,7 +263,7 @@ const Circle = function(data, field) {
             this.locY = 0.999 * (this.height - 100) + 50;
             break;
 
-        case 'fuchsia';
+        case 'fuchsia':
         this.locX = 0.999 * (this.width - 100) + 50;
         this.locY = 0.001 * (this.height - 100) + 50;
         break;
