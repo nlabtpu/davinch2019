@@ -1,9 +1,10 @@
 class Goal {
-  constructor(x, y) {
+  constructor(x, y, num) {
     this.x = x;
     this.y = y;
+    this.num = num;
   }
-  draw(context) {
+  setGoal(context) {
     context.beginPath();
 
     context.strokeStyle = 'rgb(0, 0, 0)';
@@ -12,10 +13,11 @@ class Goal {
     context.arc(this.x, this.y, 10, 0, 2 * Math.PI);
     context.stroke();
 
+    context.beginPath();
     context.arc(this.x, this.y, 15, 0, 2 * Math.PI);
     context.stroke();
 
-    context.fillText(1, this.x - 3, this.y + 3);
+    context.fillText(this.num, this.x - 3, this.y + 3);
   }
 }
 
@@ -43,6 +45,7 @@ Field.prototype = {
     },
     imageData: [],
     circles: [],
+    goalss: [],
     constructor: Field,
     checkNumber: function(color) {
         const count = this.circles.filter(circle => circle.color === color).length;
@@ -76,6 +79,12 @@ Field.prototype = {
         //change
         this.circles.forEach(circle => circle.delete(this.context, this.circles));
         this.circles.forEach(circle => circle.konamiCommand(this.circles));
+        if (this.goals.length > 0) {
+          this.goals.forEach((obj) => obj.setGoal(this.context));
+
+          //goalCheck();
+          //timeIvent();
+        }
     },
     getColor: function(context, context2) {
         this.imageData = context.getImageData(0, 0, this.size.width, this.size.height);
@@ -566,4 +575,10 @@ window.onload = function() {
     field.resize(outputArea, idMatches);
     field.context.fillStyle = "white";
     field.context.fillRect(field.size.width, 0, field.canvas.width * 0.3, field.size.height);
+
+    // add
+    goals.push(new Goal(200, 60, 1));
+    goals.push(new Goal(120, 120, 2));
+    goals.push(new Goal(220, 130, 3));
+
 };
