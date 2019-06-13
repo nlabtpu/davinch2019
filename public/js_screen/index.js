@@ -1,3 +1,25 @@
+class Goal {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  draw(context) {
+    context.beginPath();
+
+    context.strokeStyle = 'rgb(0, 0, 0)';
+    context.fillStyle = 'rgb(0, 0, 0)';
+
+    context.arc(this.x, this.y, 10, 0, 2 * Math.PI);
+    context.stroke();
+
+    context.arc(this.x, this.y, 15, 0, 2 * Math.PI);
+    context.stroke();
+
+    context.fillText(1, this.x - 3, this.y + 3);
+  }
+}
+
+
 const Field = function(e, c, d) {
     this.canvas = e;
     this.canvas2 = c;
