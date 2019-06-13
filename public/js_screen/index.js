@@ -81,7 +81,7 @@ Field.prototype = {
         this.end_count++;
       }
     }
-  }
+  },
 
 
 
