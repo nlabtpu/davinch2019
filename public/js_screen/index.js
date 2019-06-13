@@ -71,7 +71,7 @@ Field.prototype = {
         if (((this.goals[this.circles[i].goal_count].x - 10 < this.circles[i].locX) && (this.circles[i].locX < this.goals[this.circles[i].goal_count].x + 10)) &&
           ((this.goals[this.circles[i].goal_count].y - 10 < this.circles[i].locY) && (this.circles[i].locY < this.goals[this.circles[i].goal_count].y + 10))) {
           this.circles[i].goal_count++;
-          alert(i+'番目の円のオールカウントは'+this.circles[i].goal_count);
+          alert(i+'番目の円のゴールカウントは'+this.circles[i].goal_count);
         }
         if (this.circles[i].goal_count == this.goals.length) {
           this.circles[i].goal_count++;
