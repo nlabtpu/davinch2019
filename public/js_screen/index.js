@@ -254,8 +254,8 @@ const Circle = function(data, field) {
       break;
 
     case 'aqua':
-      this.locX = this.width - 10;
-      this.locY = this.height - 10;
+      this.locX = 0.1 * (this.width - 100) + 50;
+      this.locY = 0.1 * (this.height - 100) + 50;
       break;
 
     default:
