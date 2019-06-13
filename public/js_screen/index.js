@@ -45,7 +45,7 @@ Field.prototype = {
     },
     imageData: [],
     circles: [],
-    goalss: [],
+    goals: [],
     constructor: Field,
     checkNumber: function(color) {
         const count = this.circles.filter(circle => circle.color === color).length;
