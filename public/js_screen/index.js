@@ -68,7 +68,7 @@ Field.prototype = {
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
       if (this.circles[i].goal_count < this.goals.length) {
-        if (((this.goals[circles[i].goal_count].locX - 10 < this.circles[i].locX) && (this.circles[i].locX < this.goals[this.circles[i].goal_count].locX + 10)) &&
+        if (((this.goals[this.circles[i].goal_count].locX - 10 < this.circles[i].locX) && (this.circles[i].locX < this.goals[this.circles[i].goal_count].locX + 10)) &&
           ((this.goals[this.circles[i].goal_count].locY - 10 < this.circles[i].locY) && (this.circles[i].locY < this.goals[this.circles[i].goal_count].locY + 10))) {
           this.circles[i].goal_count++;
         }
