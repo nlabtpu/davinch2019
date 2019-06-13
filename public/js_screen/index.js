@@ -583,6 +583,6 @@ window.onload = function() {
 
     // add
     field.addGoal(new Goal(0.5 * (field.size.width - 100) + 50, 0.5 * (field.size.height - 100) + 50, 1));
-    field.addGoal(new Goal(0.15 * (field.size.width - 100) + 50, 0.76 * (field.size.height - 100) + 50, 1));
-    field.addGoal(new Goal(0.65 * (field.size.width - 100) + 50, 0.25 * (field.size.height - 100) + 50, 1));
+    field.addGoal(new Goal(0.15 * (field.size.width - 100) + 50, 0.76 * (field.size.height - 100) + 50, 2));
+    field.addGoal(new Goal(0.65 * (field.size.width - 100) + 50, 0.25 * (field.size.height - 100) + 50, 3));
 };
