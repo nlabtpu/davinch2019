@@ -7,8 +7,8 @@ class Goal {
   setGoal(context) {
     context.beginPath();
 
-    context.strokeStyle = 'rgb(0, 0, 0)';
-    context.fillStyle = 'rgb(0, 0, 0)';
+    context.strokeStyle = 'white';
+    context.fillStyle = 'white';
 
     context.arc(this.x, this.y, 10, 0, 2 * Math.PI);
     context.stroke();
@@ -80,7 +80,7 @@ Field.prototype = {
         this.circles.forEach(circle => circle.delete(this.context, this.circles));
         this.circles.forEach(circle => circle.konamiCommand(this.circles));
         if (this.goals.length > 0) {
-          this.goals.forEach((obj) => obj.setGoal(this.context));
+          this.goals.forEach((goal) => goal.setGoal(this.context));
 
           //goalCheck();
           //timeIvent();
