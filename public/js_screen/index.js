@@ -582,7 +582,7 @@ window.onload = function() {
     field.context.fillRect(field.size.width, 0, field.canvas.width * 0.3, field.size.height);
 
     // add
-    field.addGoal(new Goal(200, 60, 1));
+    field.addGoal(new Goal(0.5 * (field.size.width - 100) + 50, 0.5 * (field.size.height - 100) + 50, 1));
     field.addGoal(new Goal(120, 120, 2));
     field.addGoal(new Goal(220, 130, 3));
 
