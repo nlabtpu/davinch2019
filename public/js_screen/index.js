@@ -68,8 +68,8 @@ Field.prototype = {
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
       if (this.circles[i].goal_count < this.goals.length) {
-        if (((this.goals[this.circles[i].goal_count].X - 10 < this.circles[i].locX) && (this.circles[i].locX < this.goals[this.circles[i].goal_count].X + 10)) &&
-          ((this.goals[this.circles[i].goal_count].Y - 10 < this.circles[i].locY) && (this.circles[i].locY < this.goals[this.circles[i].goal_count].Y + 10))) {
+        if (((this.goals[this.circles[i].goal_count].x - 10 < this.circles[i].locX) && (this.circles[i].locX < this.goals[this.circles[i].goal_count].x + 10)) &&
+          ((this.goals[this.circles[i].goal_count].y - 10 < this.circles[i].locY) && (this.circles[i].locY < this.goals[this.circles[i].goal_count].y + 10))) {
           this.circles[i].goal_count++;
           alert(i+'番目の円のオールカウントは'+this.circles[i].goal_count);
         }
