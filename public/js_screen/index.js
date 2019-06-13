@@ -199,6 +199,11 @@ Field.prototype = {
         this.circles.push(circle);
         this.checkNumber(circle.color);
     },
+
+    addGoal: function(goal) {
+        this.goal.push(goal);
+    },
+
     winner: function(score) {
         // const names = {
         //   red: "赤",
@@ -577,8 +582,8 @@ window.onload = function() {
     field.context.fillRect(field.size.width, 0, field.canvas.width * 0.3, field.size.height);
 
     // add
-    goals.push(new Goal(200, 60, 1));
-    goals.push(new Goal(120, 120, 2));
-    goals.push(new Goal(220, 130, 3));
+    field.addGoal(new Goal(200, 60, 1));
+    field.addGoal(new Goal(120, 120, 2));
+    field.addGoal(new Goal(220, 130, 3));
 
 };
