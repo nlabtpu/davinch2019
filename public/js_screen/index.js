@@ -408,7 +408,7 @@ Circle.prototype = {
         this.direction = this.normalizeDirection(direction + this.direction);
     },
     go: function(distance, circles) {
-        const radian = this.direction * Math.PI / 180;
+        let radian = this.direction * Math.PI / 180;
         let distanceX = distance * Math.cos(radian);
         let distanceY = distance * Math.sin(radian);
         let futureLocX = this.locX + distanceX;
@@ -434,7 +434,7 @@ Circle.prototype = {
               futureLocY += distanceY;
             }
 
-        
+
 
         let direction = this.direction;
         futureLocX %= this.width;
