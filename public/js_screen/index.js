@@ -201,7 +201,7 @@ Field.prototype = {
     },
 
     addGoal: function(goal) {
-        this.goal.push(goal);
+        this.goals.push(goal);
     },
 
     winner: function(score) {
