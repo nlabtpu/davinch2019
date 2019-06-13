@@ -414,7 +414,7 @@ Circle.prototype = {
         let futureLocX = this.locX + distanceX;
         let futureLocY = this.locY + distanceY;
 
-        /*
+
 
             // 左右衝突確認
             if (futureLocX < this.radius || futureLocX > this.width - this.radius) {
@@ -434,7 +434,7 @@ Circle.prototype = {
               futureLocY += distanceY;
             }
 
-        */
+        
 
         let direction = this.direction;
         futureLocX %= this.width;
