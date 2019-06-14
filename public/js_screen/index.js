@@ -342,7 +342,29 @@ const Circle = function(data, field) {
       this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
   }
   this.radius = this.width / (this.speed + 1) / 15;
-  this.direction = Math.floor(Math.random() * 360);
+  switch (this.color) {
+    case 'red':
+      this.direction = 270;
+      break;
+
+    case 'aqua':
+      this.direction = Math.floor(Math.random() * 360);
+      break;
+
+    case 'lime':
+      this.direction = Math.floor(Math.random() * 360);
+      break;
+
+    case 'fuchsia':
+      this.direction = Math.floor(Math.random() * 360);
+      break;
+
+    default:
+      this.direction = Math.floor(Math.random() * 360);
+  }
+
+  //this.direction = Math.floor(Math.random() * 360);
+
   this.flag = 0;
   this.effectFlag = 0;
   //change
