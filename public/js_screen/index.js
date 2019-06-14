@@ -68,10 +68,18 @@ Field.prototype = {
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
       if (this.circles[i].goal_count < this.goals.length) {
+
+        /*
         if (((this.goals[this.circles[i].goal_count].x - 15 < this.circles[i].locX) && (this.circles[i].locX < this.goals[this.circles[i].goal_count].x + 15)) &&
-          ((this.goals[this.circles[i].goal_count].y - 15 < this.circles[i].locY) && (this.circles[i].locY < this.goals[this.circles[i].goal_count].y + 15))) {
+          ((this.goals[this.circles[i].goal_count].y - 15 < this.circles[i].locY) && (this.circles[i].locY < this.goals[this.circles[i].goal_count].y + 15)))
+*/
+
+        if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 + (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < 20 ** 2)
+
+
+        {
           this.circles[i].goal_count++;
-          alert(this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
+          alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
         }
         if (this.circles[i].goal_count == this.goals.length) {
           this.circles[i].goal_count++;
