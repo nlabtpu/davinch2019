@@ -112,7 +112,6 @@ Field.prototype = {
     this.circles.forEach(circle => circle.effect(this.context));
     //change
     this.circles.forEach(circle => circle.delete(this.context, this.circles));
-    this.circles.forEach(circle => circle.konamiCommand(this.circles));
     if (this.goals.length > 0) {
       this.goals.forEach((goal) => goal.setGoal(this.context));
 
@@ -371,7 +370,6 @@ const Circle = function(data, field) {
   this.effectFlag = 0;
   //change
   this.deleteFlag = 0;
-  this.commandFlag = 1;
 
   this.checkCircle(field.circles);
 };
@@ -572,50 +570,6 @@ Circle.prototype = {
     }
     this.deleteFlag = 0;
   },
-  konamiCommand: function(circles) {
-    if (this.commandFlag === 0) {
-      this.command.rewind();
-      if (this.command.next().value === {
-          go: 10
-        }) {
-        if (this.command.next().value === {
-            go: 10
-          }) {
-          if (this.command.next().value === {
-              roll: 180
-            }) {
-            if (this.command.next().value === {
-                roll: 180
-              }) {
-              if (this.command.next().value === {
-                  roll: -90
-                }) {
-                if (this.command.next().value === {
-                    roll: 90
-                  }) {
-                  if (this.command.next().value === {
-                      roll: -90
-                    }) {
-                    if (this.command.next().value === {
-                        roll: 90
-                      }) {
-                      for (let i = 0; i < 4; i++) {
-                        if (i = circles.indexOf(this)) {
-                          continue;
-                        }
-                        circles.splice(i, 1);
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      this.commandFlag = 0;
-    }
-  }
 };
 
 window.onload = function() {
