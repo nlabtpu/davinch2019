@@ -348,15 +348,15 @@ const Circle = function(data, field) {
       break;
 
     case 'aqua':
-      this.direction = Math.floor(Math.random() * 360);
+      this.direction = 45;
       break;
 
     case 'lime':
-      this.direction = Math.floor(Math.random() * 360);
+      this.direction = 315;
       break;
 
     case 'fuchsia':
-      this.direction = Math.floor(Math.random() * 360);
+      this.direction = 135;
       break;
 
     default:
