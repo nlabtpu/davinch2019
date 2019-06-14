@@ -3,6 +3,8 @@ class Goal {
     this.x = x;
     this.y = y;
     this.num = num;
+    this.r1 = 15;
+    this.r2 = 20;
   }
   setGoal(context) {
     context.beginPath();
@@ -10,11 +12,11 @@ class Goal {
     context.strokeStyle = 'white';
     context.fillStyle = 'white';
 
-    context.arc(this.x, this.y, 15, 0, 2 * Math.PI);
+    context.arc(this.x, this.y, this.r1, 0, 2 * Math.PI);
     context.stroke();
 
     context.beginPath();
-    context.arc(this.x, this.y, 20, 0, 2 * Math.PI);
+    context.arc(this.x, this.y, this.r2, 0, 2 * Math.PI);
     context.stroke();
     context.font = "16px 'ＭＳ ゴシック'";
     context.fillText(this.num, this.x - 4, this.y + 4);
@@ -68,16 +70,8 @@ Field.prototype = {
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
       if (this.circles[i].goal_count < this.goals.length) {
-
-        /*
-        if (((this.goals[this.circles[i].goal_count].x - 15 < this.circles[i].locX) && (this.circles[i].locX < this.goals[this.circles[i].goal_count].x + 15)) &&
-          ((this.goals[this.circles[i].goal_count].y - 15 < this.circles[i].locY) && (this.circles[i].locY < this.goals[this.circles[i].goal_count].y + 15)))
-*/
-
-        if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 + (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < 20 ** 2)
-
-
-        {
+        if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
+          (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].r2 ** 2) {
           this.circles[i].goal_count++;
           alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
         }
