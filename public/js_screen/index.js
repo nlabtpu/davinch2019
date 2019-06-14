@@ -344,7 +344,7 @@ const Circle = function(data, field) {
   this.radius = this.width / (this.speed + 1) / 15;
   switch (this.color) {
     case 'red':
-      this.direction = 270;
+      this.direction = 225;
       break;
 
     case 'aqua':
