@@ -232,6 +232,7 @@ Field.prototype = {
       fuchsia,
       lime,
       aqua,
+      black
     } = team;
 
     for(let i = 0; i < circles.length; i++){
@@ -254,6 +255,7 @@ Field.prototype = {
       fuchsia,
       lime,
       aqua,
+      black
     } = score;
     const width = this.canvas2.width;
     const height = this.size.height;
