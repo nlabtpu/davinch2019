@@ -235,13 +235,26 @@ Field.prototype = {
       black
     } = team;
 
-    for(let i = 0; i < this.circles.length; i++){
+    for (let i = 0; i < this.circles.length; i++) {
       switch (this.circles[i].color) {
         case 'red':
           score.red = this.circles[i].goal_count
           break;
+
+        case 'fuchsia':
+          score.fuchsia = this.circles[i].goal_count
+          break;
+
+        case 'lime':
+          score.fuchsia = this.circles[i].goal_count
+          break;
+
+        case 'aqua':
+          score.fuchsia = this.circles[i].goal_count
+          break;
+
         default:
-        break;
+          break;
 
       }
     }
@@ -264,11 +277,11 @@ Field.prototype = {
     context.fillStyle = "red";
     context.fillRect(105, height / 100, red * width * 0.7 / 3, height / 6);
     context.fillStyle = "fuchsia";
-    context.fillRect(105, height / 5, fuchsia * width * 0.7 / 100, height / 6);
+    context.fillRect(105, height / 5, fuchsia * width * 0.7 / 3, height / 6);
     context.fillStyle = "lime";
-    context.fillRect(105, height / 2.5, lime * width * 0.7 / 100, height / 6);
+    context.fillRect(105, height / 2.5, lime * width * 0.7 / 3, height / 6);
     context.fillStyle = "aqua";
-    context.fillRect(105, height / 1.7, aqua * width * 0.7 / 100, height / 6);
+    context.fillRect(105, height / 1.7, aqua * width * 0.7 / 3, height / 6);
     context.fillStyle = "white";
     context.fillRect(105, height / 1.27 - 1, (-22) * width * 0.7 / 100, height / 6 + 2);
     context.fillStyle = "black";
