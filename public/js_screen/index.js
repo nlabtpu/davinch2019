@@ -246,8 +246,6 @@ Field.prototype = {
       }
     }
 
-    this.resetScreen(context, score.black);
-    this.winnerTeam(score);
   },
   drawChart: function(context, score) {
     const {
