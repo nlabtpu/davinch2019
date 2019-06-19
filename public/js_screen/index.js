@@ -246,11 +246,11 @@ Field.prototype = {
           break;
 
         case 'lime':
-          score.fuchsia = this.circles[i].goal_count
+          score.lime = this.circles[i].goal_count
           break;
 
         case 'aqua':
-          score.fuchsia = this.circles[i].goal_count
+          score.aqua = this.circles[i].goal_count
           break;
 
         default:
