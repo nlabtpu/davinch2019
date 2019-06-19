@@ -111,7 +111,7 @@ Field.prototype = {
     this.circles.forEach(circle => circle.draw(this.context));
     this.circles.forEach(circle => circle.effect(this.context));
     //change
-    this.circles.forEach(circle => circle.delete(this.context, this.circles));
+    //this.circles.forEach(circle => circle.delete(this.context, this.circles));
     if (this.goals.length > 0) {
       this.goals.forEach((goal) => goal.setGoal(this.context));
 
