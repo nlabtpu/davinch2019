@@ -150,6 +150,9 @@ Field.prototype = {
     };
     this.displayRank(context, context2, team);
   },
+
+  /*
+
   displayRank: function(context, context2, team) {
     const score = {
       red: 0,
@@ -190,7 +193,7 @@ Field.prototype = {
     context.fillStyle = "white";
     context.fillRect(0, 0, this.canvas2.width, height);
     context.fillStyle = "red";
-    context.fillRect(105, height / 100, 50 * width * 0.7 / 100, height / 6);
+    context.fillRect(105, height / 100, red * width * 0.7 / 100, height / 6);
     context.fillStyle = "fuchsia";
     context.fillRect(105, height / 5, fuchsia * width * 0.7 / 100, height / 6);
     context.fillStyle = "lime";
@@ -211,6 +214,68 @@ Field.prototype = {
     context.fillText("セ　　　と", 110, height / 1.27 + height / 6 * 2 / 5);
     context.fillText("ッ　　　少", 110, height / 1.27 + height / 6 * 3 / 5);
     context.fillText("ト　　　し", 110, height / 1.27 + height / 6 * 4 / 5);
+  },
+
+  */
+
+
+  displayRank: function(context, context2, team, circles) {
+    const score = {
+      red: 0,
+      fuchsia: 0,
+      lime: 0,
+      aqua: 0,
+      black: 0
+    };
+    const {
+      red,
+      fuchsia,
+      lime,
+      aqua,
+    } = team;
+
+    for(let i = 0; i < circles.length; i++){
+      switch (circles[i].color) {
+        case 'red':
+          score.red = circles[i].goal_count
+          break;
+        default:
+        break;
+
+      }
+    }
+
+    this.resetScreen(context, score.black);
+    this.winnerTeam(score);
+  },
+  drawChart: function(context, score) {
+    const {
+      red,
+      fuchsia,
+      lime,
+      aqua,
+    } = score;
+    const width = this.canvas2.width;
+    const height = this.size.height;
+    context.beginPath();
+    context.fillStyle = "white";
+    context.fillRect(0, 0, this.canvas2.width, height);
+    context.fillStyle = "red";
+    context.fillRect(105, height / 100, red * width * 0.7 / 3, height / 6);
+    context.fillStyle = "fuchsia";
+    context.fillRect(105, height / 5, fuchsia * width * 0.7 / 100, height / 6);
+    context.fillStyle = "lime";
+    context.fillRect(105, height / 2.5, lime * width * 0.7 / 100, height / 6);
+    context.fillStyle = "aqua";
+    context.fillRect(105, height / 1.7, aqua * width * 0.7 / 100, height / 6);
+    context.fillStyle = "white";
+    context.fillRect(105, height / 1.27 - 1, (-22) * width * 0.7 / 100, height / 6 + 2);
+    context.fillStyle = "black";
+    context.font = "italic bold 20px sans-serif";
+    context.fillText(red, 60, height / 100 + height / 12);
+    context.fillText(fuchsia, 60, height / 5 + height / 12);
+    context.fillText(lime, 60, height / 2.5 + height / 12);
+    context.fillText(aqua, 60, height / 1.7 + height / 12);
   },
   resetScreen: function(context, black, d) {
     if (black <= 20) {
