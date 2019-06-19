@@ -245,6 +245,7 @@ Field.prototype = {
 
       }
     }
+    this.drawChart(context2, score);
 
   },
   drawChart: function(context, score) {
