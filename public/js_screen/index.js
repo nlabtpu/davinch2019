@@ -52,7 +52,7 @@ Field.prototype = {
   constructor: Field,
   checkNumber: function(color) {
     const count = this.circles.filter(circle => circle.color === color).length;
-    if (count <= 4) return;
+    if (count <= 1) return;
     this.circles.some((circle, i) => {
       if (circle.color === color) {
         circle.shadeDraw(this.context);
