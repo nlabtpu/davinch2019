@@ -219,7 +219,7 @@ Field.prototype = {
   */
 
 
-  displayRank: function(context, context2, team, circles) {
+  displayRank: function(context, context2, team) {
     const score = {
       red: 0,
       fuchsia: 0,
@@ -235,10 +235,10 @@ Field.prototype = {
       black
     } = team;
 
-    for(let i = 0; i < circles.length; i++){
-      switch (circles[i].color) {
+    for(let i = 0; i < this.circles.length; i++){
+      switch (this.circles[i].color) {
         case 'red':
-          score.red = circles[i].goal_count
+          score.red = this.circles[i].goal_count
           break;
         default:
         break;
