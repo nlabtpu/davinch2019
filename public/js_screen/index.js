@@ -190,7 +190,7 @@ Field.prototype = {
     context.fillStyle = "white";
     context.fillRect(0, 0, this.canvas2.width, height);
     context.fillStyle = "red";
-    context.fillRect(105, height / 100, 100 * width * 0.7 / 100, height / 6);
+    context.fillRect(105, height / 100, 50 * width * 0.7 / 100, height / 6);
     context.fillStyle = "fuchsia";
     context.fillRect(105, height / 5, fuchsia * width * 0.7 / 100, height / 6);
     context.fillStyle = "lime";
