@@ -677,7 +677,7 @@ window.onload = function() {
   field.addGoal(new Goal(0.65 * (field.size.width - 100) + 50, 0.25 * (field.size.height - 100) + 50, 3));
 
   document.body.onkeydown = function(e){
-    if(e.keyCode == 13){
+    if(e.keyCode == 13 && location.pathname == '/screen'){
       alert("Enterが押されました。");
     }
   }
