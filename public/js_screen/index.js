@@ -676,7 +676,7 @@ window.onload = function() {
   field.addGoal(new Goal(0.15 * (field.size.width - 100) + 50, 0.76 * (field.size.height - 100) + 50, 2));
   field.addGoal(new Goal(0.65 * (field.size.width - 100) + 50, 0.25 * (field.size.height - 100) + 50, 3));
 
-  document.getElementById("txt1").addEventListener('keydown', function() {
+  document.getElementById("game").addEventListener('keydown', function() {
     console.log(event.keyCode);
   });
 
