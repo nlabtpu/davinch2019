@@ -106,17 +106,21 @@ Field.prototype = {
     this.size.height = this.canvas.height = this.canvas2.height = parent.clientHeight;
   },
   run: function() {
-    this.circles.forEach(circle => circle.shadeDraw(this.context));
-    this.discriminateCommand();
-    this.circles.forEach(circle => circle.draw(this.context));
-    this.circles.forEach(circle => circle.effect(this.context));
-    //change
-    //this.circles.forEach(circle => circle.delete(this.context, this.circles));
-    if (this.goals.length > 0) {
-      this.goals.forEach((goal) => goal.setGoal(this.context));
 
-      this.goalCheck();
-      //timeIvent();
+    if (location.pathname !== '/screen' || swch == 1) {
+
+      this.circles.forEach(circle => circle.shadeDraw(this.context));
+      this.discriminateCommand();
+      this.circles.forEach(circle => circle.draw(this.context));
+      this.circles.forEach(circle => circle.effect(this.context));
+      //change
+      //this.circles.forEach(circle => circle.delete(this.context, this.circles));
+      if (this.goals.length > 0) {
+        this.goals.forEach((goal) => goal.setGoal(this.context));
+
+        this.goalCheck();
+        //timeIvent();
+      }
     }
   },
   getColor: function(context, context2) {
@@ -654,6 +658,7 @@ Circle.prototype = {
 window.onload = function() {
   let url = location.href;
   let index = url.replace(/screen/g, "");
+  let swch = 0;
   console.log(index);
   let canvas = document.getElementById('game');
   let canvas2 = document.getElementById('chart');
@@ -676,9 +681,9 @@ window.onload = function() {
   field.addGoal(new Goal(0.15 * (field.size.width - 100) + 50, 0.76 * (field.size.height - 100) + 50, 2));
   field.addGoal(new Goal(0.65 * (field.size.width - 100) + 50, 0.25 * (field.size.height - 100) + 50, 3));
 
-  document.body.onkeydown = function(e){
-    if(e.keyCode == 13 && location.pathname == '/screen'){
-      alert("Enterが押されました。");
+  document.body.onkeydown = function(e) {
+    if (e.keyCode == 13 && location.pathname == '/screen') {
+      swch = 1;
     }
   }
 
