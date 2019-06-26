@@ -365,6 +365,21 @@ Field.prototype = {
       div.textContent = "";
     }
   }
+
+
+  timeEvent: functiuon(){
+    var current_time = new Date();
+  ms = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
+
+  if (ms == 5) {
+    context.clearRect(0, 0, this.size.width, this.canvas.height);
+    this.circles.length = 0;
+    this.goals.length = 0;
+
+}
+  }
+
+
 };
 const Circle = function(data, field) {
   const props = JSON.parse(data);
@@ -656,6 +671,7 @@ Circle.prototype = {
 };
 
 let swch = 0;
+var start_time;
 
 window.onload = function() {
   let url = location.href;
@@ -685,6 +701,7 @@ window.onload = function() {
   document.body.onkeydown = function(e) {
     if (e.keyCode == 13 && location.pathname == '/screen') {
       swch = 1;
+      start_time = new Date();
     }
   }
 
