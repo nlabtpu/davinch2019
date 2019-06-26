@@ -507,6 +507,11 @@ Circle.prototype = {
             this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
         }
 
+        this.command = (function*() {
+          while (true)
+            for (const i in props.command) yield props.command[i];
+        })();
+
       }
     }
   },
