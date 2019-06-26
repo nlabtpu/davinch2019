@@ -368,7 +368,7 @@ Field.prototype = {
   },
 
 
-  timeEvent: functiuon() {
+  timeEvent: function() {
     var current_time = new Date();
     ms = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
@@ -377,8 +377,8 @@ Field.prototype = {
       this.circles.length = 0;
       this.goals.length = 0;
 
+      }
     }
-  }
 
 
 };
