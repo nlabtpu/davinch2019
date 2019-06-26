@@ -365,19 +365,19 @@ Field.prototype = {
       div.style.padding = "0px";
       div.textContent = "";
     }
-  }
+  },
 
 
-  timeEvent: functiuon(){
+  timeEvent: functiuon() {
     var current_time = new Date();
-  ms = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
+    ms = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
-  if (ms == 5) {
-    context.clearRect(0, 0, this.size.width, this.canvas.height);
-    this.circles.length = 0;
-    this.goals.length = 0;
+    if (ms == 5) {
+      context.clearRect(0, 0, this.size.width, this.canvas.height);
+      this.circles.length = 0;
+      this.goals.length = 0;
 
-}
+    }
   }
 
 
