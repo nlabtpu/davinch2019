@@ -373,7 +373,8 @@ Field.prototype = {
     ms = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
     if (ms == 5) {
-      context.clearRect(0, 0, this.size.width, this.canvas.height);
+      this.context.fillStyle = "black";
+      this.context.clearRect(0, 0, this.size.width, this.canvas.height);
       this.circles.length = 0;
       this.goals.length = 0;
 
