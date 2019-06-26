@@ -655,10 +655,11 @@ Circle.prototype = {
   },
 };
 
+let swch = 0;
+
 window.onload = function() {
   let url = location.href;
   let index = url.replace(/screen/g, "");
-  let swch = 0;
   console.log(index);
   let canvas = document.getElementById('game');
   let canvas2 = document.getElementById('chart');
