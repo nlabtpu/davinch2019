@@ -115,7 +115,8 @@ Field.prototype = {
       this.circles.forEach(circle => circle.effect(this.context));
       //change
       //this.circles.forEach(circle => circle.delete(this.context, this.circles));
-      this.timeEvent();
+      if (location.pathname == '/screen') this.timeEvent();
+
       if (this.goals.length > 0) {
         this.goals.forEach((goal) => goal.setGoal(this.context));
 
@@ -378,8 +379,8 @@ Field.prototype = {
       this.circles.length = 0;
       this.goals.length = 0;
 
-      }
     }
+  }
 
 
 };
@@ -480,8 +481,32 @@ Circle.prototype = {
     while (out) {
       out = circles.some(circle => (circle !== this) && ((circle.radius + this.radius) ** 2 > (circle.locX - this.locX) ** 2 + (circle.locY - this.locY) ** 2));
       if (out) {
-        this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
-        this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
+        switch (this.color) {
+          case 'red':
+            this.locX = 0.999 * (this.width - 100) + 50;
+            this.locY = 0.999 * (this.height - 100) + 50;
+            break;
+
+          case 'aqua':
+            this.locX = 0.001 * (this.width - 100) + 50;
+            this.locY = 0.001 * (this.height - 100) + 50;
+            break;
+
+          case 'lime':
+            this.locX = 0.001 * (this.width - 100) + 50;
+            this.locY = 0.999 * (this.height - 100) + 50;
+            break;
+
+          case 'fuchsia':
+            this.locX = 0.999 * (this.width - 100) + 50;
+            this.locY = 0.001 * (this.height - 100) + 50;
+            break;
+
+          default:
+            this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
+            this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
+        }
+
       }
     }
   },
