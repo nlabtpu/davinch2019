@@ -378,6 +378,7 @@ Field.prototype = {
       this.context.clearRect(0, 0, this.size.width, this.canvas.height);
       this.circles.length = 0;
       this.goals.length = 0;
+      mode = 2;
 
     }
   }
@@ -512,7 +513,7 @@ Circle.prototype = {
     }
   },
 
-  
+
   draw: function(context) {
     for (ix = -1; ix < 2; ix++) {
       for (iy = -1; iy < 2; iy++) {
@@ -616,8 +617,6 @@ Circle.prototype = {
       futureLocY += distanceY;
     }
 
-
-
     let direction = this.direction;
     futureLocX %= this.width;
     futureLocY %= this.height;
@@ -700,7 +699,8 @@ Circle.prototype = {
 };
 
 let swch = 0;
-var start_time;
+let start_time;
+let mode = 1;
 
 window.onload = function() {
   let url = location.href;
