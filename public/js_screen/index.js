@@ -474,6 +474,8 @@ const Circle = function(data, field) {
 
   //this.checkCircle(field.circles);
 };
+
+/*
 Circle.prototype = {
   hitCommand: undefined,
   checkCircle: function(circles) {
@@ -509,7 +511,8 @@ Circle.prototype = {
       }
     }
   },
-  /*
+
+  
   draw: function(context) {
     for (ix = -1; ix < 2; ix++) {
       for (iy = -1; iy < 2; iy++) {
