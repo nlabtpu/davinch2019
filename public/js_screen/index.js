@@ -472,7 +472,7 @@ const Circle = function(data, field) {
   //change
   this.deleteFlag = 0;
 
-  this.checkCircle(field.circles);
+  //this.checkCircle(field.circles);
 };
 Circle.prototype = {
   hitCommand: undefined,
@@ -506,12 +506,6 @@ Circle.prototype = {
             this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
             this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
         }
-
-        this.command = (function*() {
-          while (true)
-            for (const i in props.command) yield props.command[i];
-        })();
-
       }
     }
   },
