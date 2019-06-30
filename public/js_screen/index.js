@@ -376,7 +376,7 @@ Field.prototype = {
     if (ms == 5) {
       this.context.fillStyle = "black";
       this.context.clearRect(0, 0, this.size.width, this.canvas.height);
-      this.circles.length = 0;
+      //this.circles.length = 0;
       this.goals.length = 0;
       mode = 2;
 
@@ -393,9 +393,18 @@ const Circle = function(data, field) {
     while (true)
       for (const i in props.command) yield props.command[i];
   })();
+
+  this.hitEvent = (function*() {
+    while (true)
+      for (const i in props.hitEvent) yield props.hitEvent[i];
+  })();
+
+/*
   this.hitEvent = function*() {
     for (const hit of props.hitEvent) yield hit;
   };
+*/
+
   this.command.go = 10;
   this.id = props.id;
   let speed = 1;
@@ -641,10 +650,10 @@ Circle.prototype = {
   normalizeDirection: direction => (direction + 360) % 360,
   discriminateCommand: function(circles) {
     let order;
-    if (this.hitCommand !== undefined) {
-      order = this.hitCommand.next().value;
-    } else {
+    if (mode == 1) {
       order = this.command.next().value;
+    } else if (mode == 2){
+      order = this.hitCommand.next().value;
     }
     if (typeof order === "undefined") {
       order = this.command.next().value;
