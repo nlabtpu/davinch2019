@@ -476,9 +476,11 @@ const Circle = function(data, field) {
   //this.checkCircle(field.circles);
 };
 
-/*
+
 Circle.prototype = {
   hitCommand: undefined,
+
+  /*
   checkCircle: function(circles) {
     let out = true;
     while (out) {
@@ -620,7 +622,7 @@ Circle.prototype = {
     let direction = this.direction;
     futureLocX %= this.width;
     futureLocY %= this.height;
-    this.check(circles, futureLocX, futureLocY);
+    //this.check(circles, futureLocX, futureLocY);
     if (this.flag === 0) {
       this.direction = this.normalizeDirection(direction);
       this.locX += distanceX;
