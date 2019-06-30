@@ -653,7 +653,7 @@ Circle.prototype = {
     if (mode == 1) {
       order = this.command.next().value;
     } else if (mode == 2){
-      order = this.hitCommand.next().value;
+      order = this.hitEvent.next().value;
     }
     if (typeof order === "undefined") {
       order = this.command.next().value;
