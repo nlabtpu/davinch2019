@@ -85,7 +85,7 @@ Field.prototype = {
       }
     }
   },
-  
+
   /*************************
   ゴールチェック
   **************************/
@@ -395,7 +395,7 @@ Field.prototype = {
       mode = 2;
 
       for (let i = 0; i < this.circles.length; i++) {
-        switch (this.color) {
+        switch (this.circles[i].color) {
           case 'red':
             this.locX = 0.999 * (this.width - 100) + 50;
             this.locY = 0.999 * (this.height - 100) + 50;
