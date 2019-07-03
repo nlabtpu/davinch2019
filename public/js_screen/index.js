@@ -290,8 +290,8 @@ Field.prototype = {
     const width = this.canvas2.width;
     const height = this.size.height;
     let rate;
-    if(mode == 1) rate = 3;
-    else if(mode == 2) rate = 100;
+    if (mode == 1) rate = 3;
+    else if (mode == 2) rate = 100;
     context.beginPath();
     context.fillStyle = "white";
     context.fillRect(0, 0, this.canvas2.width, height);
@@ -395,6 +395,39 @@ Field.prototype = {
       this.goals.length = 0;
       mode = 2;
 
+      for (let i = 0; i < this.circles.length; i++) {
+        switch (this.color) {
+          case 'red':
+            this.locX = 0.999 * (this.width - 100) + 50;
+            this.locY = 0.999 * (this.height - 100) + 50;
+            this.direction = 225;
+            break;
+
+          case 'aqua':
+            this.locX = 0.001 * (this.width - 100) + 50;
+            this.locY = 0.001 * (this.height - 100) + 50;
+            this.direction = 45;
+            break;
+
+          case 'lime':
+            this.locX = 0.001 * (this.width - 100) + 50;
+            this.locY = 0.999 * (this.height - 100) + 50;
+            this.direction = 315;
+            break;
+
+          case 'fuchsia':
+            this.locX = 0.999 * (this.width - 100) + 50;
+            this.locY = 0.001 * (this.height - 100) + 50;
+            this.direction = 135;
+            break;
+
+          default:
+            this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
+            this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
+            this.direction = Math.floor(Math.random() * 360);
+            break;
+        }
+      }
     }
   }
 
@@ -447,49 +480,34 @@ const Circle = function(data, field) {
     case 'red':
       this.locX = 0.999 * (this.width - 100) + 50;
       this.locY = 0.999 * (this.height - 100) + 50;
+      this.direction = 225;
       break;
 
     case 'aqua':
       this.locX = 0.001 * (this.width - 100) + 50;
       this.locY = 0.001 * (this.height - 100) + 50;
+      this.direction = 45;
       break;
 
     case 'lime':
       this.locX = 0.001 * (this.width - 100) + 50;
       this.locY = 0.999 * (this.height - 100) + 50;
+      this.direction = 315;
       break;
 
     case 'fuchsia':
       this.locX = 0.999 * (this.width - 100) + 50;
       this.locY = 0.001 * (this.height - 100) + 50;
+      this.direction = 135;
       break;
 
     default:
       this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
       this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
+      this.direction = Math.floor(Math.random() * 360);
+      break;
   }
   this.radius = this.width / (this.speed + 1) / 15;
-  switch (this.color) {
-    case 'red':
-      this.direction = 225;
-      break;
-
-    case 'aqua':
-      this.direction = 45;
-      break;
-
-    case 'lime':
-      this.direction = 315;
-      break;
-
-    case 'fuchsia':
-      this.direction = 135;
-      break;
-
-    default:
-      this.direction = Math.floor(Math.random() * 360);
-  }
-
   //this.direction = Math.floor(Math.random() * 360);
 
   this.flag = 0;
