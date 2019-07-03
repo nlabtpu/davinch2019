@@ -241,31 +241,43 @@ Field.prototype = {
       black
     } = team;
 
-    for (let i = 0; i < this.circles.length; i++) {
-      switch (this.circles[i].color) {
-        case 'red':
-          score.red = this.circles[i].goal_count
-          break;
+    if (mode == 1) {
+      for (let i = 0; i < this.circles.length; i++) {
+        switch (this.circles[i].color) {
+          case 'red':
+            score.red = this.circles[i].goal_count
+            break;
 
-        case 'fuchsia':
-          score.fuchsia = this.circles[i].goal_count
-          break;
+          case 'fuchsia':
+            score.fuchsia = this.circles[i].goal_count
+            break;
 
-        case 'lime':
-          score.lime = this.circles[i].goal_count
-          break;
+          case 'lime':
+            score.lime = this.circles[i].goal_count
+            break;
 
-        case 'aqua':
-          score.aqua = this.circles[i].goal_count
-          break;
+          case 'aqua':
+            score.aqua = this.circles[i].goal_count
+            break;
 
-        default:
-          break;
+          default:
+            break;
 
+        }
       }
+      this.drawChart(context2, score);
+    } else if (mode == 2) {
+      let sumScore = red + fuchsia + lime + aqua + black;
+      score.red = Math.ceil(red / sumScore * 100);
+      score.fuchsia = Math.ceil(fuchsia / sumScore * 100);
+      score.lime = Math.ceil(lime / sumScore * 100);
+      score.aqua = Math.ceil(aqua / sumScore * 100);
+      let total = score.red + score.fuchsia + score.lime + score.aqua;
+      score.black = 100 - total;
+      this.drawChart(context2, score);
+      this.resetScreen(context, score.black);
+      this.winnerTeam(score);
     }
-    this.drawChart(context2, score);
-
   },
   drawChart: function(context, score) {
     const {
@@ -277,6 +289,8 @@ Field.prototype = {
     } = score;
     const width = this.canvas2.width;
     const height = this.size.height;
+    if(mode == 1) let rate = 3;
+    else if(mode == 2) let rate =100; 
     context.beginPath();
     context.fillStyle = "white";
     context.fillRect(0, 0, this.canvas2.width, height);
@@ -399,11 +413,11 @@ const Circle = function(data, field) {
       for (const i in props.hitEvent) yield props.hitEvent[i];
   })();
 
-/*
-  this.hitEvent = function*() {
-    for (const hit of props.hitEvent) yield hit;
-  };
-*/
+  /*
+    this.hitEvent = function*() {
+      for (const hit of props.hitEvent) yield hit;
+    };
+  */
 
   this.command.go = 10;
   this.id = props.id;
@@ -652,7 +666,7 @@ Circle.prototype = {
     let order;
     if (mode == 1) {
       order = this.command.next().value;
-    } else if (mode == 2){
+    } else if (mode == 2) {
       order = this.hitEvent.next().value;
     }
     if (typeof order === "undefined") {
