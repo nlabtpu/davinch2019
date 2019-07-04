@@ -397,33 +397,33 @@ Field.prototype = {
       for (let i = 0; i < this.circles.length; i++) {
         switch (this.circles[i].color) {
           case 'red':
-            this.locX = 0.999 * (this.width - 100) + 50;
-            this.locY = 0.999 * (this.height - 100) + 50;
-            this.direction = 225;
+            this.circles[i].locX = 0.999 * (this.width - 100) + 50;
+            this.circles[i].locY = 0.999 * (this.height - 100) + 50;
+            this.circles[i].direction = 225;
             break;
 
           case 'aqua':
-            this.locX = 0.001 * (this.width - 100) + 50;
-            this.locY = 0.001 * (this.height - 100) + 50;
-            this.direction = 45;
+            this.circles[i].locX = 0.001 * (this.width - 100) + 50;
+            this.circles[i].locY = 0.001 * (this.height - 100) + 50;
+            this.circles[i].direction = 45;
             break;
 
           case 'lime':
-            this.locX = 0.001 * (this.width - 100) + 50;
-            this.locY = 0.999 * (this.height - 100) + 50;
-            this.direction = 315;
+            this.circles[i].locX = 0.001 * (this.width - 100) + 50;
+            this.circles[i].locY = 0.999 * (this.height - 100) + 50;
+            this.circles[i].direction = 315;
             break;
 
           case 'fuchsia':
-            this.locX = 0.999 * (this.width - 100) + 50;
-            this.locY = 0.001 * (this.height - 100) + 50;
-            this.direction = 135;
+            this.circles[i].locX = 0.999 * (this.width - 100) + 50;
+            this.circles[i].locY = 0.001 * (this.height - 100) + 50;
+            this.circles[i].direction = 135;
             break;
 
           default:
-            this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
-            this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
-            this.direction = Math.floor(Math.random() * 360);
+            this.circles[i].locX = Math.floor(Math.random() * (this.width - 100) + 50);
+            this.circles[i].locY = Math.floor(Math.random() * (this.height - 100) + 50);
+            this.circles[i].direction = Math.floor(Math.random() * 360);
             break;
         }
       }
