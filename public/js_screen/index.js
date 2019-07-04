@@ -397,8 +397,8 @@ Field.prototype = {
       for (let i = 0; i < this.circles.length; i++) {
         switch (this.circles[i].color) {
           case 'red':
-            this.circles[i].locX = 0.999 * (this.width - 100) + 50;
-            this.circles[i].locY = 0.999 * (this.height - 100) + 50;
+            this.circles[i].locX = 0.999 * (this.size.width - 100) + 50;
+            this.circles[i].locY = 0.999 * (this.size.height - 100) + 50;
             this.circles[i].direction = 225;
             break;
 
