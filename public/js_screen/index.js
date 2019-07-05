@@ -557,7 +557,7 @@ Circle.prototype = {
   roll: function(direction) {
     this.direction = this.normalizeDirection(direction + this.direction);
   },
-  go: function(circles, distanceX, distanceY) {
+  go: function(distanceX, distanceY) {
     let direction = this.direction;
     //this.check(circles, futureLocX, futureLocY);
     if (this.flag === 0) {
@@ -610,7 +610,7 @@ Circle.prototype = {
       distanceY = distance * Math.sin(radian);
       futureLocY += distanceY;
     }
-    if(command_count % 6 == 0) this.go(field.circles, distanceX, distanceY);
+    if(command_count % 6 == 0) this.go(distanceX, distanceY);
   },
 
   check: function(circles, futureLocX, futureLocY) {
