@@ -68,6 +68,8 @@ Field.prototype = {
         if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
           (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
           this.circles[i].goal_count++;
+          time = new Date();
+          alert(time,getTime() - start_time,getTime() );
           //alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
         }
         if (this.circles[i].goal_count == this.goals.length) {
@@ -96,7 +98,7 @@ Field.prototype = {
   },
   run: function() {
 
-    if (location.pathname !== '/screen' || swch == 1) {
+    if (/*location.pathname !== '/screen' || */swch == 1) {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
       if(command_count % 30 == 0)this.discriminateCommand();
@@ -609,7 +611,7 @@ window.onload = function() {
   field.addGoal(new Goal(0.65 * (field.size.width - 100) + 50, 0.25 * (field.size.height - 100) + 50, 3));
 
   document.body.onkeydown = function(e) {
-    if (e.keyCode == 13 && location.pathname == '/screen') {
+    if (e.keyCode == 13 /*&& location.pathname == '/screen'*/) {
       swch = 1;
       start_time = new Date();
     }
