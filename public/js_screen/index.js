@@ -99,7 +99,7 @@ Field.prototype = {
     if (location.pathname !== '/screen' || swch == 1) {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
-      if(command_count % 12 == 0)this.discriminateCommand();
+      if(command_count % 30 == 0)this.discriminateCommand();
       this.circles.forEach(circle => circle.go(circle.speed, this.circles));
       this.circles.forEach(circle => circle.draw(this.context));
       this.circles.forEach(circle => circle.effect(this.context));
