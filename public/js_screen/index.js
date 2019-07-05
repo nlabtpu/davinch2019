@@ -610,7 +610,7 @@ Circle.prototype = {
       distanceY = distance * Math.sin(radian);
       futureLocY += distanceY;
     }
-    if(command_count % 6 == 0) this.go(filed.circles, distanceX, distanceY);
+    if(command_count % 6 == 0) this.go(field.circles, distanceX, distanceY);
   },
 
   check: function(circles, futureLocX, futureLocY) {
