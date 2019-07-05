@@ -397,6 +397,8 @@ const Circle = function(data, field) {
     }
   })(this.speed);
 
+  if(location.pathname == '/screen') this.speed *= 1.147
+
   /*
   this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
   this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
