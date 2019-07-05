@@ -110,6 +110,7 @@ Field.prototype = {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
       this.discriminateCommand();
+      this.circles.forEach(circle => circle.update(this.speed));
       this.circles.forEach(circle => circle.draw(this.context));
       this.circles.forEach(circle => circle.effect(this.context));
       //change
@@ -520,83 +521,6 @@ const Circle = function(data, field) {
 
 Circle.prototype = {
   hitCommand: undefined,
-
-  /*
-  checkCircle: function(circles) {
-    let out = true;
-    while (out) {
-      out = circles.some(circle => (circle !== this) && ((circle.radius + this.radius) ** 2 > (circle.locX - this.locX) ** 2 + (circle.locY - this.locY) ** 2));
-      if (out) {
-        switch (this.color) {
-          case 'red':
-            this.locX = 0.999 * (this.width - 100) + 50;
-            this.locY = 0.999 * (this.height - 100) + 50;
-            break;
-
-          case 'aqua':
-            this.locX = 0.001 * (this.width - 100) + 50;
-            this.locY = 0.001 * (this.height - 100) + 50;
-            break;
-
-          case 'lime':
-            this.locX = 0.001 * (this.width - 100) + 50;
-            this.locY = 0.999 * (this.height - 100) + 50;
-            break;
-
-          case 'fuchsia':
-            this.locX = 0.999 * (this.width - 100) + 50;
-            this.locY = 0.001 * (this.height - 100) + 50;
-            break;
-
-          default:
-            this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
-            this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
-        }
-      }
-    }
-  },
-
-
-  draw: function(context) {
-    for (ix = -1; ix < 2; ix++) {
-      for (iy = -1; iy < 2; iy++) {
-        context.beginPath();
-        context.lineWidth = 2;
-        context.strokeStyle = 'white';
-        context.arc(this.locX + ix * this.width, this.locY + iy * this.height, this.radius, 0, Math.PI * 2.0, true);
-        context.stroke();
-        context.lineWidth = 1;
-        context.fillStyle = this.color;
-        context.arc(this.locX + ix * this.width, this.locY + iy * this.height, this.radius, 0, Math.PI * 2.0, true);
-        context.fill();
-        let direction = this.direction * Math.PI / 180;
-        let textLocX = this.locX + ix * this.width - this.radius * 1 / 3 - 20 / this.radius;
-        let textLocY = this.locY + iy * this.height - this.radius * 1 / 50 + 20 / this.radius;
-        context.fillStyle = 'black';
-        context.font = "bold 8px Arial";
-        context.fillText(this.id, textLocX + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + this.radius / 6 * (Math.sin(direction) + 1 / 3));
-        context.fillStyle = 'white';
-        context.fillText(this.id, textLocX + 1 + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + 1 + this.radius / 6 * (Math.sin(direction) + 1 / 3));
-      }
-    }
-  },
-  shadeDraw: function(context) {
-    for (let ix = -1; ix < 2; ix++) {
-      for (let iy = -1; iy < 2; iy++) {
-        context.beginPath();
-        context.lineWidth = 3;
-        context.strokeStyle = this.color;
-        context.arc(this.locX + ix * this.width, this.locY + iy * this.height, this.radius, 0, Math.PI * 2.0, true);
-        context.stroke();
-        context.lineWidth = 1;
-        context.fillStyle = this.color;
-        context.arc(this.locX + ix * this.width, this.locY + iy * this.height, this.radius, 0, Math.PI * 2.0, true);
-        context.fill();
-      }
-    }
-  },
-*/
-
   draw: function(context) {
     context.beginPath();
     context.lineWidth = 2;
@@ -633,33 +557,7 @@ Circle.prototype = {
   roll: function(direction) {
     this.direction = this.normalizeDirection(direction + this.direction);
   },
-  go: function(distance, circles) {
-    let radian = this.direction * Math.PI / 180;
-    let distanceX = distance * Math.cos(radian);
-    let distanceY = distance * Math.sin(radian);
-    let futureLocX = this.locX + distanceX;
-    let futureLocY = this.locY + distanceY;
-
-
-
-    // 左右衝突確認
-    if (futureLocX < this.radius || futureLocX > this.width - this.radius) {
-      futureLocX -= distanceX; // 進んだ分を戻す
-      this.direction = 180 - this.direction; // 角度変更
-      radian = this.direction * Math.PI / 180; // ラジアンへ変換
-      distanceX = distance * Math.cos(radian); // 進む距離の設定
-      futureLocX += distanceX; // 進む
-    }
-
-    // 上下衝突判定
-    if (futureLocY < this.radius || futureLocY > this.height - this.radius) {
-      futureLocY -= distanceY;
-      this.direction = 360 - this.direction;
-      radian = this.direction * Math.PI / 180;
-      distanceY = distance * Math.sin(radian);
-      futureLocY += distanceY;
-    }
-
+  go: function(circles, distanceX, distanceY) {
     let direction = this.direction;
     //this.check(circles, futureLocX, futureLocY);
     if (this.flag === 0) {
@@ -684,9 +582,37 @@ Circle.prototype = {
       this.roll(order.roll);
     }
     if (typeof order.go !== "undefined") {
-      this.go(this.speed, circles);
+      this.roll(0);
     }
   },
+
+  update: function(distance){
+    let radian = this.direction * Math.PI / 180;
+    let distanceX = distance * Math.cos(radian);
+    let distanceY = distance * Math.sin(radian);
+    let futureLocX = this.locX + distanceX;
+    let futureLocY = this.locY + distanceY;
+
+    // 左右衝突確認
+    if (futureLocX < this.radius || futureLocX > this.width - this.radius) {
+      futureLocX -= distanceX; // 進んだ分を戻す
+      this.direction = 180 - this.direction; // 角度変更
+      radian = this.direction * Math.PI / 180; // ラジアンへ変換
+      distanceX = distance * Math.cos(radian); // 進む距離の設定
+      futureLocX += distanceX; // 進む
+    }
+
+    // 上下衝突判定
+    if (futureLocY < this.radius || futureLocY > this.height - this.radius) {
+      futureLocY -= distanceY;
+      this.direction = 360 - this.direction;
+      radian = this.direction * Math.PI / 180;
+      distanceY = distance * Math.sin(radian);
+      futureLocY += distanceY;
+    }
+    if(command_count % 6 == 0) this.go(circles, distanceX, distanceY);
+  },
+
   check: function(circles, futureLocX, futureLocY) {
     const self = this;
     //for (let ix = -1; ix < 2; ix++) {
@@ -734,6 +660,7 @@ Circle.prototype = {
 let swch = 0;
 let start_time;
 let mode = 1;
+let command_count = 0;
 
 window.onload = function() {
   let url = location.href;
