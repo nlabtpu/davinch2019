@@ -435,7 +435,7 @@ const Circle = function(data, field) {
       this.direction = Math.floor(Math.random() * 360);
       break;
   }
-  this.radius = this.width / (this.speed + 1) / 15;
+  this.radius = field.size.width / (this.speed + 1) / 15;
   //this.direction = Math.floor(Math.random() * 360);
 
   this.flag = 0;
