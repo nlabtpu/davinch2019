@@ -95,7 +95,6 @@ Field.prototype = {
     if (command_count % 6 == 0) {
       this.circles.forEach(circle => circle.discriminateCommand(this.circles));
     }
-    command_count ++;
   },
   resize: function(parent, d) {
     this.canvas.width = Math.floor(parent.clientWidth * 0.7);
@@ -127,6 +126,7 @@ Field.prototype = {
         //timeIvent();
       }
     }
+    command_count ++;
   },
   getColor: function(context, context2) {
     this.imageData = context.getImageData(0, 0, this.size.width, this.size.height);
