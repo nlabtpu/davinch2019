@@ -2,7 +2,7 @@
 //document.onkeydown = GetKeyCode;
 //document.onkeyup = OffKeyCode;
 document.onkeyup = keyup;
-let KeyState = new Array();
+//let KeyState = new Array();
 let c = 0;  //counter
 let canvas;
 let canAdd = true;
@@ -47,13 +47,11 @@ function OffKeyCode(event){
   }
 }
 
-
 function input(){
   if(KeyState[0] == true && KeyState[1] == true){
     console.log("true");
   }
 }
-
 */
 
 function getButton(discriminate) {
@@ -92,74 +90,84 @@ function getButton(discriminate) {
 function keyup(event){
   if (!url.match("color")) alert("色を指定してください");
 
-  let command;
-  switch(event.key){
-    case '1':
-      command = {roll: -15};
-      break;
-    case '2':
-      command = {roll: -90};
-      break;
-    case '3':
-      command = {roll: -135};
-      break;
-    case '4':
-      command = {go: 15};
-      break;
-    case '5':
-      command = {roll: 15};
-      break;
-    case '6':
-      command = {roll: 90};
-      break;
-    case '7':
-      command = {roll: 135};
-      break;
-    case '8':
-      command = {roll: 180};
-      break;
-    case 'r':
-      name.value = '';
-      prop.id = "";
-      prop.command = [];
-      prop.hitEvent = [];
-      addCommand();
-      addEvent();
-      break;
-    case 's':
-      if (!canAdd) return;
-      canAdd = false;
-      setTimeout(function () {
-        return canAdd = true;
-      }, 5000);
-      send('message');
-      break;
-    case 't': //demo
-      send('demo' + socket.id);
-      break;
-    case 'c':
-      c++;
-      break;
-  }
+  event_block:{
+    let command;
+    switch(event.key){
+      case '1':
+        command = {roll: -15};
+        break;
+      case '2':
+        command = {roll: -90};
+        break;
+      case '3':
+        command = {roll: -135};
+        break;
+      case '4':
+        command = {go: 15};
+        break;
+      case '5':
+        command = {roll: 15};
+        break;
+      case '6':
+        command = {roll: 90};
+        break;
+      case '7':
+        command = {roll: 135};
+        break;
+      case '8':
+        command = {roll: 180};
+        break;
+      case 'r':
+        name.value = '';
+        prop.id = "";
+        prop.command = [];
+        prop.hitEvent = [];
+        addCommand();
+        addEvent();
+        break;
+      case 's':
+        if(window.confirm("アップロードしてもよろしいですか？")){
+          alert("アップロードしました。");
+          if (!canAdd) return;
+          canAdd = false;
+          setTimeout(function () {
+            return canAdd = true;
+          }, 5000);
+          send('message');
+        }
+        else alert("アップロードを止めました");
+        break;
+      case 't': //demo
+        send('demo' + socket.id);
+        break;
+      case 'c':
+        c++;
+        break;
+      case 'd':
+        break;
+      default:
+        break event_block;
+    }
 
-  if(event.key != 'c' && c%2 == 0){
-    if(event.key == 'd'){
-      prop.command.pop();
-      addCommand();
+    if(event.key != 'c' && c%2 == 0){
+      if(event.key == 'd'){
+        prop.command.pop();
+        addCommand();
+      }
+      else if(event.key != ('r' || 's' || 't')){
+        prop.command.push(command);
+        addCommand();
+      }
     }
-    else if(event.key != ('r' || 's' || 't')){
-      prop.command.push(command);
-      addCommand();
-    }
-  }
-  else if(event.key != 'c'){
-    if(event.key == 'd'){
-      prop.hitEvent.pop();
-      addEvent();
-    }
-    else if(event.key != ('r' || 's' || 't')){
-      prop.hitEvent.push(command);
-      addEvent();
+    else if(event.key != 'c'){
+      if(event.key == 'd'){
+        prop.hitEvent.pop();
+        addEvent();
+      }
+      else if(event.key != ('r' || 's' || 't')){
+        prop.hitEvent.push(command);
+        addEvent();
+      }
     }
   }
 }
