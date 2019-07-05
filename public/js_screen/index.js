@@ -100,6 +100,7 @@ Field.prototype = {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
       this.discriminateCommand();
+      this.circles.forEach(circle => circle.go(circle.speed, this.circles));
       this.circles.forEach(circle => circle.draw(this.context));
       this.circles.forEach(circle => circle.effect(this.context));
       //change
@@ -529,7 +530,7 @@ Circle.prototype = {
       this.roll(order.roll);
     }
     if (typeof order.go !== "undefined") {
-      this.go(this.speed, circles);
+      this.roll(0);
     }
   },
   check: function(circles, futureLocX, futureLocY) {
