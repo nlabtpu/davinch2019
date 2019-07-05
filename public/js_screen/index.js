@@ -661,22 +661,11 @@ Circle.prototype = {
     }
 
     let direction = this.direction;
-    futureLocX %= this.width;
-    futureLocY %= this.height;
     //this.check(circles, futureLocX, futureLocY);
     if (this.flag === 0) {
       this.direction = this.normalizeDirection(direction);
       this.locX += distanceX;
       this.locY += distanceY;
-      /*this.locX %= this.width;
-      this.locY %= this.height;
-      if (this.locX < -this.radius) {
-        this.locX += this.width;
-      }
-      if (this.locY < -this.radius) {
-        this.locY += this.height;
-      }
-      */
     }
     this.flag = 0;
   },
