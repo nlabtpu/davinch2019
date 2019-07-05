@@ -385,7 +385,7 @@ const Circle = function(data, field) {
   this.speed = (speed => {
     switch (this.id) {
       case "・ω・":
-        return field.canvas.width/300;
+        return field.size.width/300;
       case "˘ω˘":
         return 2;
       case "><":
