@@ -92,7 +92,10 @@ Field.prototype = {
 
 
   discriminateCommand: function() {
-    this.circles.forEach(circle => circle.discriminateCommand(this.circles));
+    if (command_count % 6 == 0) {
+      this.circles.forEach(circle => circle.discriminateCommand(this.circles));
+    }
+    command_count ++;
   },
   resize: function(parent, d) {
     this.canvas.width = Math.floor(parent.clientWidth * 0.7);
@@ -586,7 +589,7 @@ Circle.prototype = {
     }
   },
 
-  update: function(distance){
+  update: function(distance) {
     let radian = this.direction * Math.PI / 180;
     let distanceX = distance * Math.cos(radian);
     let distanceY = distance * Math.sin(radian);
@@ -610,7 +613,7 @@ Circle.prototype = {
       distanceY = distance * Math.sin(radian);
       futureLocY += distanceY;
     }
-    if(command_count % 6 == 0) this.go(distanceX, distanceY);
+    this.go(distanceX, distanceY);
   },
 
   check: function(circles, futureLocX, futureLocY) {
