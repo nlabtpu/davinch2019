@@ -99,7 +99,7 @@ Field.prototype = {
     if (location.pathname !== '/screen' || swch == 1) {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
-      this.discriminateCommand();
+      if(command_count % 6 == 0)this.discriminateCommand();
       this.circles.forEach(circle => circle.go(circle.speed, this.circles));
       this.circles.forEach(circle => circle.draw(this.context));
       this.circles.forEach(circle => circle.effect(this.context));
@@ -114,6 +114,7 @@ Field.prototype = {
         //timeIvent();
       }
     }
+    command_count++;
   },
   getColor: function(context, context2) {
     this.imageData = context.getImageData(0, 0, this.size.width, this.size.height);
@@ -580,6 +581,7 @@ Circle.prototype = {
 let swch = 0;
 let start_time;
 let mode = 1;
+let command_count = 0;
 
 window.onload = function() {
   let url = location.href;
