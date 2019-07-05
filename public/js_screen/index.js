@@ -314,7 +314,7 @@ Field.prototype = {
     var current_time = new Date();
     second = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
-    if (second == 30 ) {
+    if (second == -30 ) {
       this.context.fillStyle = "black";
       this.context.clearRect(0, 0, this.size.width, this.canvas.height);
       //this.circles.length = 0;
@@ -387,7 +387,7 @@ const Circle = function(data, field) {
   this.speed = (speed => {
     switch (this.id) {
       case "・ω・":
-        return field.size.width/300;
+        return field.canvas.width/300;
       case "˘ω˘":
         return 2;
       case "><":
@@ -435,7 +435,7 @@ const Circle = function(data, field) {
       this.direction = Math.floor(Math.random() * 360);
       break;
   }
-  this.radius = field.size.width / (this.speed + 1) / 15;
+  this.radius = this.width / (this.speed + 1) / 15;
   //this.direction = Math.floor(Math.random() * 360);
 
   this.flag = 0;
