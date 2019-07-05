@@ -99,7 +99,7 @@ Field.prototype = {
     if (location.pathname !== '/screen' || swch == 1) {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
-      if(command_count % 6 == 0)this.discriminateCommand();
+      if(command_count % 12 == 0)this.discriminateCommand();
       this.circles.forEach(circle => circle.go(circle.speed, this.circles));
       this.circles.forEach(circle => circle.draw(this.context));
       this.circles.forEach(circle => circle.effect(this.context));
@@ -480,7 +480,7 @@ Circle.prototype = {
 
 
   roll: function(direction) {
-    this.direction = this.normalizeDirection(direction + this.direction);
+    this.direction = this.normalizeDirection(direction);
   },
   go: function(distance, circles) {
     let radian = this.direction * Math.PI / 180;
