@@ -480,7 +480,7 @@ Circle.prototype = {
 
 
   roll: function(direction) {
-    this.direction = this.normalizeDirection(direction);
+    this.direction = this.normalizeDirection(direction + this.direction);
   },
   go: function(distance, circles) {
     let radian = this.direction * Math.PI / 180;
