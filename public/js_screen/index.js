@@ -62,18 +62,13 @@ Field.prototype = {
     });
   },
 
-
-  /*************************
-  ゴールチェック
-  **************************/
-
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
       if (this.circles[i].goal_count < this.goals.length) {
         if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
           (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
           this.circles[i].goal_count++;
-          alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
+          //alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
         }
         if (this.circles[i].goal_count == this.goals.length) {
           this.circles[i].goal_count++;
@@ -86,25 +81,18 @@ Field.prototype = {
     }
   },
 
-  /*************************
-  ゴールチェック
-  **************************/
-
-
   discriminateCommand: function() {
-    if (command_count % 6 == 0) {
-      this.circles.forEach(circle => circle.discriminateCommand(this.circles));
-    }
+    this.circles.forEach(circle => circle.discriminateCommand(this.circles));
   },
   resize: function(parent, d) {
-    this.canvas.width = Math.floor(parent.clientWidth * 0.7);
-    this.canvas2.width = Math.floor(parent.clientWidth * 0.3);
+    this.canvas.width = Math.floor(parent.clientWidth * 0.5);
+    this.canvas2.width = Math.floor(parent.clientWidth * 0.5);
     if (!!d) {
       this.canvas.width = parent.clientWidth;
       this.canvas2.width = 0;
     }
     this.size.width = this.canvas.width;
-    this.size.height = this.canvas.height = this.canvas2.height = parent.clientHeight;
+    this.size.height = this.canvas.height = this.canvas2.height = this.canvas.width; //parent.clientHeight;
   },
   run: function() {
 
@@ -112,7 +100,6 @@ Field.prototype = {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
       this.discriminateCommand();
-      this.circles.forEach(circle => circle.update(this.speed));
       this.circles.forEach(circle => circle.draw(this.context));
       this.circles.forEach(circle => circle.effect(this.context));
       //change
@@ -126,7 +113,6 @@ Field.prototype = {
         //timeIvent();
       }
     }
-    command_count ++;
   },
   getColor: function(context, context2) {
     this.imageData = context.getImageData(0, 0, this.size.width, this.size.height);
@@ -159,6 +145,7 @@ Field.prototype = {
     };
     this.displayRank(context, context2, team);
   },
+
 
   displayRank: function(context, context2, team) {
     const score = {
@@ -323,7 +310,7 @@ Field.prototype = {
     var current_time = new Date();
     ms = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
-    if (ms == 5) {
+    if (ms == 10) {
       this.context.fillStyle = "black";
       this.context.clearRect(0, 0, this.size.width, this.canvas.height);
       //this.circles.length = 0;
@@ -396,7 +383,7 @@ const Circle = function(data, field) {
   this.speed = (speed => {
     switch (this.id) {
       case "・ω・":
-        return 1;
+        return this.width/300;
       case "˘ω˘":
         return 2;
       case "><":
@@ -456,6 +443,7 @@ const Circle = function(data, field) {
 
 Circle.prototype = {
   hitCommand: undefined,
+
   draw: function(context) {
     context.beginPath();
     context.lineWidth = 2;
@@ -492,37 +480,7 @@ Circle.prototype = {
   roll: function(direction) {
     this.direction = this.normalizeDirection(direction + this.direction);
   },
-  go: function(distanceX, distanceY) {
-    let direction = this.direction;
-    //this.check(circles, futureLocX, futureLocY);
-    if (this.flag === 0) {
-      this.direction = this.normalizeDirection(direction);
-      this.locX += distanceX;
-      this.locY += distanceY;
-      alert("go");
-    }
-    this.flag = 0;
-  },
-  normalizeDirection: direction => (direction + 360) % 360,
-  discriminateCommand: function(circles) {
-    let order;
-    if (mode == 1) {
-      order = this.command.next().value;
-    } else if (mode == 2) {
-      order = this.hitEvent.next().value;
-    }
-    if (typeof order === "undefined") {
-      order = this.command.next().value;
-    }
-    if (typeof order.roll !== "undefined") {
-      this.roll(order.roll);
-    }
-    if (typeof order.go !== "undefined") {
-      this.roll(0);
-    }
-  },
-
-  update: function(distance) {
+  go: function(distance, circles) {
     let radian = this.direction * Math.PI / 180;
     let distanceX = distance * Math.cos(radian);
     let distanceY = distance * Math.sin(radian);
@@ -546,9 +504,34 @@ Circle.prototype = {
       distanceY = distance * Math.sin(radian);
       futureLocY += distanceY;
     }
-    this.go(distanceX, distanceY);
-  },
 
+    let direction = this.direction;
+    //this.check(circles, futureLocX, futureLocY);
+    if (this.flag === 0) {
+      this.direction = this.normalizeDirection(direction);
+      this.locX += distanceX;
+      this.locY += distanceY;
+    }
+    this.flag = 0;
+  },
+  normalizeDirection: direction => (direction + 360) % 360,
+  discriminateCommand: function(circles) {
+    let order;
+    if (mode == 1) {
+      order = this.command.next().value;
+    } else if (mode == 2) {
+      order = this.hitEvent.next().value;
+    }
+    if (typeof order === "undefined") {
+      order = this.command.next().value;
+    }
+    if (typeof order.roll !== "undefined") {
+      this.roll(order.roll);
+    }
+    if (typeof order.go !== "undefined") {
+      this.go(this.speed, circles);
+    }
+  },
   check: function(circles, futureLocX, futureLocY) {
     const self = this;
     //for (let ix = -1; ix < 2; ix++) {
@@ -596,7 +579,6 @@ Circle.prototype = {
 let swch = 0;
 let start_time;
 let mode = 1;
-let command_count = 0;
 
 window.onload = function() {
   let url = location.href;
