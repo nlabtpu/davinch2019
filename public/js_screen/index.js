@@ -616,6 +616,7 @@ window.onload = function() {
 
   document.body.onkeydown = function(e) {
     if (e.keyCode == 13 && location.pathname == '/screen' ) {
+      if(swch == 1) return true;
       swch = 1;
       start_time = new Date();
       //alert(field.canvas.width);
