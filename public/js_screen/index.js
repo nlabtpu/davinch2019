@@ -3,8 +3,8 @@ class Goal {
     this.x = x;
     this.y = y;
     this.num = num;
-    this.r1 = field.size.width/33;
-    this.r2 = field.size.width/20;
+    this.r1 = field.size.width/50;
+    this.r2 = field.size.width/25;
   }
   setGoal(context) {
     context.beginPath();
