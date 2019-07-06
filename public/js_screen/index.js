@@ -66,7 +66,7 @@ Field.prototype = {
       if (this.circles[i].goal_count == this.goals.length) return true;
 
       if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
-        (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
+        (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < ( this.goals[this.circles[i].goal_count].r2 + this.circles[i].radius ) ** 2) {
         this.circles[i].goal_count++;
         //time = new Date();
         //alert(/*'%f,%f', time.getTime() - start_time.getTime(),*/command_count );
@@ -76,7 +76,7 @@ Field.prototype = {
   },
 
   discriminateCommand: function() {
-    this.circles.forEach(circle => circle.discriminateCommand(this.circles));
+    this.circles.forEach(if (circle.command_count % 30 == 0)  circle => circle.discriminateCommand(this.circles));
   },
   resize: function(parent, d) {
     this.canvas.width = Math.floor(parent.clientWidth * 0.5);
@@ -93,7 +93,7 @@ Field.prototype = {
     if ( /*location.pathname !== '/screen' || */ swch == 1) {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
-      if (command_count % 30 == 0) this.discriminateCommand();
+      this.discriminateCommand();
       this.circles.forEach(circle => circle.go(circle.speed, this.circles));
       this.circles.forEach(circle => circle.draw(this.context));
       this.circles.forEach(circle => circle.effect(this.context));
@@ -108,7 +108,6 @@ Field.prototype = {
         //timeIvent();
       }
     }
-    command_count++;
   },
   getColor: function(context, context2) {
     this.imageData = context.getImageData(0, 0, this.size.width, this.size.height);
@@ -379,6 +378,7 @@ const Circle = function(data, field) {
   this.width = field.size.width;
   this.height = field.size.height;
   this.margin = this.width / 10;
+  this.command_count = 0;
   this.speed = (speed => {
     switch (this.id) {
       case "・ω・":
@@ -535,6 +535,7 @@ Circle.prototype = {
     if (typeof order.go !== "undefined") {
       this.roll(0);
     }
+    this.command_count++;
   },
   check: function(circles, futureLocX, futureLocY) {
     const self = this;
@@ -583,7 +584,6 @@ Circle.prototype = {
 let swch = 0;
 let start_time;
 let mode = 1;
-let command_count;
 
 window.onload = function() {
   let url = location.href;
@@ -615,7 +615,6 @@ window.onload = function() {
     if (e.keyCode == 13 /*&& location.pathname == '/screen'*/ ) {
       swch = 1;
       start_time = new Date();
-      command_count = 0;
       //alert(field.canvas.width);
     }
   }
