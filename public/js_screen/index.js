@@ -520,7 +520,7 @@ Circle.prototype = {
   },
   normalizeDirection: direction => (direction + 360) % 360,
   discriminateCommand: function(circles) {
-    if (circle.command_count % 30 !== 0) return true;
+    if (this.command_count % 30 !== 0) return true;
     let order;
     if (mode == 1) {
       order = this.command.next().value;
