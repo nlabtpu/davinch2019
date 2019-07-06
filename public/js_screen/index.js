@@ -495,7 +495,7 @@ Circle.prototype = {
     let futureLocY = this.locY + distanceY;
 
     // 左右衝突確認
-    if (futureLocX < this.radius || futureLocX > this.width - this.radius) {
+    if (futureLocX < this.radius || futureLocX > this.width /*- this.radius*/) {
       futureLocX -= distanceX; // 進んだ分を戻す
       this.direction = 180 - this.direction; // 角度変更
       radian = this.direction * Math.PI / 180; // ラジアンへ変換
@@ -505,7 +505,7 @@ Circle.prototype = {
     }
 
     // 上下衝突判定
-    if (futureLocY < this.radius || futureLocY > this.height - this.radius) {
+    if (futureLocY < this.radius || futureLocY > this.height /*- this.radius*/) {
       futureLocY -= distanceY;
       this.direction = 360 - this.direction;
       radian = this.direction * Math.PI / 180;
