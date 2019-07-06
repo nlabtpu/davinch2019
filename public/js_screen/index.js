@@ -501,7 +501,7 @@ Circle.prototype = {
       radian = this.direction * Math.PI / 180; // ラジアンへ変換
       distanceX = distance * Math.cos(radian); // 進む距離の設定
       futureLocX += distanceX; // 進む
-      console.console.log(command_count);
+      console.log(command_count);
     }
 
     // 上下衝突判定
