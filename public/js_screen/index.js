@@ -517,6 +517,7 @@ Circle.prototype = {
       this.locY += distanceY;
     }
     this.flag = 0;
+    this.command_count++;
   },
   normalizeDirection: direction => (direction + 360) % 360,
   discriminateCommand: function(circles) {
@@ -536,7 +537,6 @@ Circle.prototype = {
     if (typeof order.go !== "undefined") {
       this.roll(0);
     }
-    this.command_count++;
   },
   check: function(circles, futureLocX, futureLocY) {
     const self = this;
