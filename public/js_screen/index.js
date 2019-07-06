@@ -90,7 +90,7 @@ Field.prototype = {
   },
   run: function() {
 
-    if ( /*location.pathname !== '/screen' || */ swch == 1) {
+    if ( location.pathname !== '/screen' ||  swch == 1) {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
       this.discriminateCommand();
@@ -613,7 +613,7 @@ window.onload = function() {
   field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.25 * (field.size.height - margin * 2) + margin, 3, field));
 
   document.body.onkeydown = function(e) {
-    if (e.keyCode == 13 /*&& location.pathname == '/screen'*/ ) {
+    if (e.keyCode == 13 && location.pathname == '/screen' ) {
       swch = 1;
       start_time = new Date();
       //alert(field.canvas.width);
