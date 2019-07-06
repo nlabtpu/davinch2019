@@ -307,7 +307,7 @@ Field.prototype = {
     var current_time = new Date();
     second = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
-    if (second == 10) {
+    if (second == -10) {
       this.context.fillStyle = "black";
       this.context.clearRect(0, 0, this.size.width, this.canvas.height);
       //this.circles.length = 0;
