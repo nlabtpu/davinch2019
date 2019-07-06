@@ -585,7 +585,7 @@ Circle.prototype = {
 let swch = 0;
 let start_time;
 let mode = 1;
-let command_count = 0;
+let command_count;
 
 window.onload = function() {
   let url = location.href;
@@ -616,6 +616,7 @@ window.onload = function() {
     if (e.keyCode == 13 /*&& location.pathname == '/screen'*/) {
       swch = 1;
       start_time = new Date();
+      command_count = 0;
       //alert(field.canvas.width);
     }
   }
