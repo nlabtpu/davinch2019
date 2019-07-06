@@ -622,15 +622,15 @@ window.onload = function() {
     }
     if (e.key == 'q' && location.pathname !== '/screen' ) {
       mode = 1;
-      context.fillStyle = "black";
-      context.fillRect(0, 0, this.size.width, this.canvas.height);
+      field.context.fillStyle = "black";
+      field.context.fillRect(0, 0, this.size.width, this.canvas.height);
       field.circles.length = 0;
       field.goals.length = 0;
     }
     if (e.key == 'w' && location.pathname !== '/screen' ) {
       mode = 2;
-      context.fillStyle = "black";
-      context.fillRect(0, 0, this.size.width, this.canvas.height);
+      field.context.fillStyle = "black";
+      field.context.fillRect(0, 0, this.size.width, this.canvas.height);
       field.circles.length = 0;
       field.goals.length = 0;
       field.addGoal(new Goal(0.5 * (field.size.width - margin * 2) + margin, 0.5 * (field.size.height - margin * 2) + margin, 1, field));
