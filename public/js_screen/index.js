@@ -69,7 +69,7 @@ Field.prototype = {
           (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
           this.circles[i].goal_count++;
           time = new Date();
-          alert(time.getTime() - start_time.getTime(),command_count );
+          alert('%f,%f', time.getTime() - start_time.getTime(),command_count );
           //alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
         }
         if (this.circles[i].goal_count == this.goals.length) {
