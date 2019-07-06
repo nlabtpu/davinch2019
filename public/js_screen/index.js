@@ -48,7 +48,6 @@ Field.prototype = {
   imageData: [],
   circles: [],
   goals: [],
-  end_count: 0,
   constructor: Field,
   checkNumber: function(color) {
     const count = this.circles.filter(circle => circle.color === color).length;
@@ -69,18 +68,10 @@ Field.prototype = {
         if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
           (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
           this.circles[i].goal_count++;
-          time = new Date();
+          //time = new Date();
           //alert(/*'%f,%f', time.getTime() - start_time.getTime(),*/command_count );
           //alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
         }
-        if (this.circles[i].goal_count == this.goals.length) {
-          this.circles[i].goal_count++;
-          this.end_count++;
-        }
-
-      if (this.end_count == this.circles.length) {
-        this.end_count++;
-      }
     }
   },
 
