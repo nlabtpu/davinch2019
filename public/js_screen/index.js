@@ -302,6 +302,7 @@ Field.prototype = {
 
 
   timeEvent: function() {
+    if(mode == 2) return true;
     let margin = this.canvas.width / 10;
     var current_time = new Date();
     second = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
@@ -345,6 +346,7 @@ Field.prototype = {
             this.circles[i].direction = Math.floor(Math.random() * 360);
             break;
         }
+        this.command_count = 0;
       }
     }
   }
