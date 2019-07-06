@@ -505,7 +505,7 @@ Circle.prototype = {
     }
 
     // 上下衝突判定
-    if (futureLocY < this.radius || futureLocY > this.height /*- this.radius*/) {
+    if (futureLocY < 0 || futureLocY > this.height /*- this.radius*/) {
       futureLocY -= distanceY;
       this.direction = 360 - this.direction;
       radian = this.direction * Math.PI / 180;
