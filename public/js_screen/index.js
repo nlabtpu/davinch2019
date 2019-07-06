@@ -76,7 +76,7 @@ Field.prototype = {
   },
 
   discriminateCommand: function() {
-    this.circles.forEach(if (circle.command_count % 30 == 0)  circle => circle.discriminateCommand(this.circles));
+    this.circles.forEach(circle => circle.discriminateCommand(this.circles));
   },
   resize: function(parent, d) {
     this.canvas.width = Math.floor(parent.clientWidth * 0.5);
@@ -520,6 +520,7 @@ Circle.prototype = {
   },
   normalizeDirection: direction => (direction + 360) % 360,
   discriminateCommand: function(circles) {
+    if (circle.command_count % 30 !== 0) return true;
     let order;
     if (mode == 1) {
       order = this.command.next().value;
