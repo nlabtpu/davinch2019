@@ -3,8 +3,8 @@ class Goal {
     this.x = x;
     this.y = y;
     this.num = num;
-    this.r1 = 15;
-    this.r2 = 20;
+    this.r1 = field.size.width/33;
+    this.r2 = field.size.width/20;
   }
   setGoal(context) {
     context.beginPath();
@@ -311,6 +311,7 @@ Field.prototype = {
 
 
   timeEvent: function() {
+    let margin = this.ca.vas.width/10;
     var current_time = new Date();
     second = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
@@ -324,32 +325,32 @@ Field.prototype = {
       for (let i = 0; i < this.circles.length; i++) {
         switch (this.circles[i].color) {
           case 'red':
-            this.circles[i].locX = 0.999 * (this.size.width - 100) + 50;
-            this.circles[i].locY = 0.999 * (this.size.height - 100) + 50;
+            this.circles[i].locX = 0.999 * (this.size.width - margin*2) + margin;
+            this.circles[i].locY = 0.999 * (this.size.height - margin*2) + margin;
             this.circles[i].direction = 225;
             break;
 
           case 'aqua':
-            this.circles[i].locX = 0.001 * (this.size.width - 100) + 50;
-            this.circles[i].locY = 0.001 * (this.size.height - 100) + 50;
+            this.circles[i].locX = 0.001 * (this.size.width - margin*2) + margin;
+            this.circles[i].locY = 0.001 * (this.size.height - margin*2) + margin;
             this.circles[i].direction = 45;
             break;
 
           case 'lime':
-            this.circles[i].locX = 0.001 * (this.size.width - 100) + 50;
-            this.circles[i].locY = 0.999 * (this.size.height - 100) + 50;
+            this.circles[i].locX = 0.001 * (this.size.width - margin*2) + margin;
+            this.circles[i].locY = 0.999 * (this.size.height - margin*2) + margin;
             this.circles[i].direction = 315;
             break;
 
           case 'fuchsia':
-            this.circles[i].locX = 0.999 * (this.size.width - 100) + 50;
-            this.circles[i].locY = 0.001 * (this.size.height - 100) + 50;
+            this.circles[i].locX = 0.999 * (this.size.width - margin*2) + margin;
+            this.circles[i].locY = 0.001 * (this.size.height - margin*2) + margin;
             this.circles[i].direction = 135;
             break;
 
           default:
-            this.circles[i].locX = Math.floor(Math.random() * (this.size.width - 100) + 50);
-            this.circles[i].locY = Math.floor(Math.random() * (this.size.height - 100) + 50);
+            this.circles[i].locX = Math.floor(Math.random() * (this.size.width - margin*2) + margin);
+            this.circles[i].locY = Math.floor(Math.random() * (this.size.height - margin*2) + margin);
             this.circles[i].direction = Math.floor(Math.random() * 360);
             break;
         }
@@ -413,30 +414,30 @@ const Circle = function(data, field) {
       break;
 
     case 'aqua':
-      this.locX = 0.001 * (this.width - 100) + 50;
-      this.locY = 0.001 * (this.height - 100) + 50;
+      this.locX = 0.001 * (this.width - this.margin*2) + this.margin;
+      this.locY = 0.001 * (this.height - this.margin*2) + this.margin;
       this.direction = 45;
       break;
 
     case 'lime':
-      this.locX = 0.001 * (this.width - 100) + 50;
-      this.locY = 0.999 * (this.height - 100) + 50;
+      this.locX = 0.001 * (this.width - this.margin*2) + this.margin;
+      this.locY = 0.999 * (this.height - this.margin*2) + this.margin;
       this.direction = 315;
       break;
 
     case 'fuchsia':
-      this.locX = 0.999 * (this.width - 100) + 50;
-      this.locY = 0.001 * (this.height - 100) + 50;
+      this.locX = 0.999 * (this.width - this.margin*2) + this.margin;
+      this.locY = 0.001 * (this.height - this.margin*2) + this.margin;
       this.direction = 135;
       break;
 
     default:
-      this.locX = Math.floor(Math.random() * (this.width - 100) + 50);
-      this.locY = Math.floor(Math.random() * (this.height - 100) + 50);
+      this.locX = Math.floor(Math.random() * (this.width - this.margin*2) + this.margin);
+      this.locY = Math.floor(Math.random() * (this.height - this.margin*2) + this.margin);
       this.direction = Math.floor(Math.random() * 360);
       break;
   }
-  this.radius = this.width / /*(this.speed + 1) /*/ 25;
+  this.radius = this.width / /*(this.speed + 1) /*/ 65;
   //this.direction = Math.floor(Math.random() * 360);
 
   this.flag = 0;
@@ -613,8 +614,8 @@ window.onload = function() {
   let margin = field.size.width/10;
   // add
   field.addGoal(new Goal(0.5 * (field.size.width - margin*2) + margin, 0.5 * (field.size.height - margin*2) + margin, 1));
-  field.addGoal(new Goal(0.15 * (field.size.width - 100) + 50, 0.76 * (field.size.height - 100) + 50, 2));
-  field.addGoal(new Goal(0.65 * (field.size.width - 100) + 50, 0.25 * (field.size.height - 100) + 50, 3));
+  field.addGoal(new Goal(0.15 * (field.size.width - margin*2) + margin, 0.76 * (field.size.height - margin*2) + margin, 2));
+  field.addGoal(new Goal(0.65 * (field.size.width - margin*2) + margin, 0.25 * (field.size.height - margin*2) + margin, 3));
 
   document.body.onkeydown = function(e) {
     if (e.keyCode == 13 /*&& location.pathname == '/screen'*/) {
