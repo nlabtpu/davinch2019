@@ -616,7 +616,7 @@ window.onload = function() {
     if (e.keyCode == 13 /*&& location.pathname == '/screen'*/) {
       swch = 1;
       start_time = new Date();
-      alert(field.canvas.width);
+      //alert(field.canvas.width);
     }
   }
 
