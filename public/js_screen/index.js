@@ -384,6 +384,7 @@ const Circle = function(data, field) {
   let speed = 1;
   this.width = field.size.width;
   this.height = field.size.height;
+  this.margin = this.width/10;
   this.speed = (speed => {
     switch (this.id) {
       case "・ω・":
@@ -406,8 +407,8 @@ const Circle = function(data, field) {
 
   switch (this.color) {
     case 'red':
-      this.locX = 0.999 * (this.width - 100) + 50;
-      this.locY = 0.999 * (this.height - 100) + 50;
+      this.locX = 0.999 * (this.width - this.margin*2) + this.margin;
+      this.locY = 0.999 * (this.height - this.margin*2) + this.margin;
       this.direction = 225;
       break;
 
@@ -607,8 +608,9 @@ window.onload = function() {
   field.context.fillStyle = "white";
   field.context.fillRect(field.size.width, 0, field.canvas.width * 0.3, field.size.height);
 
+  let margin = field.size.width/10;
   // add
-  field.addGoal(new Goal(0.5 * (field.size.width - 100) + 50, 0.5 * (field.size.height - 100) + 50, 1));
+  field.addGoal(new Goal(0.5 * (field.size.width - margin*2) + margin, 0.5 * (field.size.height - margin*2) + margin, 1));
   field.addGoal(new Goal(0.15 * (field.size.width - 100) + 50, 0.76 * (field.size.height - 100) + 50, 2));
   field.addGoal(new Goal(0.65 * (field.size.width - 100) + 50, 0.25 * (field.size.height - 100) + 50, 3));
 
