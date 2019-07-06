@@ -311,7 +311,7 @@ Field.prototype = {
 
 
   timeEvent: function() {
-    let margin = this.ca.vas.width/10;
+    let margin = this.canvas.width/10;
     var current_time = new Date();
     second = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
