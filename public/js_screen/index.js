@@ -615,8 +615,8 @@ window.onload = function() {
   let margin = field.size.width/10;
   // add
   field.addGoal(new Goal(0.5 * (field.size.width - margin*2) + margin, 0.5 * (field.size.height - margin*2) + margin, 1, field));
-  field.addGoal(new Goal(0.15 * (field.size.width - margin*2) + margin, 0.76 * (field.size.height - margin*2) + margin, 2, field));
-  field.addGoal(new Goal(0.65 * (field.size.width - margin*2) + margin, 0.25 * (field.size.height - margin*2) + margin, 3, field));
+  field.addGoal(new Goal(0.15 * (field.size.width - margin*2) + margin, 0.8 * (field.size.height - margin*2) + margin, 2, field));
+  field.addGoal(new Goal(0.8 * (field.size.width - margin*2) + margin, 0.25 * (field.size.height - margin*2) + margin, 3, field));
 
   document.body.onkeydown = function(e) {
     if (e.keyCode == 13 /*&& location.pathname == '/screen'*/) {
