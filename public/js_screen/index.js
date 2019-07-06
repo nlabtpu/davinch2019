@@ -495,7 +495,7 @@ Circle.prototype = {
     let futureLocY = this.locY + distanceY;
 
     // 左右衝突確認
-    if (futureLocX < this.radius || futureLocX > this.width /*- this.radius*/) {
+    if (futureLocX < 0 || futureLocX > this.width /*- this.radius*/) {
       futureLocX -= distanceX; // 進んだ分を戻す
       this.direction = 180 - this.direction; // 角度変更
       radian = this.direction * Math.PI / 180; // ラジアンへ変換
