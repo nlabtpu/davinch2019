@@ -467,7 +467,7 @@ Circle.prototype = {
     let textLocY = this.locY - this.radius * 1 / 50 + 20 / this.radius;
     context.fillStyle = 'black';
     let pixel = String(Math.floor(this.width/120)) + 'px'
-    context.font = 'bold' + '' + pixel + '' + 'Arial';
+    context.font = 'bold' + ' ' + pixel + ' ' + 'Arial';
     context.fillText(this.id, textLocX + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + this.radius / 6 * (Math.sin(direction) + 1 / 3));
     context.fillStyle = 'white';
     context.fillText(this.id, textLocX + 1 + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + 1 + this.radius / 6 * (Math.sin(direction) + 1 / 3));
