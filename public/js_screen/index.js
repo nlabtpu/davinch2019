@@ -69,7 +69,7 @@ Field.prototype = {
           (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
           this.circles[i].goal_count++;
           time = new Date();
-          alert(/*'%f,%f', time.getTime() - start_time.getTime(),*/command_count );
+          //alert(/*'%f,%f', time.getTime() - start_time.getTime(),*/command_count );
           //alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
         }
         if (this.circles[i].goal_count == this.goals.length) {
@@ -501,6 +501,7 @@ Circle.prototype = {
       radian = this.direction * Math.PI / 180; // ラジアンへ変換
       distanceX = distance * Math.cos(radian); // 進む距離の設定
       futureLocX += distanceX; // 進む
+      console.console.log(command_count);
     }
 
     // 上下衝突判定
@@ -510,6 +511,7 @@ Circle.prototype = {
       radian = this.direction * Math.PI / 180;
       distanceY = distance * Math.sin(radian);
       futureLocY += distanceY;
+      console.log(command_count);
     }
 
     let direction = this.direction;
