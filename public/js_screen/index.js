@@ -64,7 +64,8 @@ Field.prototype = {
 
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
-      if (this.circles[i].goal_count < this.goals.length) {
+      if(this.circles[i].goal_count == this.goals.length) return true;
+
         if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
           (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
           this.circles[i].goal_count++;
@@ -76,7 +77,7 @@ Field.prototype = {
           this.circles[i].goal_count++;
           this.end_count++;
         }
-      }
+
       if (this.end_count == this.circles.length) {
         this.end_count++;
       }
