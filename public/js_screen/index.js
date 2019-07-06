@@ -3,8 +3,8 @@ class Goal {
     this.x = x;
     this.y = y;
     this.num = num;
-    this.r1 = field.size.width/50;
-    this.r2 = field.size.width/25;
+    this.r1 = field.size.width / 50;
+    this.r2 = field.size.width / 25;
   }
   setGoal(context) {
     context.beginPath();
@@ -63,15 +63,15 @@ Field.prototype = {
 
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
-      if(this.circles[i].goal_count == this.goals.length) return true;
+      if (this.circles[i].goal_count == this.goals.length) return true;
 
-        if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
-          (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
-          this.circles[i].goal_count++;
-          //time = new Date();
-          //alert(/*'%f,%f', time.getTime() - start_time.getTime(),*/command_count );
-          //alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
-        }
+      if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
+        (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < this.goals[this.circles[i].goal_count].r2 ** 2) {
+        this.circles[i].goal_count++;
+        //time = new Date();
+        //alert(/*'%f,%f', time.getTime() - start_time.getTime(),*/command_count );
+        //alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
+      }
     }
   },
 
@@ -90,10 +90,10 @@ Field.prototype = {
   },
   run: function() {
 
-    if (/*location.pathname !== '/screen' || */swch == 1) {
+    if ( /*location.pathname !== '/screen' || */ swch == 1) {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
-      if(command_count % 30 == 0)this.discriminateCommand();
+      if (command_count % 30 == 0) this.discriminateCommand();
       this.circles.forEach(circle => circle.go(circle.speed, this.circles));
       this.circles.forEach(circle => circle.draw(this.context));
       this.circles.forEach(circle => circle.effect(this.context));
@@ -303,11 +303,11 @@ Field.prototype = {
 
 
   timeEvent: function() {
-    let margin = this.canvas.width/10;
+    let margin = this.canvas.width / 10;
     var current_time = new Date();
     second = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
-    if (second == -30 ) {
+    if (second == 10) {
       this.context.fillStyle = "black";
       this.context.clearRect(0, 0, this.size.width, this.canvas.height);
       //this.circles.length = 0;
@@ -317,32 +317,32 @@ Field.prototype = {
       for (let i = 0; i < this.circles.length; i++) {
         switch (this.circles[i].color) {
           case 'red':
-            this.circles[i].locX = 0.999 * (this.size.width - margin*2) + margin;
-            this.circles[i].locY = 0.999 * (this.size.height - margin*2) + margin;
+            this.circles[i].locX = 0.999 * (this.size.width - margin * 2) + margin;
+            this.circles[i].locY = 0.999 * (this.size.height - margin * 2) + margin;
             this.circles[i].direction = 225;
             break;
 
           case 'aqua':
-            this.circles[i].locX = 0.001 * (this.size.width - margin*2) + margin;
-            this.circles[i].locY = 0.001 * (this.size.height - margin*2) + margin;
+            this.circles[i].locX = 0.001 * (this.size.width - margin * 2) + margin;
+            this.circles[i].locY = 0.001 * (this.size.height - margin * 2) + margin;
             this.circles[i].direction = 45;
             break;
 
           case 'lime':
-            this.circles[i].locX = 0.001 * (this.size.width - margin*2) + margin;
-            this.circles[i].locY = 0.999 * (this.size.height - margin*2) + margin;
+            this.circles[i].locX = 0.001 * (this.size.width - margin * 2) + margin;
+            this.circles[i].locY = 0.999 * (this.size.height - margin * 2) + margin;
             this.circles[i].direction = 315;
             break;
 
           case 'fuchsia':
-            this.circles[i].locX = 0.999 * (this.size.width - margin*2) + margin;
-            this.circles[i].locY = 0.001 * (this.size.height - margin*2) + margin;
+            this.circles[i].locX = 0.999 * (this.size.width - margin * 2) + margin;
+            this.circles[i].locY = 0.001 * (this.size.height - margin * 2) + margin;
             this.circles[i].direction = 135;
             break;
 
           default:
-            this.circles[i].locX = Math.floor(Math.random() * (this.size.width - margin*2) + margin);
-            this.circles[i].locY = Math.floor(Math.random() * (this.size.height - margin*2) + margin);
+            this.circles[i].locX = Math.floor(Math.random() * (this.size.width - margin * 2) + margin);
+            this.circles[i].locY = Math.floor(Math.random() * (this.size.height - margin * 2) + margin);
             this.circles[i].direction = Math.floor(Math.random() * 360);
             break;
         }
@@ -354,6 +354,7 @@ Field.prototype = {
 };
 const Circle = function(data, field) {
   const props = JSON.parse(data);
+  if(props.hitEvent.length == 0 ) props.hitEvent = props.command;
   this.color = props.color;
   this.goal_count = 0;
   this.command = (function*() {
@@ -377,11 +378,11 @@ const Circle = function(data, field) {
   let speed = 1;
   this.width = field.size.width;
   this.height = field.size.height;
-  this.margin = this.width/10;
+  this.margin = this.width / 10;
   this.speed = (speed => {
     switch (this.id) {
       case "・ω・":
-        return field.canvas.width/300;
+        return field.canvas.width / 300;
       case "˘ω˘":
         return 2;
       case "><":
@@ -400,32 +401,32 @@ const Circle = function(data, field) {
 
   switch (this.color) {
     case 'red':
-      this.locX = 0.999 * (this.width - this.margin*2) + this.margin;
-      this.locY = 0.999 * (this.height - this.margin*2) + this.margin;
+      this.locX = 0.999 * (this.width - this.margin * 2) + this.margin;
+      this.locY = 0.999 * (this.height - this.margin * 2) + this.margin;
       this.direction = 225;
       break;
 
     case 'aqua':
-      this.locX = 0.001 * (this.width - this.margin*2) + this.margin;
-      this.locY = 0.001 * (this.height - this.margin*2) + this.margin;
+      this.locX = 0.001 * (this.width - this.margin * 2) + this.margin;
+      this.locY = 0.001 * (this.height - this.margin * 2) + this.margin;
       this.direction = 45;
       break;
 
     case 'lime':
-      this.locX = 0.001 * (this.width - this.margin*2) + this.margin;
-      this.locY = 0.999 * (this.height - this.margin*2) + this.margin;
+      this.locX = 0.001 * (this.width - this.margin * 2) + this.margin;
+      this.locY = 0.999 * (this.height - this.margin * 2) + this.margin;
       this.direction = 315;
       break;
 
     case 'fuchsia':
-      this.locX = 0.999 * (this.width - this.margin*2) + this.margin;
-      this.locY = 0.001 * (this.height - this.margin*2) + this.margin;
+      this.locX = 0.999 * (this.width - this.margin * 2) + this.margin;
+      this.locY = 0.001 * (this.height - this.margin * 2) + this.margin;
       this.direction = 135;
       break;
 
     default:
-      this.locX = Math.floor(Math.random() * (this.width - this.margin*2) + this.margin);
-      this.locY = Math.floor(Math.random() * (this.height - this.margin*2) + this.margin);
+      this.locX = Math.floor(Math.random() * (this.width - this.margin * 2) + this.margin);
+      this.locY = Math.floor(Math.random() * (this.height - this.margin * 2) + this.margin);
       this.direction = Math.floor(Math.random() * 360);
       break;
   }
@@ -458,7 +459,7 @@ Circle.prototype = {
     let textLocX = this.locX - this.radius * 1 / 3 - 20 / this.radius;
     let textLocY = this.locY - this.radius * 1 / 50 + 20 / this.radius;
     context.fillStyle = 'black';
-    let pixel = String(Math.floor(this.width/120)) + 'px'
+    let pixel = String(Math.floor(this.width / 120)) + 'px'
     context.font = 'bold' + ' ' + pixel + ' ' + 'Arial';
     context.fillText(this.id, textLocX + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + this.radius / 6 * (Math.sin(direction) + 1 / 3));
     context.fillStyle = 'white';
@@ -489,23 +490,23 @@ Circle.prototype = {
     let futureLocY = this.locY + distanceY;
 
     // 左右衝突確認
-    if (futureLocX < 0 || futureLocX > this.width /*- this.radius*/) {
+    if (futureLocX < 0 || futureLocX > this.width /*- this.radius*/ ) {
       futureLocX -= distanceX; // 進んだ分を戻す
       this.direction = 180 - this.direction; // 角度変更
       radian = this.direction * Math.PI / 180; // ラジアンへ変換
       distanceX = distance * Math.cos(radian); // 進む距離の設定
       futureLocX += distanceX; // 進む
-      console.log(command_count);
+      //console.log(command_count);  //テスト用
     }
 
     // 上下衝突判定
-    if (futureLocY < 0 || futureLocY > this.height /*- this.radius*/) {
+    if (futureLocY < 0 || futureLocY > this.height /*- this.radius*/ ) {
       futureLocY -= distanceY;
       this.direction = 360 - this.direction;
       radian = this.direction * Math.PI / 180;
       distanceY = distance * Math.sin(radian);
       futureLocY += distanceY;
-      console.log(command_count);
+      //console.log(command_count);  //テスト用
     }
 
     let direction = this.direction;
@@ -604,14 +605,14 @@ window.onload = function() {
   field.context.fillStyle = "white";
   field.context.fillRect(field.size.width, 0, field.canvas.width * 0.3, field.size.height);
 
-  let margin = field.size.width/10;
+  let margin = field.size.width / 10;
   // add
-  field.addGoal(new Goal(0.5 * (field.size.width - margin*2) + margin, 0.5 * (field.size.height - margin*2) + margin, 1, field));
-  field.addGoal(new Goal(0.15 * (field.size.width - margin*2) + margin, 0.8 * (field.size.height - margin*2) + margin, 2, field));
-  field.addGoal(new Goal(0.8 * (field.size.width - margin*2) + margin, 0.25 * (field.size.height - margin*2) + margin, 3, field));
+  field.addGoal(new Goal(0.5 * (field.size.width - margin * 2) + margin, 0.5 * (field.size.height - margin * 2) + margin, 1, field));
+  field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 2, field));
+  field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.25 * (field.size.height - margin * 2) + margin, 3, field));
 
   document.body.onkeydown = function(e) {
-    if (e.keyCode == 13 /*&& location.pathname == '/screen'*/) {
+    if (e.keyCode == 13 /*&& location.pathname == '/screen'*/ ) {
       swch = 1;
       start_time = new Date();
       command_count = 0;
