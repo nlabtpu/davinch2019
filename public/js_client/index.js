@@ -10,8 +10,8 @@ let url;
 let name;
 let prop = {
   id: "",
-  command: [],
-  hitEvent: [],
+  FPC: [],
+  SPC: [],
   color: ""
 };
 
@@ -88,9 +88,12 @@ function getButton(discriminate) {
 }
 
 function keyup(event){
-  if (!url.match("color")) alert("色を指定してください");
-
   event_block:{
+    if(!url.match("color")) {
+      alert("色を指定してください");
+      break event_block;
+    }
+
     let command;
     switch(event.key){
       case '1':
@@ -120,22 +123,19 @@ function keyup(event){
       case 'r':
         name.value = '';
         prop.id = "";
-        prop.command = [];
-        prop.hitEvent = [];
-        addCommand();
-        addEvent();
+        prop.FPC = [];
+        prop.SPC = [];
+        addFPC();
+        addSPC();
+        c=0;
         break;
       case 's':
-        if(window.confirm("アップロードしてもよろしいですか？")){
-          alert("アップロードしました。");
-          if (!canAdd) return;
-          canAdd = false;
-          setTimeout(function () {
-            return canAdd = true;
-          }, 5000);
-          send('message');
-        }
-        else alert("アップロードを止めました");
+        if (!canAdd) return;
+        canAdd = false;
+        setTimeout(function () {
+          return canAdd = true;
+        }, 5000);
+        send('message');
         break;
       case 't': //demo
         send('demo' + socket.id);
@@ -144,34 +144,34 @@ function keyup(event){
         c++;
         break;
       case 'd':
+        command = "delete";
         break;
-      default:
-        break event_block;
     }
+
+    if(command == undefined) break event_block;
 
     if(event.key != 'c' && c%2 == 0){
       if(event.key == 'd'){
-        prop.command.pop();
-        addCommand();
+        prop.FPC.pop();
+        addFPC();
       }
-      else if(event.key != ('r' || 's' || 't')){
-        prop.command.push(command);
-        addCommand();
+      else {
+        prop.FPC.push(command);
+        addFPC();
       }
     }
     else if(event.key != 'c'){
       if(event.key == 'd'){
-        prop.hitEvent.pop();
-        addEvent();
+        prop.SPC.pop();
+        addSPC();
       }
-      else if(event.key != ('r' || 's' || 't')){
-        prop.hitEvent.push(command);
-        addEvent();
+      else{
+        prop.SPC.push(command);
+        addSPC();
       }
     }
   }
 }
-
 
 /*
 $(function(){
@@ -182,50 +182,47 @@ $(function(){
 });
 */
 
-function addElement() {
+function createBlock(className){
+  return function(command){
+    let el = document.createElement("div");
+    el.className = className;
+    el.style.marginBottom = "20px";
+    el.innerHTML = getButton(command);
+    return el;
+  };
+}
+
+function addElement(id, commands, className){
   console.log(prop);
+  let list = document.getElementById(id);
+  list.innerHTML = "";
+  commands.map(createBlock(className)).forEach(function(el){
+    return list.appendChild(el);
+  });
+  list.scrollTop = list.scrollHeight;
 }
 
-function addCommand() {
-  addElement();
-  let commandList = document.getElementById('messageList');
-  commandList.innerHTML = "";
-
-  for (let i = 0; i < prop.command.length; i++) {
-    let command = document.createElement("div");
-    command.className = "block1";
-    command.style.marginBottom = "20px";
-    command.innerHTML = getButton(prop.command[i]);
-    commandList.appendChild(command);
-    commandList.scrollTop = commandList.scrollHeight;
-  }
+function addFPC() {
+  addElement('FPCList', prop.FPC, "block1");
 }
 
-function addEvent() {
-  addElement();
-  let hitEventList = document.getElementById('hitEventList');
-  hitEventList.innerHTML = "";
-
-  for (let i = 0; i < prop.hitEvent.length; i++) {
-    let hitEvent = document.createElement("div");
-    hitEvent.className = "block2";
-    hitEvent.style.marginBottom = "20px";
-    hitEvent.innerHTML = getButton(prop.hitEvent[i]);
-    hitEventList.appendChild(hitEvent);
-    hitEventList.scrollTop = hitEventList.scrollHeight;
-  }
+function addSPC() {
+  addElement('SPCList', prop.SPC, "block2");
 }
 
 function send(id) {
   prop.id = name.value;
 
-  if (prop.command.length === 0 || prop.id === "") {
-    alert('入力されていない部分があります');
+  if (prop.FPC.length === 0 || prop.SPC.length === 0 || prop.id === "") {
+    alert("入力されていない部分があります");
     return false;
   }
-
-  console.log(prop);
-  socket.emit(id, JSON.stringify(prop));
+  else if(window.confirm("アップロードしてもよろしいですか？")){
+    alert("アップロードしました。");
+    console.log(prop);
+    socket.emit(id, JSON.stringify(prop));
+  }
+  else alert("アップロードをやめました。");
 }
 
 window.onload = function () {
