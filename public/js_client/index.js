@@ -173,14 +173,12 @@ function keyup(event){
   }
 }
 
-/*
 $(function(){
   $(".phase").click(function(){
     if(($this).hasClass("active")) $(this).removeClass("active");
     else if(!$(this).hasClass("active")) $(this).addClass("active");
   });
 });
-*/
 
 function createBlock(className){
   return function(command){
