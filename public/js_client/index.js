@@ -12,8 +12,8 @@ let name;
 //let id;
 let prop = {
   id: "",
-  FPC: [],
-  SPC: [],
+  command: [],
+  hitEvent: [],
   color: ""
 };
 
@@ -33,7 +33,6 @@ function GetKeyCode(event){
       break;
   }
 }
-
 function OffKeyCode(event){
   input();
   switch(event.key){
@@ -48,7 +47,6 @@ function OffKeyCode(event){
       break;
   }
 }
-
 function input(){
   if(KeyState[0] == true && KeyState[1] == true){
     console.log("true");
@@ -130,9 +128,7 @@ function getButton(discriminate) {
         id = "onereturn";
         break;
     }
-
     if(id == undefined) break event_block;
-
     if(c%2 == 0) $("#"+id).addClass("pressing");
     else $("#"+id+"Final").addClass("pressing");
   }
@@ -198,24 +194,22 @@ function keyup(event){
     if(command == undefined) break event_block;
 
     if(event.key != 'c' && c%2 == 0){
-      //$("#"+id).removeClass("pressing");
       if(event.key == 'd'){
-        prop.FPC.pop();
+        prop.command.pop();
         addFPC();
       }
       else {
-        prop.FPC.push(command);
+        prop.command.push(command);
         addFPC();
       }
     }
     else if(event.key != 'c'){
-      //$("#"+id+Final).removeClass("pressing");
       if(event.key == 'd'){
-        prop.SPC.pop();
+        prop.hitEvent.pop();
         addSPC();
       }
       else{
-        prop.SPC.push(command);
+        prop.hitEvent.push(command);
         addSPC();
       }
     }
@@ -223,6 +217,7 @@ function keyup(event){
 }
 
 function createBlock(className){
+  console.log("test");
   return function(command){
     let el = document.createElement("div");
     el.className = className;
@@ -233,6 +228,7 @@ function createBlock(className){
 }
 
 function addElement(id, commands, className){
+  console.log("test2");
   console.log(prop);
   let list = document.getElementById(id);
   list.innerHTML = "";
@@ -243,26 +239,29 @@ function addElement(id, commands, className){
 }
 
 function addFPC() {
-  addElement('FPCList', prop.FPC, "block1");
+  addElement('FPCList', prop.command, "block1");
 }
 
 function addSPC() {
-  addElement('SPCList', prop.SPC, "block2");
+  addElement('SPCList', prop.hitEvent, "block2");
 }
 
 function send(id) {
+  console.log("test3");
   prop.id = name.value;
 
-  if (prop.FPC.length === 0 || prop.SPC.length === 0 || prop.id === "") {
+  if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
     alert("入力されていない部分があります");
     return false;
   }
-  
-  if(id != "message){
+
+  if(id != "message"){
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
+    console.log("test4");
   }
   else if(window.confirm("アップロードしてもよろしいですか？")){
+    console.log("test5");
     alert("アップロードしました。");
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
@@ -285,8 +284,8 @@ function active(){
 function reset(){
   name.value = '';
   prop.id = "";
-  prop.FPC = [];
-  prop.SPC = [];
+  prop.command = [];
+  prop.hitEvent = [];
   addFPC();
   addSPC();
   c=0;
