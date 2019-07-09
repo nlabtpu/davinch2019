@@ -12,8 +12,8 @@ let name;
 //let id;
 let prop = {
   id: "",
-  command: [],
-  hitEvent: [],
+  command: [],  //First phase commands
+  hitEvent: [], //second phase commands
   color: ""
 };
 
@@ -221,7 +221,6 @@ function keyup(event){
 }
 
 function createBlock(className){
-  console.log("test");
   return function(command){
     let el = document.createElement("div");
     el.className = className;
@@ -232,7 +231,6 @@ function createBlock(className){
 }
 
 function addElement(id, commands, className){
-  console.log("test2");
   console.log(prop);
   let list = document.getElementById(id);
   list.innerHTML = "";
@@ -251,7 +249,6 @@ function addSPC() {
 }
 
 function send(id) {
-  console.log("test3");
   prop.id = name.value;
 
   if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
@@ -262,10 +259,8 @@ function send(id) {
   if(id != "message"){
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
-    console.log("test4");
   }
   else if(window.confirm("アップロードしてもよろしいですか？")){
-    console.log("test5");
     alert("アップロードしました。");
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
