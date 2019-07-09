@@ -257,6 +257,11 @@ function send(id) {
     alert("入力されていない部分があります");
     return false;
   }
+
+  if(id != "message"){
+    console.log(prop);
+    socket.emit(id, JSON.stringify(prop));
+  }
   else if(window.confirm("アップロードしてもよろしいですか？")){
     alert("アップロードしました。");
     console.log(prop);
