@@ -203,10 +203,16 @@ iframe.iframe{
   width: 500px;
 }
 
+.pressing {
+  opacity: 0.7;
+  color: black;
+  border-style: none;
+}
+
 .label{
   position:relative;
   height:20px;
-  background:#09F;
+  background:grey;
   width:150px;
   margin-left:35px;
   padding-bottom:20px;
@@ -223,7 +229,7 @@ iframe.iframe{
   left:-15px;
   border-top:20px solid transparent;
   border-bottom:20px solid transparent; /* 上下のborderを透過 */
-  border-right:15px solid #09F;
+  border-right:15px solid grey;
 }
 
 .label:after{
@@ -234,17 +240,17 @@ iframe.iframe{
   right:-15px;
   border-top:20px solid transparent;
   border-bottom:20px solid transparent; /* 上下のborderを透過 */
-  border-left:15px solid #09F;m:rotate(45deg); /* 正方形を45度回転 */
+  border-left:15px solid grey;m:rotate(45deg); /* 正方形を45度回転 */
 }
 
 .active{
-  background-color: grey;
+  background-color: #09F;
 }
 
 .active:before{
-  border-right:15px solid grey;
+  border-right:15px solid #09F;
 }
 
 .active:after{
-  border-left:15px solid grey;m:rotate(45deg); /* 正方形を45度回転 */
+  border-left:15px solid #09F;m:rotate(45deg); /* 正方形を45度回転 */
 }
