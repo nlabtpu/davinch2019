@@ -355,7 +355,7 @@ Field.prototype = {
 };
 const Circle = function(data, field) {
   const props = JSON.parse(data);
-  if(props.hitEvent.length == 0 ) props.hitEvent = props.command;
+  //if(props.hitEvent.length == 0 ) props.hitEvent = props.command;
   this.color = props.color;
   this.goal_count = 0;
   this.command = (function*() {
