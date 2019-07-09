@@ -1,17 +1,19 @@
 "use strict";
 //document.onkeydown = GetKeyCode;
 //document.onkeyup = OffKeyCode;
+//document.onkeydown = keydown;
 document.onkeyup = keyup;
-let KeyState = new Array();
+//let KeyState = new Array();
 let c = 0;  //counter
 let canvas;
 let canAdd = true;
 let url;
 let name;
+//let id;
 let prop = {
   id: "",
-  command: [],
-  hitEvent: [],
+  FPC: [],
+  SPC: [],
   color: ""
 };
 
@@ -47,13 +49,11 @@ function OffKeyCode(event){
   }
 }
 
-
 function input(){
   if(KeyState[0] == true && KeyState[1] == true){
     console.log("true");
   }
 }
-
 */
 
 function getButton(discriminate) {
@@ -89,135 +89,206 @@ function getButton(discriminate) {
   }
 }
 
-function keyup(event){
-  if (!url.match("color")) alert("色を指定してください");
+/*function keydown(event){
+  let id;
+  event_block:{
+    switch(event.key){
+      case '1':
+        id = "left15";
+        break;
+      case '2':
+        id = "go";
+        break;
+      case '3':
+        id = "right15";
+        break;
+      case '4':
+       id = "left90";
+        break;
+      case '5':
+        id = "right90";
+        break;
+      case '6':
+        id = "left135";
+        break;
+      case '7':
+        id = "back";
+        break;
+      case '8':
+        id = "right135";
+        break;
+      case 'r':
+        id = "reset";
+        break;
+      case 's':
+        id = "send";
+        break;
+      case 't':
+        id = "subsend";
+        break;
+      case 'd':
+        id = "onereturn";
+        break;
+    }
 
-  let command;
-  switch(event.key){
-    case '1':
-      command = {roll: -15};
-      break;
-    case '2':
-      command = {roll: -90};
-      break;
-    case '3':
-      command = {roll: -135};
-      break;
-    case '4':
-      command = {go: 15};
-      break;
-    case '5':
-      command = {roll: 15};
-      break;
-    case '6':
-      command = {roll: 90};
-      break;
-    case '7':
-      command = {roll: 135};
-      break;
-    case '8':
-      command = {roll: 180};
-      break;
-    case 'r':
-      name.value = '';
-      prop.id = "";
-      prop.command = [];
-      prop.hitEvent = [];
-      addCommand();
-      addEvent();
-      break;
-    case 's':
-      if (!canAdd) return;
-      canAdd = false;
-      setTimeout(function () {
-        return canAdd = true;
-      }, 5000);
-      send('message');
-      break;
-    case 't': //demo
-      send('demo' + socket.id);
-      break;
-    case 'c':
-      c++;
-      break;
-  }
+    if(id == undefined) break event_block;
 
-  if(event.key != 'c' && c%2 == 0){
-    if(event.key == 'd'){
-      prop.command.pop();
-      addCommand();
-    }
-    else if(event.key != ('r' || 's' || 't')){
-      prop.command.push(command);
-      addCommand();
-    }
-  }
-  else if(event.key != 'c'){
-    if(event.key == 'd'){
-      prop.hitEvent.pop();
-      addEvent();
-    }
-    else if(event.key != ('r' || 's' || 't')){
-      prop.hitEvent.push(command);
-      addEvent();
-    }
+    if(c%2 == 0) $("#"+id).addClass("pressing");
+    else $("#"+id+"Final").addClass("pressing");
   }
 }
-
-
-/*
-$(function(){
-  $(".phase").click(function(){
-    if(($this).hasClass("active")) $(this).removeClass("active");
-    else if(!$(this).hasClass("active")) $(this).addClass("active");
-  });
-});
 */
 
-function addElement() {
+function keyup(event){
+  event_block:{
+    if(!url.match("color")) {
+      alert("色を指定してください");
+      break event_block;
+    }
+
+    let command;
+    switch(event.key){
+      case '1':
+        command = {roll: -15};
+        break;
+      case '2':
+        command = {go: 15};
+        break;
+      case '3':
+        command = {roll: 15};
+        break;
+      case '4':
+        command = {roll: -90};
+        break;
+      case '5':
+        command = {roll: 90};
+        break;
+      case '6':
+        command = {roll: -135};
+        break;
+      case '7':
+        command = {roll: 135};
+        break;
+      case '8':
+        command = {roll: 180};
+        break;
+      case 'r':
+        reset();
+        break;
+      case 's':
+        if (!canAdd) return;
+        canAdd = false;
+        setTimeout(function () {
+          return canAdd = true;
+        }, 5000);
+        send('message');
+        break;
+      case 't': //demo
+        send('demo' + socket.id);
+        break;
+      case 'c':
+        c++;
+        active();
+        break;
+      case 'd':
+        command = "delete";
+        break;
+    }
+
+    if(command == undefined) break event_block;
+
+    if(event.key != 'c' && c%2 == 0){
+      //$("#"+id).removeClass("pressing");
+      if(event.key == 'd'){
+        prop.FPC.pop();
+        addFPC();
+      }
+      else {
+        prop.FPC.push(command);
+        addFPC();
+      }
+    }
+    else if(event.key != 'c'){
+      //$("#"+id+Final).removeClass("pressing");
+      if(event.key == 'd'){
+        prop.SPC.pop();
+        addSPC();
+      }
+      else{
+        prop.SPC.push(command);
+        addSPC();
+      }
+    }
+  }
+}
+
+function createBlock(className){
+  return function(command){
+    let el = document.createElement("div");
+    el.className = className;
+    el.style.marginBottom = "20px";
+    el.innerHTML = getButton(command);
+    return el;
+  };
+}
+
+function addElement(id, commands, className){
   console.log(prop);
+  let list = document.getElementById(id);
+  list.innerHTML = "";
+  commands.map(createBlock(className)).forEach(function(el){
+    return list.appendChild(el);
+  });
+  list.scrollTop = list.scrollHeight;
 }
 
-function addCommand() {
-  addElement();
-  let commandList = document.getElementById('messageList');
-  commandList.innerHTML = "";
-
-  for (let i = 0; i < prop.command.length; i++) {
-    let command = document.createElement("div");
-    command.className = "block1";
-    command.style.marginBottom = "20px";
-    command.innerHTML = getButton(prop.command[i]);
-    commandList.appendChild(command);
-    commandList.scrollTop = commandList.scrollHeight;
-  }
+function addFPC() {
+  addElement('FPCList', prop.FPC, "block1");
 }
 
-function addEvent() {
-  addElement();
-  let hitEventList = document.getElementById('hitEventList');
-  hitEventList.innerHTML = "";
-
-  for (let i = 0; i < prop.hitEvent.length; i++) {
-    let hitEvent = document.createElement("div");
-    hitEvent.className = "block2";
-    hitEvent.style.marginBottom = "20px";
-    hitEvent.innerHTML = getButton(prop.hitEvent[i]);
-    hitEventList.appendChild(hitEvent);
-    hitEventList.scrollTop = hitEventList.scrollHeight;
-  }
+function addSPC() {
+  addElement('SPCList', prop.SPC, "block2");
 }
 
 function send(id) {
   prop.id = name.value;
 
-  if (prop.command.length === 0 || prop.id === "") {
-    alert('入力されていない部分があります');
+  if (prop.FPC.length === 0 || prop.SPC.length === 0 || prop.id === "") {
+    alert("入力されていない部分があります");
     return false;
   }
+  else if(window.confirm("アップロードしてもよろしいですか？")){
+    alert("アップロードしました。");
+    console.log(prop);
+    socket.emit(id, JSON.stringify(prop));
+  }
+  else alert("アップロードをやめました。");
+}
 
-  console.log(prop);
-  socket.emit(id, JSON.stringify(prop));
+
+function active(){
+  if(c%2 == 0) {
+    $("#first").addClass("active");
+    $("#second").removeClass("active");
+  }
+  else{
+    $("#second").addClass("active");
+    $("#first").removeClass("active");
+  }
+}
+
+function reset(){
+  name.value = '';
+  prop.id = "";
+  prop.FPC = [];
+  prop.SPC = [];
+  addFPC();
+  addSPC();
+  c=0;
+  if($("#second").hasClass("active")) {
+    $("#second").removeClass("active");
+    $("#first").addClass("active");
+  }
 }
 
 window.onload = function () {
