@@ -12,8 +12,8 @@ let name;
 //let id;
 let prop = {
   id: "",
-  command: [],
-  hitEvent: [],
+  FPC: [],
+  SPC: [],
   color: ""
 };
 
@@ -199,21 +199,21 @@ function keyup(event){
 
     if(event.key != 'c' && c%2 == 0){
       if(event.key == 'd'){
-        prop.command.pop();
+        prop.FPC.pop();
         addFPC();
       }
       else {
-        prop.command.push(command);
+        prop.FPC.push(command);
         addFPC();
       }
     }
     else if(event.key != 'c'){
       if(event.key == 'd'){
-        prop.hitEvent.pop();
+        prop.SPC.pop();
         addSPC();
       }
       else{
-        prop.hitEvent.push(command);
+        prop.SPC.push(command);
         addSPC();
       }
     }
@@ -243,18 +243,18 @@ function addElement(id, commands, className){
 }
 
 function addFPC() {
-  addElement('commandList', prop.command, "block1");
+  addElement('FPCList', prop.FPC, "block1");
 }
 
 function addSPC() {
-  addElement('SPCList', prop.hitEvent, "block2");
+  addElement('SPCList', prop.SPC, "block2");
 }
 
 function send(id) {
   console.log("test3");
   prop.id = name.value;
 
-  if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
+  if (prop.FPC.length === 0 || prop.SPC.length === 0 || prop.id === "") {
     alert("入力されていない部分があります");
     return false;
   }
@@ -288,8 +288,8 @@ function active(){
 function reset(){
   name.value = '';
   prop.id = "";
-  prop.command = [];
-  prop.hitEvent = [];
+  prop.FPC = [];
+  prop.SPC = [];
   addFPC();
   addSPC();
   c=0;
