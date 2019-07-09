@@ -1,6 +1,7 @@
 "use strict";
 //document.onkeydown = GetKeyCode;
 //document.onkeyup = OffKeyCode;
+//document.onkeydown = keydown;
 document.onkeyup = keyup;
 //let KeyState = new Array();
 let c = 0;  //counter
@@ -8,6 +9,7 @@ let canvas;
 let canAdd = true;
 let url;
 let name;
+//let id;
 let prop = {
   id: "",
   FPC: [],
@@ -87,6 +89,56 @@ function getButton(discriminate) {
   }
 }
 
+/*function keydown(event){
+  let id;
+  event_block:{
+    switch(event.key){
+      case '1':
+        id = "left15";
+        break;
+      case '2':
+        id = "go";
+        break;
+      case '3':
+        id = "right15";
+        break;
+      case '4':
+       id = "left90";
+        break;
+      case '5':
+        id = "right90";
+        break;
+      case '6':
+        id = "left135";
+        break;
+      case '7':
+        id = "back";
+        break;
+      case '8':
+        id = "right135";
+        break;
+      case 'r':
+        id = "reset";
+        break;
+      case 's':
+        id = "send";
+        break;
+      case 't':
+        id = "subsend";
+        break;
+      case 'd':
+        id = "onereturn";
+        break;
+    }
+
+    if(id == undefined) break event_block;
+
+    if(c%2 == 0) $("#"+id).addClass("pressing");
+    else $("#"+id+"Final").addClass("pressing");
+  }
+}
+*/
+
 function keyup(event){
   event_block:{
     if(!url.match("color")) {
@@ -100,19 +152,19 @@ function keyup(event){
         command = {roll: -15};
         break;
       case '2':
-        command = {roll: -90};
-        break;
-      case '3':
-        command = {roll: -135};
-        break;
-      case '4':
         command = {go: 15};
         break;
-      case '5':
+      case '3':
         command = {roll: 15};
         break;
-      case '6':
+      case '4':
+        command = {roll: -90};
+        break;
+      case '5':
         command = {roll: 90};
+        break;
+      case '6':
+        command = {roll: -135};
         break;
       case '7':
         command = {roll: 135};
@@ -121,13 +173,7 @@ function keyup(event){
         command = {roll: 180};
         break;
       case 'r':
-        name.value = '';
-        prop.id = "";
-        prop.FPC = [];
-        prop.SPC = [];
-        addFPC();
-        addSPC();
-        c=0;
+        reset();
         break;
       case 's':
         if (!canAdd) return;
@@ -142,6 +188,7 @@ function keyup(event){
         break;
       case 'c':
         c++;
+        active();
         break;
       case 'd':
         command = "delete";
@@ -151,6 +198,7 @@ function keyup(event){
     if(command == undefined) break event_block;
 
     if(event.key != 'c' && c%2 == 0){
+      //$("#"+id).removeClass("pressing");
       if(event.key == 'd'){
         prop.FPC.pop();
         addFPC();
@@ -161,6 +209,7 @@ function keyup(event){
       }
     }
     else if(event.key != 'c'){
+      //$("#"+id+Final).removeClass("pressing");
       if(event.key == 'd'){
         prop.SPC.pop();
         addSPC();
@@ -172,13 +221,6 @@ function keyup(event){
     }
   }
 }
-
-$(function(){
-  $(".phase").click(function(){
-    if(($this).hasClass("active")) $(this).removeClass("active");
-    else if(!$(this).hasClass("active")) $(this).addClass("active");
-  });
-});
 
 function createBlock(className){
   return function(command){
@@ -221,6 +263,32 @@ function send(id) {
     socket.emit(id, JSON.stringify(prop));
   }
   else alert("アップロードをやめました。");
+}
+
+
+function active(){
+  if(c%2 == 0) {
+    $("#first").addClass("active");
+    $("#second").removeClass("active");
+  }
+  else{
+    $("#second").addClass("active");
+    $("#first").removeClass("active");
+  }
+}
+
+function reset(){
+  name.value = '';
+  prop.id = "";
+  prop.FPC = [];
+  prop.SPC = [];
+  addFPC();
+  addSPC();
+  c=0;
+  if($("#second").hasClass("active")) {
+    $("#second").removeClass("active");
+    $("#first").addClass("active");
+  }
 }
 
 window.onload = function () {
