@@ -198,7 +198,6 @@ function keyup(event){
     if(command == undefined) break event_block;
 
     if(event.key != 'c' && c%2 == 0){
-      //$("#"+id).removeClass("pressing");
       if(event.key == 'd'){
         prop.FPC.pop();
         addFPC();
@@ -209,7 +208,6 @@ function keyup(event){
       }
     }
     else if(event.key != 'c'){
-      //$("#"+id+Final).removeClass("pressing");
       if(event.key == 'd'){
         prop.SPC.pop();
         addSPC();
