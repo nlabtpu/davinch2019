@@ -1,23 +1,22 @@
 "use strict";
 //document.onkeydown = GetKeyCode;
 //document.onkeyup = OffKeyCode;
-//document.onkeydown = keydown;
+document.onkeydown = keydown;
 document.onkeyup = keyup;
 //let KeyState = new Array();
 let c = 0;  //counter
 let canvas;
-let canAdd = true;
+//let canAdd = true;
 let url;
 let name;
-//let id;
+let cid;  //command id
 let prop = {
   id: "",
   command: [],  //First phase commands
   hitEvent: [], //second phase commands
-  color: ""
+  color: "",
+  mode:0
 };
-
-
 
 /*
 function GetKeyCode(event){
@@ -89,55 +88,54 @@ function getButton(discriminate) {
   }
 }
 
-/*function keydown(event){
-  let id;
+function keydown(event){
   event_block:{
     switch(event.key){
       case '1':
-        id = "left15";
+        cid = "left15";
         break;
       case '2':
-        id = "go";
+        cid = "go";
         break;
       case '3':
-        id = "right15";
+        cid = "right15";
         break;
       case '4':
-       id = "left90";
+       cid = "left90";
         break;
       case '5':
-        id = "right90";
+        cid = "right90";
         break;
       case '6':
-        id = "left135";
+        cid = "left135";
         break;
       case '7':
-        id = "back";
+        cid = "back";
         break;
       case '8':
-        id = "right135";
+        cid = "right135";
         break;
       case 'r':
-        id = "reset";
+        cid = "reset";
         break;
       case 's':
-        id = "send";
+        cid = "send";
         break;
       case 't':
-        id = "subsend";
+        cid = "subsend";
         break;
       case 'd':
-        id = "onereturn";
+        cid = "onereturn";
         break;
+      default:
+        cid = undefined;
     }
 
-    if(id == undefined) break event_block;
-
-    if(c%2 == 0) $("#"+id).addClass("pressing");
-    else $("#"+id+"Final").addClass("pressing");
+    if(cid == undefined) break event_block;
+    if(c%2 == 0 || event.key == 'r' || event.key == 's') $("#"+cid).addClass("pressing");
+    else $("#"+cid+"Final").addClass("pressing");
   }
 }
-*/
 
 function keyup(event){
   event_block:{
@@ -176,11 +174,12 @@ function keyup(event){
         reset();
         break;
       case 's':
-        if (!canAdd) return;
+        /*if (!canAdd) return;
         canAdd = false;
         setTimeout(function () {
           return canAdd = true;
-        }, 5000);
+        }, 5000);*/
+        $("#"+cid).removeClass("pressing");
         send('message');
         break;
       case 't': //demo
@@ -197,7 +196,9 @@ function keyup(event){
 
     if(command == undefined) break event_block;
 
-    if(event.key != 'c' && c%2 == 0){
+    if(c%2 == 0){
+      $("#"+cid).removeClass("pressing");
+
       if(event.key == 'd'){
         prop.command.pop();
         addFPC();
@@ -207,7 +208,9 @@ function keyup(event){
         addFPC();
       }
     }
-    else if(event.key != 'c'){
+    else{
+      $("#"+cid+"Final").removeClass("pressing");
+
       if(event.key == 'd'){
         prop.hitEvent.pop();
         addSPC();
@@ -259,6 +262,8 @@ function send(id) {
   if(id != "message"){
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
+    if(c%2==0) $("#"+id).removeClass("pressing");
+    else $("#"+id+"Final").removeClass("pressing");
   }
   else if(window.confirm("アップロードしてもよろしいですか？")){
     alert("アップロードしました。");
@@ -268,15 +273,16 @@ function send(id) {
   else alert("アップロードをやめました。");
 }
 
-
 function active(){
   if(c%2 == 0) {
     $("#first").addClass("active");
     $("#second").removeClass("active");
+    prop.mode=0;
   }
   else{
     $("#second").addClass("active");
     $("#first").removeClass("active");
+    prop.mode=1;
   }
 }
 
@@ -288,10 +294,12 @@ function reset(){
   addFPC();
   addSPC();
   c=0;
+  prop.mode=0;
   if($("#second").hasClass("active")) {
     $("#second").removeClass("active");
     $("#first").addClass("active");
   }
+  $("#"+cid).removeClass("pressing");
 }
 
 window.onload = function () {
