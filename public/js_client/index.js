@@ -183,6 +183,8 @@ function keyup(event){
         send('message');
         break;
       case 't': //demo
+        if(c%2==0) $("#"+cid).removeClass("pressing");
+        else $("#"+cid+"Final").removeClass("pressing");
         send('demo' + socket.id);
         break;
       case 'c':
@@ -262,8 +264,6 @@ function send(id) {
   if(id != "message"){
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
-    if(c%2==0) $("#"+id).removeClass("pressing");
-    else $("#"+id+"Final").removeClass("pressing");
   }
   else if(window.confirm("アップロードしてもよろしいですか？")){
     alert("アップロードしました。");
