@@ -71,6 +71,7 @@ function input(){
 }
 */
 
+
 function getButton(discriminate) {
   if ("go" in discriminate) {
     return "前進";
@@ -155,10 +156,10 @@ function keydown(event){
 
 function keyup(event){
   event_block:{
-    if(!url.match("color")) {
-      alert("色を指定してください");
-      break event_block;
-    }
+    // if(!url.match("color")) {
+    //   alert("色を指定してください");
+    //   break event_block;
+    // }
 
     let command;
     switch(event.key){
@@ -327,7 +328,16 @@ window.onload = function () {
   console.log(url + '?color=lime&?id=4');
 
   name = document.getElementById('userID');
-  let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
+  if(id=1){
+    let PlayerColor = "red";
+  }else if(id=2){
+    let PlayerColor = "aqua";
+  }else if(id=3){
+    let PlayerColor = "fuchsia";
+  }else if(id=4){
+    let PlayerColor = "lime";
+  }
+  // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
 
   if (PlayerColor) {
     prop.color = decodeURIComponent(PlayerColor[1]);

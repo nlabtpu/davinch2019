@@ -23,7 +23,7 @@ class Goal {
   }
 }
 
-var socket_id = socket.id;
+
 
 
 const Field = function(e, c, d) {
