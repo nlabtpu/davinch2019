@@ -1,7 +1,7 @@
 "use strict";
 //document.onkeydown = GetKeyCode;
 //document.onkeyup = OffKeyCode;
-//document.onkeydown = keydown;
+document.onkeydown = keydown;
 document.onkeyup = keyup;
 //let KeyState = new Array();
 let c = 0;  //counter
@@ -9,12 +9,13 @@ let canvas;
 let canAdd = true;
 let url;
 let name;
-//let id;
+let vid;  //vector id
 let prop = {
   id: "",
-  command: [],
-  hitEvent: [],
-  color: ""
+  command: [],  //First phase commands
+  hitEvent: [], //second phase commands
+  color: "",
+  mode: 0
 };
 
 
@@ -33,6 +34,7 @@ function GetKeyCode(event){
       break;
   }
 }
+
 function OffKeyCode(event){
   input();
   switch(event.key){
@@ -47,6 +49,7 @@ function OffKeyCode(event){
       break;
   }
 }
+
 function input(){
   if(KeyState[0] == true && KeyState[1] == true){
     console.log("true");
@@ -87,53 +90,57 @@ function getButton(discriminate) {
   }
 }
 
-/*function keydown(event){
-  let id;
+function keydown(event){
   event_block:{
     switch(event.key){
       case '1':
-        id = "left15";
+        vid = "left15";
         break;
       case '2':
-        id = "go";
+        vid = "go";
         break;
       case '3':
-        id = "right15";
+        vid = "right15";
         break;
       case '4':
-       id = "left90";
+       vid = "left90";
         break;
       case '5':
-        id = "right90";
+        vid = "right90";
         break;
       case '6':
-        id = "left135";
+        vid = "left135";
         break;
       case '7':
-        id = "back";
+        vid = "back";
         break;
       case '8':
-        id = "right135";
+        vid = "right135";
         break;
       case 'r':
-        id = "reset";
+        vid = "reset";
         break;
       case 's':
-        id = "send";
+        vid = "send";
         break;
       case 't':
-        id = "subsend";
+        vid = "subsend";
+        break;
+        case 'c':
+        vid = undefined;
         break;
       case 'd':
-        id = "onereturn";
+        vid = "onereturn";
         break;
     }
-    if(id == undefined) break event_block;
-    if(c%2 == 0) $("#"+id).addClass("pressing");
-    else $("#"+id+"Final").addClass("pressing");
+
+    if(vid == undefined) break event_block;
+    console.log(vid);
+    if(c%2 == 0 || event.key == ('r' || 's')) $("#"+vid).addClass("pressing");
+    else $("#"+vid+"Final").addClass("pressing");
   }
 }
-*/
+
 
 function keyup(event){
   event_block:{
@@ -170,6 +177,7 @@ function keyup(event){
         break;
       case 'r':
         reset();
+        $("#"+vid).removeClass("pressing");
         break;
       case 's':
         if (!canAdd) return;
@@ -178,6 +186,7 @@ function keyup(event){
           return canAdd = true;
         }, 5000);
         send('message');
+        $("#"+vid).removeClass("pressing");
         break;
       case 't': //demo
         send('demo' + socket.id);
@@ -194,6 +203,8 @@ function keyup(event){
     if(command == undefined) break event_block;
 
     if(event.key != 'c' && c%2 == 0){
+      $("#"+vid).removeClass("pressing");
+
       if(event.key == 'd'){
         prop.command.pop();
         addFPC();
@@ -204,6 +215,8 @@ function keyup(event){
       }
     }
     else if(event.key != 'c'){
+      $("#"+vid+"Final").removeClass("pressing");
+
       if(event.key == 'd'){
         prop.hitEvent.pop();
         addSPC();
@@ -217,7 +230,6 @@ function keyup(event){
 }
 
 function createBlock(className){
-  console.log("test");
   return function(command){
     let el = document.createElement("div");
     el.className = className;
@@ -228,7 +240,6 @@ function createBlock(className){
 }
 
 function addElement(id, commands, className){
-  console.log("test2");
   console.log(prop);
   let list = document.getElementById(id);
   list.innerHTML = "";
@@ -247,7 +258,6 @@ function addSPC() {
 }
 
 function send(id) {
-  console.log("test3");
   prop.id = name.value;
 
   if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
@@ -258,10 +268,8 @@ function send(id) {
   if(id != "message"){
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
-    console.log("test4");
   }
   else if(window.confirm("アップロードしてもよろしいですか？")){
-    console.log("test5");
     alert("アップロードしました。");
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
@@ -269,15 +277,16 @@ function send(id) {
   else alert("アップロードをやめました。");
 }
 
-
 function active(){
   if(c%2 == 0) {
     $("#first").addClass("active");
     $("#second").removeClass("active");
+    prop.mode=0;
   }
   else{
     $("#second").addClass("active");
     $("#first").removeClass("active");
+    prop.mode=1;
   }
 }
 
@@ -289,6 +298,7 @@ function reset(){
   addFPC();
   addSPC();
   c=0;
+  prop.mode=0;
   if($("#second").hasClass("active")) {
     $("#second").removeClass("active");
     $("#first").addClass("active");
