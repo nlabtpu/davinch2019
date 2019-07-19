@@ -322,27 +322,27 @@ function reset(){
 window.onload = function () {
   url = location.href;
   console.log(url + 'screen');
-  console.log(url + '?color=red&?id=1');
-  console.log(url + '?color=aqua&?id=2');
-  console.log(url + '?color=fuchsia&?id=3');
-  console.log(url + '?color=lime&?id=4');
+  console.log(url + '?color=red&?ids=1');
+  console.log(url + '?color=aqua&?ids=2');
+  console.log(url + '?color=fuchsia&?ids=3');
+  console.log(url + '?color=lime&?ids=4');
 
   name = document.getElementById('userID');
-  // if(prop.id=1){
-  //   prop.color = "red";
-  // }else if(prop.id=2){
-  //   prop.color = "aqua";
-  // }else if(prop.id=3){
-  //   prop.color = "fuchsia";
-  // }else if(prop.id=4){
-  //   prop.color = "lime";
-  // }
-  let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
-
-  if (PlayerColor) {
-    prop.color = decodeURIComponent(PlayerColor[1]);
-    document.getElementById("teamcolor").style.background = prop.color;
+  if(prop.id=1){
+    prop.color = "red";
+  }else if(prop.id=2){
+    prop.color = "aqua";
+  }else if(prop.id=3){
+    prop.color = "fuchsia";
+  }else if(prop.id=4){
+    prop.color = "lime";
   }
+  // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
+
+  // if (PlayerColor) {
+  //   prop.color = decodeURIComponent(PlayerColor[1]);
+  //   document.getElementById("teamcolor").style.background = prop.color;
+  // }
 
   setTimeout(function () {
     canvas = document.getElementById('iframe');
