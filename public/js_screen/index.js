@@ -48,6 +48,7 @@ Field.prototype = {
   imageData: [],
   circles: [],
   goals: [],
+  tmp_goals: [],
   constructor: Field,
   checkNumber: function(color) {
     const count = this.circles.filter(circle => circle.color === color).length;
@@ -63,14 +64,12 @@ Field.prototype = {
 
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
-      if (this.circles[i].goal_count == this.goals.length) return true;
-
-      if ((this.goals[this.circles[i].goal_count].x - this.circles[i].locX) ** 2 +
-        (this.goals[this.circles[i].goal_count].y - this.circles[i].locY) ** 2 < ( this.goals[this.circles[i].goal_count].r2 + this.circles[i].radius ) ** 2) {
-        this.circles[i].goal_count++;
-        //time = new Date();
-        //alert(/*'%f,%f', time.getTime() - start_time.getTime(),*/command_count );
-        //alert('*テスト用' + ' ' + this.circles[i].color + 'の円は' + this.circles[i].goal_count + 'のゴールに到達しました。');
+      if (this.circles[i].goal_count == 3) return true;
+      for (var j = 0; j < this.goals.length; j++) {
+        if (this.circles[i].goal_count == this.goals[j].num - 1 && (this.goals[j].x - this.circles[i].locX) ** 2 +
+          (this.goals[j].y - this.circles[i].locY) ** 2 < (this.goals[j].r2 + this.circles[i].radius) ** 2) {
+          this.circles[i].goal_count++;
+        }
       }
     }
   },
@@ -90,7 +89,7 @@ Field.prototype = {
   },
   run: function() {
 
-    if ( location.pathname !== '/screen' ||  swch == 1) {
+    if (location.pathname !== '/screen' || swch == 1) {
 
       this.circles.forEach(circle => circle.shadeDraw(this.context));
       this.discriminateCommand();
@@ -158,7 +157,7 @@ Field.prototype = {
       black
     } = team;
 
-    if (mode == 1) {
+    if (game_mode == 0) {
       for (let i = 0; i < this.circles.length; i++) {
         switch (this.circles[i].color) {
           case 'red':
@@ -183,7 +182,7 @@ Field.prototype = {
         }
       }
       this.drawChart(context2, score);
-    } else if (mode == 2) {
+    } else if (game_mode == 1) {
       let sumScore = red + fuchsia + lime + aqua + black;
       score.red = Math.ceil(red / sumScore * 100);
       score.fuchsia = Math.ceil(fuchsia / sumScore * 100);
@@ -207,8 +206,18 @@ Field.prototype = {
     const width = this.canvas2.width;
     const height = this.size.height;
     let rate;
-    if (mode == 1) rate = 3;
-    else if (mode == 2) rate = 100;
+    let time_rate = 30;
+    let current_time = new Date();
+    let elapsed_time = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
+    let mode_name = ["お", "た", "か", "ら"];
+    if (game_mode == 0) {
+      rate = 3;
+      mode_name = ["お", "た", "か", "ら"];
+    } else if (game_mode == 1) {
+      elapsed_time -= time_rate;
+      rate = 100;
+      mode_name = ["い", "ろ", "ぬ", "り"];
+    }
     context.beginPath();
     context.fillStyle = "white";
     context.fillRect(0, 0, this.canvas2.width, height);
@@ -220,6 +229,13 @@ Field.prototype = {
     context.fillRect(105, height / 2.5, lime * width * 0.7 / rate, height / 6);
     context.fillStyle = "aqua";
     context.fillRect(105, height / 1.7, aqua * width * 0.7 / rate, height / 6);
+
+    // add
+    context.fillStyle = "black";
+    context.fillRect(105, height / 1.27, (time_rate - elapsed_time) * width * 0.7 / time_rate, height / 6);
+    // add
+
+
     context.fillStyle = "white";
     context.fillRect(105, height / 1.27 - 1, (-22) * width * 0.7 / rate, height / 6 + 2);
     context.fillStyle = "black";
@@ -228,6 +244,19 @@ Field.prototype = {
     context.fillText(fuchsia, 60, height / 5 + height / 12);
     context.fillText(lime, 60, height / 2.5 + height / 12);
     context.fillText(aqua, 60, height / 1.7 + height / 12);
+
+    // add
+    context.fillText(mode_name[0], 60, height / 1.27 + height / 6 * 1 / 5);
+    context.fillText(mode_name[1], 60, height / 1.27 + height / 6 * 2 / 5);
+    context.fillText(mode_name[2], 60, height / 1.27 + height / 6 * 3 / 5);
+    context.fillText(mode_name[3], 60, height / 1.27 + height / 6 * 4 / 5);
+
+    context.fillText("リ　　　        あ", 110, height / 1.27 + height / 6 * 1 / 5);
+    context.fillText("セ　　　        と", 110, height / 1.27 + height / 6 * 2 / 5);
+    context.fillText("ッ　　　        少", 110, height / 1.27 + height / 6 * 3 / 5);
+    context.fillText("ト　　　        し", 110, height / 1.27 + height / 6 * 4 / 5);
+    // add
+
   },
   resetScreen: function(context, black, d) {
     if (black <= 20) {
@@ -246,12 +275,31 @@ Field.prototype = {
     context.fillRect(this.size.width, 0, 55, this.canvas.height);
   },
   addCircle: function(circle) {
+    if (location.pathname !== '/screen') {
+      this.circles.length = 0;
+      this.goals.length = 0;
+
+      if (circle.mode == 0) {
+        let margin = this.size.width / 10;
+        game_mode = 0;
+        this.context.fillStyle = "black";
+        this.context.fillRect(0, 0, this.size.width, this.canvas.height);
+        this.goals = Array.from(this.tmp_goals);
+      }
+      else if (circle.mode == 1) {
+        game_mode = 1;
+        this.context.fillStyle = "black";
+        this.context.fillRect(0, 0, this.size.width, this.canvas.height);
+      }
+    }
+
+
     this.circles.push(circle);
     this.checkNumber(circle.color);
   },
 
   addGoal: function(goal) {
-    this.goals.push(goal);
+    this.tmp_goals.push(goal);
   },
 
   winner: function(score) {
@@ -302,17 +350,19 @@ Field.prototype = {
 
 
   timeEvent: function() {
-    if(mode == 2) return true;
-    let margin = this.canvas.width / 10;
-    var current_time = new Date();
-    second = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
 
-    if (second == 30) {
+    let time_limit = 30;
+    let current_time = new Date();
+    second = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
+    if ((game_mode == 1 && second == time_limit) || (game_mode == 0 && second == time_limit * 2)) return true;
+
+    let margin = this.canvas.width / 10;
+
+    if (second == time_limit) {
       this.context.fillStyle = "black";
       this.context.clearRect(0, 0, this.size.width, this.canvas.height);
-      //this.circles.length = 0;
       this.goals.length = 0;
-      mode = 2;
+      game_mode = 1;
 
       for (let i = 0; i < this.circles.length; i++) {
         switch (this.circles[i].color) {
@@ -346,16 +396,33 @@ Field.prototype = {
             this.circles[i].direction = Math.floor(Math.random() * 360);
             break;
         }
-        this.command_count = 0;
+        this.circles[i].command_count = 0;
       }
+    }
+
+    if (second == time_limit * 2) {
+      this.context.fillStyle = "black";
+      this.context.clearRect(0, 0, this.size.width, this.canvas.height);
+      this.goals.length = 0;
+      this.goals = Array.from(this.tmp_goals);
+      game_mode = 0;
+
+      let tmp_circles = [];
+      for (let i = 0; i < this.circles.length; i++) {
+        tmp_circles.push(new Circle(this.circles[i].data, this));
+      }
+      this.circles.length = 0;
+      this.circles = Array.from(tmp_circles);
+      start_time = new Date();
     }
   }
 
 
 };
 const Circle = function(data, field) {
+  this.data = data;
   const props = JSON.parse(data);
-  //if(props.hitEvent.length == 0 ) props.hitEvent = props.command;
+  if (props.hitEvent.length == 0) props.hitEvent = props.command;
   this.color = props.color;
   this.goal_count = 0;
   this.command = (function*() {
@@ -368,6 +435,7 @@ const Circle = function(data, field) {
       for (const i in props.hitEvent) yield props.hitEvent[i];
   })();
 
+  this.mode = props.mode;
   /*
     this.hitEvent = function*() {
       for (const hit of props.hitEvent) yield hit;
@@ -386,9 +454,9 @@ const Circle = function(data, field) {
       case "・ω・":
         return field.canvas.width / 300;
       case "˘ω˘":
-        return field.canvas.width / 300;
+        return 2;
       case "><":
-        return field.canvas.width / 300;
+        return 4;
       default:
         return speed;
     }
@@ -525,9 +593,9 @@ Circle.prototype = {
   discriminateCommand: function(circles) {
     if (this.command_count % 30 !== 0) return true;
     let order;
-    if (mode == 1) {
+    if (game_mode == 0) {
       order = this.command.next().value;
-    } else if (mode == 2) {
+    } else if (game_mode == 1) {
       order = this.hitEvent.next().value;
     }
     if (typeof order === "undefined") {
@@ -585,8 +653,8 @@ Circle.prototype = {
 };
 
 let swch = 0;
-let start_time;
-let mode = 1;
+let start_time = new Date();
+let game_mode = 0;
 
 window.onload = function() {
   let url = location.href;
@@ -613,31 +681,19 @@ window.onload = function() {
   field.addGoal(new Goal(0.5 * (field.size.width - margin * 2) + margin, 0.5 * (field.size.height - margin * 2) + margin, 1, field));
   field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 2, field));
   field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.25 * (field.size.height - margin * 2) + margin, 3, field));
+  field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.15 * (field.size.height - margin * 2) + margin, 2, field));
+  field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 3, field));
+  field.goals = Array.from(field.tmp_goals);
 
-  document.body.onkeydown = function(e) {
-    if (e.keyCode == 13 && location.pathname == '/screen' ) {
-      if(swch == 1) return true;
-      swch = 1;
-      start_time = new Date();
-      //alert(field.canvas.width);
+  /*   enterでスタート　←廃止
+    document.body.onkeydown = function(e) {
+      if (e.keyCode == 13 && location.pathname == '/screen') {
+        if (swch == 1) return true;
+        swch = 1;
+        start_time = new Date();
+        //alert(field.canvas.width);
+      }
     }
-    if (e.key == 'q' && location.pathname !== '/screen' ) {
-      mode = 1;
-      field.context.fillStyle = "black";
-      field.context.fillRect(0, 0, field.size.width, field.canvas.height);
-      field.circles.length = 0;
-      field.goals.length = 0;
-      field.addGoal(new Goal(0.5 * (field.size.width - margin * 2) + margin, 0.5 * (field.size.height - margin * 2) + margin, 1, field));
-      field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 2, field));
-      field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.25 * (field.size.height - margin * 2) + margin, 3, field));
-    }
-    if (e.key == 'w' && location.pathname !== '/screen' ) {
-      mode = 2;
-      field.context.fillStyle = "black";
-      field.context.fillRect(0, 0, field.size.width, field.canvas.height);
-      field.circles.length = 0;
-      field.goals.length = 0;
-    }
-  }
-
+  */
+  swch = 1; // enterでスタートを用いるならいらない
 };
