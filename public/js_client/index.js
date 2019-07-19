@@ -14,7 +14,7 @@ let prop = {
   id: "",
   command: [],  //First phase commands
   hitEvent: [], //second phase commands
-  color: "",
+  // color: "",
   mode:0
 };
 // var sio = require('socket.io'),
