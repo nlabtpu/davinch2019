@@ -322,10 +322,10 @@ function reset(){
 window.onload = function () {
   url = location.href;
   console.log(url + 'screen');
-  console.log(url + '?ss=1');
-  console.log(url + '?ss=2');
-  console.log(url + '?ss=3');
-  console.log(url + '?ss=4');
+  console.log(url + '?id=1');
+  console.log(url + '?id=2');
+  console.log(url + '?id=3');
+  console.log(url + '?id=4');
 
   name = document.getElementById('userID');
   if(prop.id=1){
@@ -339,10 +339,10 @@ window.onload = function () {
   }
   // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
 
-  // if (PlayerColor) {
+  if (PlayerColor) {
   //   prop.color = decodeURIComponent(PlayerColor[1]);
-  //   document.getElementById("teamcolor").style.background = prop.color;
-  // }
+    document.getElementById("teamcolor").style.background = prop.color;
+  }
 
   setTimeout(function () {
     canvas = document.getElementById('iframe');
