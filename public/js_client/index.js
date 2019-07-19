@@ -322,19 +322,19 @@ function reset(){
 window.onload = function () {
   url = location.href;
   console.log(url + 'screen');
-  console.log(url + '?color=red');
+  console.log(url + '?color=red&id=1');
   // console.log(url + '?color=aqua');
   // console.log(url + '?color=fuchsia');
   // console.log(url + '?color=lime');
 
   name = document.getElementById('userID');
-  if(prop.id=1){
+  if(prop.id==1){
     prop.color = "aqua";
-  }else if(prop.id=2){
+  }else if(prop.id==2){
     prop.color = "red";
-  }else if(prop.id=3){
+  }else if(prop.id==3){
     prop.color = "fuchsia";
-  }else if(prop.id=4){
+  }else if(prop.id==4){
     prop.color = "lime";
   }
   // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
