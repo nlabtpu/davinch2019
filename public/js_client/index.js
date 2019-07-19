@@ -323,9 +323,9 @@ window.onload = function () {
   url = location.href;
   console.log(url + 'screen');
   console.log(url + '?color=red&?id=1');
-  console.log(url + '?color=aqua&?id=2');
-  console.log(url + '?color=fuchsia&?ids=3');
-  console.log(url + '?color=lime&?ids=4');
+  // console.log(url + '?color=aqua&?id=2');
+  // console.log(url + '?color=fuchsia&?ids=3');
+  // console.log(url + '?color=lime&?ids=4');
 
   name = document.getElementById('userID');
   if(prop.id=1){
