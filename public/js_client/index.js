@@ -271,7 +271,7 @@ function addSPC() {
 }
 
 function send(id) {
-  prop.id = name.value;
+  prop.id = socket_id
 
   if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
     alert("入力されていない部分があります");
