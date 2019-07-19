@@ -24,13 +24,6 @@ class Goal {
 }
 
 
-var io = require('socket.io');
-io.sockets.on('connection', function(socket) {
-
-var socket_id = socket.id;
-});
-
-
 
 const Field = function(e, c, d) {
   this.canvas = e;
