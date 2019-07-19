@@ -327,7 +327,7 @@ window.onload = function () {
   console.log(url + '?color=lime&?id=4');
 
   name = document.getElementById('userID');
-  // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
+  let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
 
   if (PlayerColor) {
     prop.color = decodeURIComponent(PlayerColor[1]);
