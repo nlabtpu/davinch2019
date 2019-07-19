@@ -329,9 +329,9 @@ window.onload = function () {
 
   name = document.getElementById('userID');
   if(prop.id=1){
-    prop.color = "red";
+    prop.color = "qaua";
   }else if(prop.id=2){
-    prop.color = "aqua";
+    prop.color = "red";
   }else if(prop.id=3){
     prop.color = "fuchsia";
   }else if(prop.id=4){
