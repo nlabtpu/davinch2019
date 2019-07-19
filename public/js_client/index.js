@@ -17,22 +17,22 @@ let prop = {
   color: "",
   mode:0
 };
-var sio = require('socket.io'),
-    app = require('express').createServer();
+// var sio = require('socket.io'),
+//     app = require('express').createServer();
 
-app.listen(8080);
-sio = sio.listen(app);
+// app.listen(PORT);
+// sio = sio.listen(app);
 
-sio.on('connection', function (client) {
-  console.log('client connected');
+// sio.on('connection', function (client) {
+//   console.log('client connected');
 
-  // send the clients id to the client itself.
-  client.send(client.id);
+//   // send the clients id to the client itself.
+//   client.send(client.id);
 
-  client.on('disconnect', function () {
-    console.log('client disconnected');
-  });
-});
+//   client.on('disconnect', function () {
+//     console.log('client disconnected');
+//   });
+// });
 
 /*
 function GetKeyCode(event){
@@ -327,7 +327,7 @@ window.onload = function () {
   console.log(url + '?color=lime&?id=4');
 
   name = document.getElementById('userID');
-  let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
+  // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
 
   if (PlayerColor) {
     prop.color = decodeURIComponent(PlayerColor[1]);
