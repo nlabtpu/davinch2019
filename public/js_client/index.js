@@ -339,10 +339,10 @@ window.onload = function () {
   }
   // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
 
-  if (PlayerColor) {
+  // if (PlayerColor) {
   //   prop.color = decodeURIComponent(PlayerColor[1]);
-    document.getElementById("teamcolor").style.background = prop.color;
-  }
+  //   document.getElementById("teamcolor").style.background = prop.color;
+  // }
 
   setTimeout(function () {
     canvas = document.getElementById('iframe');
