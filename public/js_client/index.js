@@ -340,7 +340,7 @@ window.onload = function () {
   // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
 
   if (PlayerColor) {
-    prop.color = decodeURIComponent(PlayerColor[1]);
+    prop.color = PlayerColor;
     document.getElementById("teamcolor").style.background = prop.color;
   }
 
