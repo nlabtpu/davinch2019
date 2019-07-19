@@ -254,7 +254,7 @@ function createBlock(className){
 
 function addElement(id, commands, className){
   console.log(prop);
-  let list = document.getElementById(id);
+  // let list = document.getElementById(id);
   list.innerHTML = "";
   commands.map(createBlock(className)).forEach(function(el){
     return list.appendChild(el);
@@ -322,16 +322,16 @@ function reset(){
 window.onload = function () {
   url = location.href;
   console.log(url + 'screen');
-  console.log(url + '?color=red');
-  // console.log(url + '?color=aqua&?id=2');
-  // console.log(url + '?color=fuchsia&?ids=3');
-  // console.log(url + '?color=lime&?ids=4');
+  console.log(url + '?color=red&?id=1');
+  console.log(url + '?color=aqua&?id=2');
+  console.log(url + '?color=fuchsia&?ids=3');
+  console.log(url + '?color=lime&?ids=4');
 
   name = document.getElementById('userID');
   if(prop.id=1){
-    prop.color = "qaua";
-  }else if(prop.id=2){
     prop.color = "red";
+  }else if(prop.id=2){
+    prop.color = "aqua";
   }else if(prop.id=3){
     prop.color = "fuchsia";
   }else if(prop.id=4){
