@@ -254,7 +254,7 @@ function createBlock(className){
 
 function addElement(id, commands, className){
   console.log(prop);
-  // let list = document.getElementById(id);
+  let list = document.getElementById(id);
   list.innerHTML = "";
   commands.map(createBlock(className)).forEach(function(el){
     return list.appendChild(el);
@@ -271,7 +271,7 @@ function addSPC() {
 }
 
 function send(id) {
-  prop.id = name.value;
+  prop.id = socket.id;
 
   if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
     alert("入力されていない部分があります");
@@ -329,7 +329,7 @@ window.onload = function () {
 
   name = document.getElementById('userID');
   if(prop.id=1){
-    prop.color = "red";
+    prop.color = "aqua";
   }else if(prop.id=2){
     prop.color = "aqua";
   }else if(prop.id=3){
