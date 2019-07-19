@@ -322,10 +322,10 @@ function reset(){
 window.onload = function () {
   url = location.href;
   console.log(url + 'screen');
-  console.log(url + 'id=1');
-  console.log(url + 'id=2');
-  console.log(url + 'id=3');
-  console.log(url + 'id=4');
+  console.log(url + '?color=red&?id=1');
+  console.log(url + '?color=aqua&?id=2');
+  console.log(url + '?color=fuchsia&?id=3');
+  console.log(url + '?color=lime&?id=4');
 
   name = document.getElementById('userID');
   if(prop.id=1){
