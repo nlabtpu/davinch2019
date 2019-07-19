@@ -271,7 +271,7 @@ function addSPC() {
 }
 
 function send(id) {
-  prop.id = socket_id
+  prop.id = name.value;
 
   if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
     alert("入力されていない部分があります");
@@ -324,12 +324,12 @@ window.onload = function () {
   console.log(url + 'screen');
   console.log(url + '?color=red&?id=1');
   console.log(url + '?color=aqua&?id=2');
-  // console.log(url + '?color=fuchsia&?id=3');
-  // console.log(url + '?color=lime&?id=4');
+  // console.log(url + '?color=fuchsia&?ids=3');
+  // console.log(url + '?color=lime&?ids=4');
 
   name = document.getElementById('userID');
   if(prop.id=1){
-    prop.color = "red";
+    prop.color = "aqua";
   }else if(prop.id=2){
     prop.color = "aqua";
   }else if(prop.id=3){
