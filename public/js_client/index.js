@@ -1,61 +1,20 @@
 "use strict";
-//document.onkeydown = GetKeyCode;
-//document.onkeyup = OffKeyCode;
 document.onkeydown = keydown;
 document.onkeyup = keyup;
-//let KeyState = new Array();
+let Keystate = new Array();
 let c = 0;  //counter
 let canvas;
-let canAdd = true;
+//let canAdd = true;
 let url;
 let name;
-let vid;  //vector id
+let cid;  //command id
 let prop = {
   id: "",
   command: [],  //First phase commands
   hitEvent: [], //second phase commands
   color: "",
-  mode: 0
+  mode:0
 };
-
-
-
-/*
-function GetKeyCode(event){
-  switch(event.key){
-    case 'a':
-      KeyState[0] = true;
-      break;
-    case 'b':
-      KeyState[1] = true;
-      break;
-    case 'e':
-      KeyState[2] = true;
-      break;
-  }
-}
-
-function OffKeyCode(event){
-  input();
-  switch(event.key){
-    case 'a':
-      KeyState[0] = false;
-      break;
-    case 'b':
-      KeyState[1] = false;
-      break;
-    case 'e':
-      KeyState[2] = false;
-      break;
-  }
-}
-
-function input(){
-  if(KeyState[0] == true && KeyState[1] == true){
-    console.log("true");
-  }
-}
-*/
 
 function getButton(discriminate) {
   if ("go" in discriminate) {
@@ -94,53 +53,56 @@ function keydown(event){
   event_block:{
     switch(event.key){
       case '1':
-        vid = "left15";
+        Keystate[0] = true;
         break;
       case '2':
-        vid = "go";
+        Keystate[1] = true;
         break;
       case '3':
-        vid = "right15";
+        Keystate[2] = true;
         break;
       case '4':
-       vid = "left90";
-        break;
-      case '5':
-        vid = "right90";
-        break;
-      case '6':
-        vid = "left135";
-        break;
-      case '7':
-        vid = "back";
-        break;
-      case '8':
-        vid = "right135";
+        Keystate[3] = true;
         break;
       case 'r':
-        vid = "reset";
+        cid = "reset";
         break;
       case 's':
-        vid = "send";
+        cid = "send";
         break;
       case 't':
-        vid = "subsend";
-        break;
-        case 'c':
-        vid = undefined;
+        cid = "subsend";
         break;
       case 'd':
-        vid = "onereturn";
+        cid = "onereturn";
         break;
+      default:
+        cid = undefined;
     }
 
-    if(vid == undefined) break event_block;
-    console.log(vid);
-    if(c%2 == 0 || event.key == ('r' || 's')) $("#"+vid).addClass("pressing");
-    else $("#"+vid+"Final").addClass("pressing");
+    if(Keystate[0] == true){
+      if(Keystate[1] == true) cid = "right15";
+      else if(Keystate[3] == true) cid = "left15";
+      else cid = "go";
+    }
+    else if(Keystate[2] == true){
+      if(Keystate[1] == true) cid = "right135";
+      else if(Keystate[3] == true) cid = "left135";
+      else cid = "back";
+    }
+    else if(Keystate[1] == true) cid = "right90";
+    else if(Keystate[3] == true) cid = "left90";
+
+    if(cid == undefined) break event_block;
+
+    let pressing = function(){
+      if(c%2 == 0 || event.key == 'r' || event.key == 's') $("#"+cid).addClass("pressing");
+      else $("#"+cid+"Final").addClass("pressing");
+    }
+
+    setTimeout(pressing,50)
   }
 }
-
 
 function keyup(event){
   event_block:{
@@ -150,45 +112,38 @@ function keyup(event){
     }
 
     let command;
+
+    if(Keystate[0] == true){
+      if(Keystate[1] == true) command = {roll: 15};
+      else if(Keystate[3] == true) command = {roll: -15};
+      else command = {go: 15};
+    }
+    else if(Keystate[2] == true){
+      if(Keystate[1] == true) command = {roll: 135};
+      else if(Keystate[3] == true) command = {roll: -135};
+    else command = {roll: 180};
+    }
+    else if(Keystate[1] == true) command = {roll: 90};
+    else if(Keystate[3] == true) command = {roll: -90};
+
+    for(let i=0;i<4;i++) Keystate[i] = false;
+
     switch(event.key){
-      case '1':
-        command = {roll: -15};
-        break;
-      case '2':
-        command = {go: 15};
-        break;
-      case '3':
-        command = {roll: 15};
-        break;
-      case '4':
-        command = {roll: -90};
-        break;
-      case '5':
-        command = {roll: 90};
-        break;
-      case '6':
-        command = {roll: -135};
-        break;
-      case '7':
-        command = {roll: 135};
-        break;
-      case '8':
-        command = {roll: 180};
-        break;
       case 'r':
         reset();
-        $("#"+vid).removeClass("pressing");
         break;
       case 's':
-        if (!canAdd) return;
+        /*if (!canAdd) return;
         canAdd = false;
         setTimeout(function () {
           return canAdd = true;
-        }, 5000);
+        }, 5000);*/
+        $("#"+cid).removeClass("pressing");
         send('message');
-        $("#"+vid).removeClass("pressing");
         break;
       case 't': //demo
+        if(c%2==0) $("#"+cid).removeClass("pressing");
+        else $("#"+cid+"Final").removeClass("pressing");
         send('demo' + socket.id);
         break;
       case 'c':
@@ -202,8 +157,8 @@ function keyup(event){
 
     if(command == undefined) break event_block;
 
-    if(event.key != 'c' && c%2 == 0){
-      $("#"+vid).removeClass("pressing");
+    if(c%2 == 0){
+      $("#"+cid).removeClass("pressing");
 
       if(event.key == 'd'){
         prop.command.pop();
@@ -214,8 +169,8 @@ function keyup(event){
         addFPC();
       }
     }
-    else if(event.key != 'c'){
-      $("#"+vid+"Final").removeClass("pressing");
+    else{
+      $("#"+cid+"Final").removeClass("pressing");
 
       if(event.key == 'd'){
         prop.hitEvent.pop();
@@ -303,6 +258,7 @@ function reset(){
     $("#second").removeClass("active");
     $("#first").addClass("active");
   }
+  $("#"+cid).removeClass("pressing");
 }
 
 window.onload = function () {
