@@ -328,13 +328,13 @@ window.onload = function () {
   // console.log(url + '?color=lime');
 
   name = document.getElementById('userID');
-  if(prop.id==1){
+  if(prop.id=1){
     prop.color = "aqua";
-  }else if(prop.id==2){
+  }else if(prop.id=2){
     prop.color = "red";
-  }else if(prop.id==3){
+  }else if(prop.id=3){
     prop.color = "fuchsia";
-  }else if(prop.id==4){
+  }else if(prop.id=4){
     prop.color = "lime";
   }
   // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
