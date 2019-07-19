@@ -328,19 +328,19 @@ window.onload = function () {
   console.log(url + '?color=lime&?id=4');
 
   name = document.getElementById('userID');
-  if(prop.id=1){
-    let PlayerColor = "red";
-  }else if(prop.id=2){
-    let PlayerColor = "aqua";
-  }else if(prop.id=3){
-    let PlayerColor = "fuchsia";
-  }else if(prop.id=4){
-    let PlayerColor = "lime";
-  }
-  // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
+  // if(prop.id=1){
+  //   let PlayerColor = "red";
+  // }else if(prop.id=2){
+  //   let PlayerColor = "aqua";
+  // }else if(prop.id=3){
+  //   let PlayerColor = "fuchsia";
+  // }else if(prop.id=4){
+  //   let PlayerColor = "lime";
+  // }
+  let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
 
   if (PlayerColor) {
-    prop.color = PlayerColor;
+    prop.color = decodeURIComponent(PlayerColor[1]);
     document.getElementById("teamcolor").style.background = prop.color;
   }
 
