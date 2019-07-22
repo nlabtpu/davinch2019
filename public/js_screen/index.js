@@ -24,6 +24,8 @@ class Goal {
 }
 
 
+
+
 const Field = function(e, c, d) {
   this.canvas = e;
   this.canvas2 = c;
