@@ -1,9 +1,7 @@
 "use strict";
-//document.onkeydown = GetKeyCode;
-//document.onkeyup = OffKeyCode;
 document.onkeydown = keydown;
 document.onkeyup = keyup;
-//let KeyState = new Array();
+let Keystate = new Array();
 let c = 0;  //counter
 let canvas;
 //let canAdd = true;
@@ -17,60 +15,6 @@ let prop = {
   color: "",
   mode:0
 };
-// var sio = require('socket.io'),
-//     app = require('express').createServer();
-
-// app.listen(PORT);
-// sio = sio.listen(app);
-
-// sio.on('connection', function (client) {
-//   console.log('client connected');
-
-//   // send the clients id to the client itself.
-//   client.send(client.id);
-
-//   client.on('disconnect', function () {
-//     console.log('client disconnected');
-//   });
-// });
-
-/*
-function GetKeyCode(event){
-  switch(event.key){
-    case 'a':
-      KeyState[0] = true;
-      break;
-    case 'b':
-      KeyState[1] = true;
-      break;
-    case 'e':
-      KeyState[2] = true;
-      break;
-  }
-}
-
-function OffKeyCode(event){
-  input();
-  switch(event.key){
-    case 'a':
-      KeyState[0] = false;
-      break;
-    case 'b':
-      KeyState[1] = false;
-      break;
-    case 'e':
-      KeyState[2] = false;
-      break;
-  }
-}
-
-function input(){
-  if(KeyState[0] == true && KeyState[1] == true){
-    console.log("true");
-  }
-}
-*/
-
 
 function getButton(discriminate) {
   if ("go" in discriminate) {
@@ -109,28 +53,16 @@ function keydown(event){
   event_block:{
     switch(event.key){
       case '1':
-        cid = "left15";
+        Keystate[0] = true;
         break;
       case '2':
-        cid = "go";
+        Keystate[1] = true;
         break;
       case '3':
-        cid = "right15";
+        Keystate[2] = true;
         break;
       case '4':
-       cid = "left90";
-        break;
-      case '5':
-        cid = "right90";
-        break;
-      case '6':
-        cid = "left135";
-        break;
-      case '7':
-        cid = "back";
-        break;
-      case '8':
-        cid = "right135";
+        Keystate[3] = true;
         break;
       case 'r':
         cid = "reset";
@@ -148,45 +80,55 @@ function keydown(event){
         cid = undefined;
     }
 
+    if(Keystate[0] == true){
+      if(Keystate[1] == true) cid = "right15";
+      else if(Keystate[3] == true) cid = "left15";
+      else cid = "go";
+    }
+    else if(Keystate[2] == true){
+      if(Keystate[1] == true) cid = "right135";
+      else if(Keystate[3] == true) cid = "left135";
+      else cid = "back";
+    }
+    else if(Keystate[1] == true) cid = "right90";
+    else if(Keystate[3] == true) cid = "left90";
+
     if(cid == undefined) break event_block;
-    if(c%2 == 0 || event.key == 'r' || event.key == 's') $("#"+cid).addClass("pressing");
-    else $("#"+cid+"Final").addClass("pressing");
+
+    let pressing = function(){
+      if(c%2 == 0 || event.key == 'r' || event.key == 's') $("#"+cid).addClass("pressing");
+      else $("#"+cid+"Final").addClass("pressing");
+    }
+
+    setTimeout(pressing,50)
   }
 }
 
 function keyup(event){
   event_block:{
-    // if(!url.match("color")) {
-    //   alert("色を指定してください");
-    //   break event_block;
-    // }
+    if(!url.match("color")) {
+      alert("色を指定してください");
+      break event_block;
+    }
 
     let command;
+
+    if(Keystate[0] == true){
+      if(Keystate[1] == true) command = {roll: 15};
+      else if(Keystate[3] == true) command = {roll: -15};
+      else command = {go: 15};
+    }
+    else if(Keystate[2] == true){
+      if(Keystate[1] == true) command = {roll: 135};
+      else if(Keystate[3] == true) command = {roll: -135};
+    else command = {roll: 180};
+    }
+    else if(Keystate[1] == true) command = {roll: 90};
+    else if(Keystate[3] == true) command = {roll: -90};
+
+    for(let i=0;i<4;i++) Keystate[i] = false;
+
     switch(event.key){
-      case '1':
-        command = {roll: -15};
-        break;
-      case '2':
-        command = {go: 15};
-        break;
-      case '3':
-        command = {roll: 15};
-        break;
-      case '4':
-        command = {roll: -90};
-        break;
-      case '5':
-        command = {roll: 90};
-        break;
-      case '6':
-        command = {roll: -135};
-        break;
-      case '7':
-        command = {roll: 135};
-        break;
-      case '8':
-        command = {roll: 180};
-        break;
       case 'r':
         reset();
         break;
@@ -322,27 +264,18 @@ function reset(){
 window.onload = function () {
   url = location.href;
   console.log(url + 'screen');
-  console.log(url + '?color=red&id=1');
-  // console.log(url + '?color=aqua');
-  // console.log(url + '?color=fuchsia');
-  // console.log(url + '?color=lime');
+  console.log(url + '?color=red&?id=1');
+  console.log(url + '?color=aqua&?id=2');
+  console.log(url + '?color=fuchsia&?id=3');
+  console.log(url + '?color=lime&?id=4');
 
   name = document.getElementById('userID');
-  if(prop.id==1){
-    prop.color = "aqua";
-  }else if(prop.id==2){
-    prop.color = "red";
-  }else if(prop.id==3){
-    prop.color = "fuchsia";
-  }else if(prop.id==4){
-    prop.color = "lime";
-  }
-  // let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
+  let PlayerColor = location.search.match(/color=(.*?)(&|$)/);
 
-  // if (PlayerColor) {
-  //   prop.color = decodeURIComponent(PlayerColor[1]);
-  //   document.getElementById("teamcolor").style.background = prop.color;
-  // }
+  if (PlayerColor) {
+    prop.color = decodeURIComponent(PlayerColor[1]);
+    document.getElementById("teamcolor").style.background = prop.color;
+  }
 
   setTimeout(function () {
     canvas = document.getElementById('iframe');
