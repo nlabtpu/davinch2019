@@ -423,6 +423,7 @@ const Circle = function(data, field) {
   this.data = data;
   const props = JSON.parse(data);
   if (props.hitEvent.length == 0) props.hitEvent = props.command;
+  if (props.command.length == 0) props.command = props.hitEvent;
   this.color = props.color;
   this.goal_count = 0;
   this.command = (function*() {
