@@ -3,6 +3,7 @@ document.onkeydown = keydown;
 document.onkeyup = keyup;
 let Keystate = new Array();
 let c = 0;  //counter
+let f = 0; //face counter
 let canvas;
 //let canAdd = true;
 let url;
@@ -77,6 +78,7 @@ function keydown(event){
         cid = "onereturn";
         break;
       default:
+        console.log(event.key);
         cid = undefined;
     }
 
@@ -152,6 +154,18 @@ function keyup(event){
         break;
       case 'd':
         command = "delete";
+        break;
+      case 'q': //１つ前の顔文字
+        if(f>0){
+          f--;
+          face();
+        }
+        break;
+      case 'w': //次の顔文字
+        if(f<3){
+          f++;
+          face();
+        }
         break;
     }
 
@@ -259,6 +273,13 @@ function reset(){
     $("#first").addClass("active");
   }
   $("#"+cid).removeClass("pressing");
+}
+
+function face(){
+  if(f == 0) document.getElementById("userID").value = "";
+  else if(f == 1) document.getElementById("userID").value = "・ω・";
+  else if(f == 2) document.getElementById("userID").value = "˘ω˘";
+  else document.getElementById("userID").value = "><";
 }
 
 window.onload = function () {
