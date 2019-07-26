@@ -232,9 +232,12 @@ function send(id) {
     alert("入力されていない部分があります");
     return false;
   }
-  else if(id != "message"){
-    console.log(prop);
-    socket.emit(id, JSON.stringify(prop));
+
+  if(id != "message"){
+    if((mode == 0 && prop.command.length !== 0) || (mode == 1 && prop.hitEvent.length !== 0)){
+      console.log(prop);
+      socket.emit(id, JSON.stringify(prop));
+    }
   }
   else if (prop.command.length === 0 || prop.hitEvent.length === 0) {
     alert("入力されていない部分があります");
