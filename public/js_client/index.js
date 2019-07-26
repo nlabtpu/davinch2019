@@ -234,9 +234,13 @@ function send(id) {
   }
 
   if(id != "message"){
-    if((mode == 0 && prop.command.length !== 0) || (mode == 1 && prop.hitEvent.length !== 0)){
+    if((mode == 0 && prop.command.length != 0) || (mode == 1 && prop.hitEvent.length != 0)){
       console.log(prop);
       socket.emit(id, JSON.stringify(prop));
+    }
+    else{
+      alert("入力されていない部分があります");
+      return false;
     }
   }
   else if (prop.command.length === 0 || prop.hitEvent.length === 0) {
