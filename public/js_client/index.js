@@ -78,7 +78,6 @@ function keydown(event){
         cid = "onereturn";
         break;
       default:
-        console.log(event.key);
         cid = undefined;
     }
 
@@ -156,7 +155,7 @@ function keyup(event){
         command = "delete";
         break;
       case 'q': //１つ前の顔文字
-        if(f>0){
+        if(f>1){
           f--;
           face();
         }
@@ -229,14 +228,17 @@ function addSPC() {
 function send(id) {
   prop.id = name.value;
 
-  if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
+  if((prop.command.length === 0 && prop.hitEvent.length === 0) || prop.id === ""){
     alert("入力されていない部分があります");
     return false;
   }
-
-  if(id != "message"){
+  else if(id != "message"){
     console.log(prop);
     socket.emit(id, JSON.stringify(prop));
+  }
+  else if (prop.command.length === 0 || prop.hitEvent.length === 0) {
+    alert("入力されていない部分があります");
+    return false;
   }
   else if(window.confirm("アップロードしてもよろしいですか？")){
     alert("アップロードしました。");
@@ -276,8 +278,7 @@ function reset(){
 }
 
 function face(){
-  if(f == 0) document.getElementById("userID").value = "";
-  else if(f == 1) document.getElementById("userID").value = "・ω・";
+  if(f == 1) document.getElementById("userID").value = "・ω・";
   else if(f == 2) document.getElementById("userID").value = "˘ω˘";
   else document.getElementById("userID").value = "><";
 }
