@@ -234,7 +234,7 @@ function send(id) {
   }
 
   if(id != "message"){
-    if((mode == 0 && prop.command.length != 0) || (mode == 1 && prop.hitEvent.length != 0)){
+    if((prop.mode == 0 && prop.command.length != 0) || (prop.mode == 1 && prop.hitEvent.length != 0)){
       console.log(prop);
       socket.emit(id, JSON.stringify(prop));
     }
