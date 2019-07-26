@@ -3,6 +3,7 @@ document.onkeydown = keydown;
 document.onkeyup = keyup;
 let Keystate = new Array();
 let c = 0;  //counter
+let f = 0; //face counter
 let canvas;
 //let canAdd = true;
 let url;
@@ -153,6 +154,18 @@ function keyup(event){
       case 'd':
         command = "delete";
         break;
+      case 'q': //１つ前の顔文字
+        if(f>1){
+          f--;
+          face();
+        }
+        break;
+      case 'w': //次の顔文字
+        if(f<3){
+          f++;
+          face();
+        }
+        break;
     }
 
     if(command == undefined) break event_block;
@@ -215,14 +228,20 @@ function addSPC() {
 function send(id) {
   prop.id = name.value;
 
-  if (prop.command.length === 0 || prop.hitEvent.length === 0 || prop.id === "") {
+  if((prop.command.length === 0 && prop.hitEvent.length === 0) || prop.id === ""){
     alert("入力されていない部分があります");
     return false;
   }
 
   if(id != "message"){
-    console.log(prop);
-    socket.emit(id, JSON.stringify(prop));
+    if((mode == 0 && prop.command.length !== 0) || (mode == 1 && prop.hitEvent.length !== 0)){
+      console.log(prop);
+      socket.emit(id, JSON.stringify(prop));
+    }
+  }
+  else if (prop.command.length === 0 || prop.hitEvent.length === 0) {
+    alert("入力されていない部分があります");
+    return false;
   }
   else if(window.confirm("アップロードしてもよろしいですか？")){
     alert("アップロードしました。");
@@ -259,6 +278,12 @@ function reset(){
     $("#first").addClass("active");
   }
   $("#"+cid).removeClass("pressing");
+}
+
+function face(){
+  if(f == 1) document.getElementById("userID").value = "・ω・";
+  else if(f == 2) document.getElementById("userID").value = "˘ω˘";
+  else document.getElementById("userID").value = "><";
 }
 
 window.onload = function () {
