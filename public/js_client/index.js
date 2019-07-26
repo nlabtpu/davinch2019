@@ -9,6 +9,7 @@ let canvas;
 let url;
 let name;
 let cid;  //command id
+let bcid; //before command id;
 let prop = {
   id: "",
   command: [],  //First phase commands
@@ -96,12 +97,14 @@ function keydown(event){
 
     if(cid == undefined) break event_block;
 
-    let pressing = function(){
-      if(c%2 == 0 || event.key == 'r' || event.key == 's') $("#"+cid).addClass("pressing");
-      else $("#"+cid+"Final").addClass("pressing");
+    if(bcid != cid){
+      $("#"+bcid).removeClass("pressing");
+      $("#"+bcid+"Final").removeClass("pressing");
     }
 
-    setTimeout(pressing,50)
+    if(c%2 == 0 || event.key == 'r' || event.key == 's') $("#"+cid).addClass("pressing");
+    else $("#"+cid+"Final").addClass("pressing");
+    bcid = cid;
   }
 }
 
@@ -243,7 +246,7 @@ function send(id) {
       return false;
     }
   }
-  else if (prop.command.length === 0 || prop.hitEvent.length === 0) {
+  else if (prop.command.length === 0 || prop.hitEvent.length === 0){
     alert("入力されていない部分があります");
     return false;
   }
