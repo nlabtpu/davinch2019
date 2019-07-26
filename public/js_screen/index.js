@@ -209,10 +209,10 @@ Field.prototype = {
     let time_rate = 30;
     let current_time = new Date();
     let elapsed_time = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
-    let mode_name = ["お", "た", "か", "ら"];
+    let mode_name = ["お", "さ", "ん", "ぽ"];
     if (game_mode == 0) {
       rate = 3;
-      mode_name = ["お", "た", "か", "ら"];
+      mode_name = ["お", "さ", "ん", "ぽ"];
     } else if (game_mode == 1) {
       elapsed_time -= time_rate;
       rate = 100;
@@ -423,6 +423,7 @@ const Circle = function(data, field) {
   this.data = data;
   const props = JSON.parse(data);
   if (props.hitEvent.length == 0) props.hitEvent = props.command;
+  if (props.command.length == 0) props.command = props.hitEvent;
   this.color = props.color;
   this.goal_count = 0;
   this.command = (function*() {
@@ -445,6 +446,7 @@ const Circle = function(data, field) {
   this.command.go = 10;
   this.id = props.id;
   let speed = 1;
+  let radius = 1;
   this.width = field.size.width;
   this.height = field.size.height;
   this.margin = this.width / 10;
@@ -452,15 +454,28 @@ const Circle = function(data, field) {
   this.speed = (speed => {
     switch (this.id) {
       case "・ω・":
-        return field.canvas.width / 300;
+        return field.size.width / 250;
       case "˘ω˘":
-        return 2;
+        return field.size.width / 200;
       case "><":
-        return 4;
+        return field.size.width / 150;
       default:
         return speed;
     }
   })(this.speed);
+
+  this.radius = (radius => {
+    switch (this.id) {
+      case "・ω・":
+        return field.size.width / 45;
+      case "˘ω˘":
+        return field.size.width / 60;
+      case "><":
+        return field.size.width / 80;
+      default:
+        return speed;
+    }
+  })(this.radius);
 
   //if(location.pathname == '/screen') this.speed *= 1.147
 
@@ -500,7 +515,8 @@ const Circle = function(data, field) {
       this.direction = Math.floor(Math.random() * 360);
       break;
   }
-  this.radius = this.width / /*(this.speed + 1) /*/ 65;
+  //this.radius = this.width / /*(this.speed + 1) /*/ 65;
+  //this.radius = 40 / this.speed ;
   //this.direction = Math.floor(Math.random() * 360);
 
   this.flag = 0;
@@ -529,7 +545,7 @@ Circle.prototype = {
     let textLocX = this.locX - this.radius * 1 / 3 - 20 / this.radius;
     let textLocY = this.locY - this.radius * 1 / 50 + 20 / this.radius;
     context.fillStyle = 'black';
-    let pixel = String(Math.floor(this.width / 120)) + 'px'
+    let pixel = String(Math.floor(this.width / 200)) + 'px'
     context.font = 'bold' + ' ' + pixel + ' ' + 'Arial';
     context.fillText(this.id, textLocX + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + this.radius / 6 * (Math.sin(direction) + 1 / 3));
     context.fillStyle = 'white';
