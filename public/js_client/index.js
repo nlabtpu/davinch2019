@@ -279,6 +279,7 @@ function reset(){
   addFPC();
   addSPC();
   c=0;
+  f=0;
   prop.mode=0;
   if($("#second").hasClass("active")) {
     $("#second").removeClass("active");
