@@ -3,7 +3,7 @@ class Goal {
     this.x = x;
     this.y = y;
     this.num = num;
-    this.r1 = field.size.width / 50;
+    //this.r1 = field.size.width / 50;
     this.r2 = field.size.width / 25;
   }
   setGoal(context) {
@@ -12,12 +12,13 @@ class Goal {
     context.strokeStyle = 'white';
     context.fillStyle = 'white';
 
-    context.arc(this.x, this.y, this.r1, 0, 2 * Math.PI);
-    context.stroke();
+    //context.arc(this.x, this.y, this.r1, 0, 2 * Math.PI);
+    //context.stroke();
 
     context.beginPath();
     context.arc(this.x, this.y, this.r2, 0, 2 * Math.PI);
-    context.stroke();
+    context.fill();
+    context.fillStyle = 'black';
     context.font = "16px 'ＭＳ ゴシック'";
     context.fillText(this.num, this.x - 4, this.y + 4);
   }
@@ -64,11 +65,12 @@ Field.prototype = {
 
   goalCheck: function() {
     for (var i = 0; i < this.circles.length; i++) {
-      if (this.circles[i].goal_count == 3) return true;
-      for (var j = 0; j < this.goals.length; j++) {
-        if (this.circles[i].goal_count == this.goals[j].num - 1 && (this.goals[j].x - this.circles[i].locX) ** 2 +
-          (this.goals[j].y - this.circles[i].locY) ** 2 < (this.goals[j].r2 + this.circles[i].radius) ** 2) {
-          this.circles[i].goal_count++;
+      if (this.circles[i].goal_count !== 3) {
+        for (var j = 0; j < this.goals.length; j++) {
+          if (this.circles[i].goal_count == this.goals[j].num - 1 && (this.goals[j].x - this.circles[i].locX) ** 2 +
+            (this.goals[j].y - this.circles[i].locY) ** 2 < (this.goals[j].r2 + this.circles[i].radius) ** 2) {
+            this.circles[i].goal_count++;
+          }
         }
       }
     }
@@ -209,10 +211,10 @@ Field.prototype = {
     let time_rate = 30;
     let current_time = new Date();
     let elapsed_time = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
-    let mode_name = ["お", "さ", "ん", "ぽ"];
+    let mode_name = ["お", "た", "か", "ら"];
     if (game_mode == 0) {
       rate = 3;
-      mode_name = ["お", "さ", "ん", "ぽ"];
+      mode_name = ["お", "た", "か", "ら"];
     } else if (game_mode == 1) {
       elapsed_time -= time_rate;
       rate = 100;
@@ -285,8 +287,7 @@ Field.prototype = {
         this.context.fillStyle = "black";
         this.context.fillRect(0, 0, this.size.width, this.canvas.height);
         this.goals = Array.from(this.tmp_goals);
-      }
-      else if (circle.mode == 1) {
+      } else if (circle.mode == 1) {
         game_mode = 1;
         this.context.fillStyle = "black";
         this.context.fillRect(0, 0, this.size.width, this.canvas.height);
@@ -423,7 +424,6 @@ const Circle = function(data, field) {
   this.data = data;
   const props = JSON.parse(data);
   if (props.hitEvent.length == 0) props.hitEvent = props.command;
-  if (props.command.length == 0) props.command = props.hitEvent;
   this.color = props.color;
   this.goal_count = 0;
   this.command = (function*() {
@@ -446,7 +446,6 @@ const Circle = function(data, field) {
   this.command.go = 10;
   this.id = props.id;
   let speed = 1;
-  let radius = 1;
   this.width = field.size.width;
   this.height = field.size.height;
   this.margin = this.width / 10;
@@ -454,11 +453,11 @@ const Circle = function(data, field) {
   this.speed = (speed => {
     switch (this.id) {
       case "・ω・":
-        return field.size.width / 250;
+        return field.size.width / 300;
       case "˘ω˘":
-        return field.size.width / 200;
+        return field.size.width / 250;
       case "><":
-        return field.size.width / 150;
+        return field.size.width / 200;
       default:
         return speed;
     }
@@ -473,7 +472,7 @@ const Circle = function(data, field) {
       case "><":
         return field.size.width / 80;
       default:
-        return speed;
+        return radius;
     }
   })(this.radius);
 
@@ -516,7 +515,6 @@ const Circle = function(data, field) {
       break;
   }
   //this.radius = this.width / /*(this.speed + 1) /*/ 65;
-  //this.radius = 40 / this.speed ;
   //this.direction = Math.floor(Math.random() * 360);
 
   this.flag = 0;
@@ -545,7 +543,7 @@ Circle.prototype = {
     let textLocX = this.locX - this.radius * 1 / 3 - 20 / this.radius;
     let textLocY = this.locY - this.radius * 1 / 50 + 20 / this.radius;
     context.fillStyle = 'black';
-    let pixel = String(Math.floor(this.width / 200)) + 'px'
+    let pixel = String(Math.floor(this.width / 120)) + 'px'
     context.font = 'bold' + ' ' + pixel + ' ' + 'Arial';
     context.fillText(this.id, textLocX + this.radius / 6 * (Math.cos(direction) - 1 / 3), textLocY + this.radius / 6 * (Math.sin(direction) + 1 / 3));
     context.fillStyle = 'white';
@@ -694,11 +692,14 @@ window.onload = function() {
 
   let margin = field.size.width / 10;
   // add
-  field.addGoal(new Goal(0.5 * (field.size.width - margin * 2) + margin, 0.5 * (field.size.height - margin * 2) + margin, 1, field));
-  field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 2, field));
-  field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.25 * (field.size.height - margin * 2) + margin, 3, field));
-  field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.15 * (field.size.height - margin * 2) + margin, 2, field));
-  field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 3, field));
+  field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.15 * (field.size.height - margin * 2) + margin, 1, field));
+  field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 1, field));
+  field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.15 * (field.size.height - margin * 2) + margin, 1, field));
+  field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 1, field));
+  field.addGoal(new Goal(0.15 * (field.size.width - margin * 2) + margin, 0.475 * (field.size.height - margin * 2) + margin, 2, field));
+  field.addGoal(new Goal(0.8 * (field.size.width - margin * 2) + margin, 0.475 * (field.size.height - margin * 2) + margin, 2, field));
+  field.addGoal(new Goal(0.475 * (field.size.width - margin * 2) + margin, 0.15 * (field.size.height - margin * 2) + margin, 3, field));
+  field.addGoal(new Goal(0.475 * (field.size.width - margin * 2) + margin, 0.8 * (field.size.height - margin * 2) + margin, 3, field));
   field.goals = Array.from(field.tmp_goals);
 
   /*   enterでスタート　←廃止
