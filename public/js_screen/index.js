@@ -446,6 +446,7 @@ const Circle = function(data, field) {
   this.command.go = 10;
   this.id = props.id;
   let speed = 1;
+  let radius = 1;
   this.width = field.size.width;
   this.height = field.size.height;
   this.margin = this.width / 10;
