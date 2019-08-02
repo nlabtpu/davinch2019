@@ -154,7 +154,7 @@ function keyup(event){
         c++;
         active();
         break;
-      case 'd':
+      case 'Escape':
         command = "delete";
         break;
       case 'q': //１つ前の顔文字
@@ -176,7 +176,7 @@ function keyup(event){
     if(c%2 == 0){
       $("#"+cid).removeClass("pressing");
 
-      if(event.key == 'd'){
+      if(event.key == 'Escape'){
         prop.command.pop();
         addFPC();
       }
@@ -188,7 +188,7 @@ function keyup(event){
     else{
       $("#"+cid+"Final").removeClass("pressing");
 
-      if(event.key == 'd'){
+      if(event.key == 'Escape'){
         prop.hitEvent.pop();
         addSPC();
       }
