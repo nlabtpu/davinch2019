@@ -75,7 +75,7 @@ function keydown(event){
       case 't':
         cid = "subsend";
         break;
-      case 'd':
+      case 'Escape':
         cid = "onereturn";
         break;
       default:
