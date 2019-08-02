@@ -211,10 +211,10 @@ Field.prototype = {
     let time_rate = 30;
     let current_time = new Date();
     let elapsed_time = parseInt((current_time.getTime() - start_time.getTime()) / 1000);
-    let mode_name = ["お", "た", "か", "ら"];
+    let mode_name = ["お", "さ", "ん", "ぽ"];
     if (game_mode == 0) {
       rate = 3;
-      mode_name = ["お", "た", "か", "ら"];
+      mode_name = ["お", "さ", "ん", "ぽ"];
     } else if (game_mode == 1) {
       elapsed_time -= time_rate;
       rate = 100;
